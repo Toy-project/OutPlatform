@@ -1,0 +1,14 @@
+{
+  "name": "toyproject",
+  "version": "1.0.0",
+  "description": "Outsourcing Platform",
+  "main": "app.js",
+  "repository": {},
+  "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
