@@ -6,6 +6,7 @@
   "repository": {},
   "license": "ISC",
   "scripts": {
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
     "start": "node app.js"
   },
   "dependencies": {
