@@ -1,8 +1,7 @@
 {
-  "name": "toyproject",
+  "name": "outplatform",
   "version": "0.1.0",
   "private": true,
-  "license": "ISC",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
