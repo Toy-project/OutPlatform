@@ -2,18 +2,12 @@
   "name": "outplatform",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
-=======
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
@@ -54,11 +48,6 @@
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -101,6 +90,5 @@
   },
   "eslintConfig": {
     "extends": "react-app"
->>>>>>> d28de86198a9eeb04b9590775fdbb4c813f12564
   }
 }
