@@ -18,7 +18,7 @@ echo 'is followed by another command that retrieves the process ID (PID) value'
 echo 'of the previously run process (i.e. "npm start") and writes this value to'
 echo 'the file ".pidfile".'
 set -x
-npm server &
+npm start &
 sleep 1
 echo $! > .pidfile
 set +x
@@ -27,3 +27,5 @@ echo 'Now...'
 echo 'Visit http://localhost:8000 to see your Node.js/React application in action.'
 echo '(This is why you specified the "args ''-p 8000:8000''" parameter when you'
 echo 'created your initial Pipeline as a Jenkinsfile.)'
+
+npm server
