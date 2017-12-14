@@ -1,12 +1,9 @@
 pipeline {
     agent {
         docker {
-            image 'node:9.2.1-alpine'
-            args '-p 8000:8000'
+            image 'node:8.9.3-alpine'
+            args '-p 8000:8000 -p 5000:5000'
         }
-    }
-    environment {
-        CI = 'true'
     }
     stages {
         stage('Build') {
@@ -15,11 +12,9 @@ pipeline {
             }
         }
         stage('Test') {
-          if(CI){
-              steps {
-                  sh './jenkins/scripts/test.sh'
-              }
-          }
+            steps {
+                sh './jenkins/scripts/test.sh'
+            }
         }
         stage('Deliver') {
             steps {
