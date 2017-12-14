@@ -1,5 +1,4 @@
+#!/usr/bin/env sh
 set -x
-npm run server &
-sleep 1
-echo $! > .pidfile
+npm run server
 set +x
