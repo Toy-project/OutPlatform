@@ -2,7 +2,6 @@ pipeline {
     agent {
       docker {
         image 'node:8.9.3-alpine'
-        label 'dev-container'
         args '-p 80:80'
       }
     }
