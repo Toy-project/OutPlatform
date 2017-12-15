@@ -1,33 +1,15 @@
 pipeline {
-    agent none
+    agent {
+      docker {
+        image 'node:8.9.3-alpine'
+        args '-p 80:80'
+      }
+    }
     environment {
         CI = 'true'
     }
     stages {
         stage('Build') {
-            when {
-              branch 'dev'
-            }
-            agent {
-              docker {
-                image 'node:8.9.3-alpine'
-                args '-p 80:80'
-              }
-            }
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Build') {
-            when {
-              branch 'pro'
-            }
-            agent {
-              docker {
-                image 'node:8.9.3-alpine'
-                args '-p 5000:5000'
-              }
-            }
             steps {
                 sh 'npm install'
             }
