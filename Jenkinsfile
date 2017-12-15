@@ -3,8 +3,6 @@ pipeline {
         docker {
           image 'node:8.9.3-alpine'
           args '-p 80:80'
-          image 'node:8.9.3-alpine'
-          args '-p 5000:5000'
         }
     }
     environment {
