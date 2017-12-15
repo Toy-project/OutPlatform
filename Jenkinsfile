@@ -1,20 +1,10 @@
 pipeline {
     agent {
-        when {
-          branch 'dev'
-        }
         docker {
           image 'node:8.9.3-alpine'
           args '-p 80:80'
-        }
-    }
-    agent {
-        when {
-          branch 'pro'
-        }
-        docker {
           image 'node:8.9.3-alpine'
-          args '-p 80:80'
+          args '-p 5000:5000'
         }
     }
     environment {
