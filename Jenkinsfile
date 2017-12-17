@@ -27,8 +27,7 @@ pipeline {
           agent any
           steps {
             sh 'docker cp . nodeForDev:/app'
-            sh 'docker exec nodeForDev sh -c "echo a && echo b"'
-            sh 'docker exec nodeForDev ls'
+            sh 'docker exec nodeForDev sh -c "cd /app && npm start"'
           }
         }
     }
