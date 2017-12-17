@@ -10,9 +10,9 @@ pipeline {
             }
           }
 
-          steps {
-              sh 'npm --version'
-          }
+            steps {
+                sh 'npm install'
+            }
         }
         stage('Test') {
           agent {
@@ -22,14 +22,13 @@ pipeline {
             }
           }
           steps {
-              sh 'npm --version'
+              sh './jenkins/scripts/test.sh'
           }
         }
         stage('Deliver for development') {
-          agent any
-          steps {
-            sh 'sudo docker exec -i -t test echo'
-          }
+            steps {
+              sh 'sudo docker exec -i -t test echo'
+            }
         }
     }
 }
