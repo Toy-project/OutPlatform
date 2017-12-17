@@ -26,7 +26,7 @@ pipeline {
         stage('Deliver for development') {
           agent any
           steps {
-            sh 'docker exec -i test npm start'
+            sh 'docker exec -i test echo "${env.JOB_NAME}"'
           }
         }
     }
