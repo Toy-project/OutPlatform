@@ -26,7 +26,8 @@ pipeline {
         stage('Deliver for development') {
           agent any
           steps {
-            sh 'docker exec -i test COPY . /home/app'
+            sh 'docker exec -i test /bin/bash'
+            sh '-c "cat > /app < ./"'
           }
         }
     }
