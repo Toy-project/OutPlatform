@@ -1,10 +1,35 @@
 pipeline {
-    agent any
+    agent none
+
     stages {
-        stage('Deliver for development') {
-            steps {
-              sh 'docker exec -i test echo "Hello"'
+        stage('Build') {
+          agent {
+            docker {
+              image 'node:8.9.3-alpine'
+              args '-p 80:80'
             }
+          }
+
+          steps {
+              sh 'npm --version'
+          }
+        }
+        stage('Test') {
+          agent {
+            docker {
+              image 'node:8.9.3-alpine'
+              args '-p 80:80'
+            }
+          }
+          steps {
+              sh 'npm --version'
+          }
+        }
+        stage('Deliver for development') {
+          agent any
+          steps {
+            sh 'sudo docker exec -i -t test echo'
+          }
         }
     }
 }
