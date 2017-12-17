@@ -1,13 +1,5 @@
 pipeline {
-    agent {
-      docker {
-        image 'node:8.9.3-alpine'
-        args '-p 80:80'
-      }
-    }
-    environment {
-        CI = 'true'
-    }
+    agent any
     stages {
         stage('Deliver for development') {
             steps {
