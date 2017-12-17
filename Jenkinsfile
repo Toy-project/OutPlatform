@@ -26,7 +26,7 @@ pipeline {
         stage('Deliver for development') {
           agent any
           steps {
-            sh 'sudo docker start nodeForDev'
+            sh 'docker start nodeForDev'
             sh 'docker cp . nodeForDev:/app'
             sh 'docker exec -it nodeForDev bash'
           }
