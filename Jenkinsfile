@@ -6,7 +6,6 @@ pipeline {
           agent {
             docker {
               image 'node:8.9.3-alpine'
-              args '-p 80:80'
             }
           }
 
@@ -18,7 +17,6 @@ pipeline {
           agent {
             docker {
               image 'node:8.9.3-alpine'
-              args '-p 80:80'
             }
           }
           steps {
@@ -26,9 +24,10 @@ pipeline {
           }
         }
         stage('Deliver for development') {
-            steps {
-              sh 'sudo docker exec -i -t test echo'
-            }
+          ageny any
+          steps {
+            sh 'docker exec -i test sh -c "cd /home/dev && npm start"'
+          }
         }
     }
 }
