@@ -10,10 +10,8 @@ pipeline {
     }
     stages {
         stage('Deliver for development') {
-            container('docker'){
-              steps {
-                sh 'docker exec -i -t test echo "Hello"'
-              }
+            steps {
+              sh 'docker exec -i -t test echo "Hello"'
             }
         }
     }
