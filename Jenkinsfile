@@ -26,7 +26,7 @@ pipeline {
         stage('Deliver for development') {
           ageny any
           steps {
-            sh 'docker exec -i test sh -c "cd /home/dev && npm start"'
+            sh 'docker exec -i test npm install --prefix /home/client'
           }
         }
     }
