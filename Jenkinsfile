@@ -27,7 +27,7 @@ pipeline {
           agent any
           steps {
             sh 'docker cp . test:/app'
-            sh 'docker exec test "cd app/ && npm start"'
+            sh 'docker exec test "cd /app && npm start"'
           }
         }
     }
