@@ -26,7 +26,7 @@ pipeline {
         stage('Deliver for development') {
           ageny any
           steps {
-            sh 'docker exec -i test npm install'
+            echo "Hello"
           }
         }
     }
