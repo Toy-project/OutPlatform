@@ -24,9 +24,9 @@ pipeline {
           }
         }
         stage('Deliver for development') {
-          ageny any
+          agent any
           steps {
-            echo "Hello"
+            sh 'docker exec -i test npm start'
           }
         }
     }
