@@ -28,7 +28,6 @@ pipeline {
           steps {
             sh 'docker cp . nodeForDev:/app'
             sh 'docker exec nodeForDev sh -c "cd /app"'
-            sh 'docker exec nodeForDev sh -c "pm2 start npm -- start --name runForDev"'
           }
         }
     }
