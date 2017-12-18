@@ -27,8 +27,7 @@ pipeline {
           agent any
           steps {
             sh 'docker cp . nodeForDev:/app'
-            sh 'docker exec nodeForDev sh -c "cd /app"'
-            sh 'docker exec nodeForDev sh -c "pm2 restart ecosystem.json"'
+            sh 'docker exec nodeForDev sh -c "cd /app && pm2 restart ecosystem.json"'
           }
         }
     }
