@@ -5,18 +5,18 @@ pipeline {
         stage('Build') {
           agent {
             docker {
-              image 'node:8.9.3-alpine'
+              image 'node:8.9.2'
             }
           }
 
-            steps {
-                sh 'npm install'
-            }
+          steps {
+              sh 'npm install'
+          }
         }
         stage('Test') {
           agent {
             docker {
-              image 'node:8.9.3-alpine'
+              image 'node:8.9.2'
             }
           }
           steps {
