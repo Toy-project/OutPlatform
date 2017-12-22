@@ -1,33 +1,32 @@
 pipeline {
     agent none
-
+    environment {
+      CI = 'true'
+    }
     stages {
-        stage('Build') {
-          agent {
-            docker {
-              image 'node:8.9.2'
-            }
-          }
-
-          steps {
-              sh 'npm install'
-          }
-        }
-        stage('Test') {
-          agent {
-            docker {
-              image 'node:8.9.2'
-            }
-          }
-          steps {
-              sh './jenkins/scripts/test.sh'
-          }
-        }
-        stage('Deliver for development') {
+        stage('Checkout') {
           agent any
           steps {
-            sh 'docker cp . nodeForDev:/app'
-            sh 'docker exec nodeForDev sh -c "cd /app && pm2 restart ecosystem.json"'
+            //start Checkout
+            echo 'start checkout'
+            echo 'Building ${BRANCH_NAME}'
+            echo 'Current workspace : ${workspace}'
+
+            // remove shared directory
+            echo 'remove shared directory'
+            sh 'rm -rf /shared/*'
+
+            //copy workspace -> shared
+            echo 'copy workspace directory'
+            sh 'cp -rf ./* /shared'
+
+            //copy config -> shared
+            echo 'copy config directory'
+            sh 'cp -rf /config /shared'
+          }
+
+          steps {gi
+              sh 'npm install'
           }
         }
     }
