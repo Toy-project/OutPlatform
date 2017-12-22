@@ -43,7 +43,7 @@ pipeline {
             //pm2 delete & start
             echo 'pm2 develop delete and start'
             sh 'docker exec -i develop pm2 delete -s develop'
-            sh 'docker exec -i develop pm2 start ecosystem.json'
+            sh 'docker exec -i develop pm2 start /app/ecosystem.json'
 
           }
         }
