@@ -24,10 +24,6 @@ pipeline {
             echo 'copy config directory'
             sh 'cp -rf /config /shared'
           }
-
-          steps {gi
-              sh 'npm install'
-          }
         }
     }
 }
