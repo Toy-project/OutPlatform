@@ -19,10 +19,13 @@ pipeline {
             //copy workspace -> shared
             echo 'copy workspace directory'
             sh 'cp -rf ./* /shared'
+          }
+        }
 
-            //copy config -> shared
-            echo 'copy config directory'
-            sh 'cp -rf /config /shared'
+        stage('Develop Deploy') {
+          agent any
+          when {
+            branch 'develop'
           }
         }
     }
