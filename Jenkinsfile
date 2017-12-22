@@ -30,11 +30,11 @@ pipeline {
           steps {
             //develop container list
             echo 'develop container list'
-            sh 'docker exec -i develop ls -al'
+            sh 'sudo docker exec -i develop ls -al'
 
             //copy shared -> workspace
             echo 'copy shared directory'
-            sh 'docker exec -i develop cp -rf /shared/* /app'
+            sh 'sudo docker exec -i develop cp -rf /shared/* /app'
           }
         }
     }
