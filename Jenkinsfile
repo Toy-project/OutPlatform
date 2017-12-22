@@ -32,9 +32,19 @@ pipeline {
             echo 'develop container list'
             sh 'docker exec -i develop ls -al'
 
-            //copy shared -> workspace
+            // copy shared -> workspace
             echo 'copy shared directory'
             sh 'docker exec -i develop cp -rf /shared/* /app'
+
+            // npm install
+            echo 'npm install'
+            sh 'docker exec -i develop npm --prefix /shared install /app'
+
+            //pm2 delete & start
+            echo 'pm2 develop delete and start'
+            sh 'docker exec -i develop pm2 delete -s develop'
+            sh 'docker exec -i develop pm2 start ecosystem.json'
+
           }
         }
     }
