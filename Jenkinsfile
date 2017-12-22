@@ -38,7 +38,7 @@ pipeline {
 
             // npm install
             echo 'npm install'
-            sh 'docker exec -i develop npm --prefix /shared install /app'
+            sh 'docker exec -i develop npm --prefix /app install /app'
 
             //pm2 delete & start
             echo 'pm2 develop delete and start'
