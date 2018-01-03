@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import logo from '../assets/svg/logo.svg';
-import '../assets/scss/App.css';
+import classNames from 'classnames';
+import styles from '../assets/sass/materialize.scss';
+const css = classNames.bind(styles);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <a className={css('waves-effect','waves-light','btn')}>Button</a>
       </div>
     );
   }
