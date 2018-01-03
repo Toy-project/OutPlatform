@@ -5,6 +5,7 @@
 
 #config
 /config
+/scripts
 
 # testing
 /coverage
