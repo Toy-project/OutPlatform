@@ -1,0 +1,18 @@
+//Grid
+
+.container {
+  margin: 0 auto;
+  max-width: 1024px;
+  width: 90%;
+}
+
+@media #{$small-and-up} {
+  .container {
+    width: 85%;
+  }
+}
+@media #{$medium-and-up} {
+  .container {
+    width: 70%;
+  }
+}

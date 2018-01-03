@@ -1,0 +1,23 @@
+a {
+  text-decoration: none;
+}
+
+html{
+  line-height: 1.5;
+
+  @media #{$zero} {
+    font-size: 14px;
+  }
+
+  @media #{$medium} {
+    font-size: 14.5px;
+  }
+
+  @media #{$large} {
+    font-size: 15px;
+  }
+
+  font-family: sans-serif;
+  font-weight: normal;
+  color: $off-black;
+}
