@@ -21,3 +21,11 @@ html{
   font-weight: normal;
   color: $off-black;
 }
+
+//Header Styles
+h1, h2, h3, h4, h5, h6 { font-weight: 400;	line-height: 1.1; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
+h4 { font-size: $h4-fontsize; line-height: 110%; margin: ($h4-fontsize / 2) 0 ($h4-fontsize / 2.5) 0;}
+
+//Text Styles
+.light { font-weight: 300; }

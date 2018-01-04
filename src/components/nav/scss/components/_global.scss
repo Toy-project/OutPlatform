@@ -1,0 +1,34 @@
+nav {
+  color: $navbar-font-color;
+  background-color: $nav-bg-color;
+  width: 100% ;
+  height: $navbar-height-mobile;
+  line-height: $navbar-line-height-mobile;
+
+  a { color: $navbar-font-color; }
+
+  .nav-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  // Navbar Links
+  ul {
+    margin: 0;
+    list-style-type: none;
+
+    li {
+      float: left;
+      padding: 0;
+    }
+
+    a {
+      font-size: $navbar-font-size;
+      color: $navbar-font-color;
+      display: block;
+      padding: 0 15px;
+      cursor: pointer;
+    }
+
+  }
+}

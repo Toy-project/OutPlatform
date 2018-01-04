@@ -22,6 +22,7 @@ $zero-screen: 0px !default;
 
 $small-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
 $medium-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 $large: "only screen and (min-width : #{$large-screen})" !default;
 $medium: "only screen and (min-width : #{$medium-screen})" !default;
 $zero: "only screen and (min-width : #{$zero-screen})" !default;
@@ -37,10 +38,3 @@ $h3-fontsize: 2.92rem !default;
 $h4-fontsize: 2.28rem !default;
 $h5-fontsize: 1.64rem !default;
 $h6-fontsize: 1rem !default;
-
-// 3. Grid
-// ==========================================================================
-
-// 4. Navbar
-// ==========================================================================
-$navbar-font-color: #fff !default

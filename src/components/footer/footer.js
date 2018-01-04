@@ -6,8 +6,12 @@ import './js/footer.js';
 class Footer extends React.Component {
   render(){
     return (
-      <footer className="footer center-align">
-        <h1>FOOTER</h1>
+      <footer className="page-footer center-align">
+        <div className="container">
+          <div className="row">
+            <h1>FOOTER</h1>
+          </div>
+        </div>
       </footer>
     )
   }
