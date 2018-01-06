@@ -32,12 +32,3 @@
 .right {
   float: right !important;
 }
-
-/*********************
-  Media Query Classes
-**********************/
-.hide-on-med-and-down {
-  @media #{$medium-and-down} {
-    display: none !important;
-  }
-}

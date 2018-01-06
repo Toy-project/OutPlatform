@@ -1,7 +1,7 @@
 import React from 'react';
 import '../scss/common.scss';
 import Footer from '../components/footer/footer';
-import ClubList from '../components/clubList/clubList';
+import MainViewList from '../components/mainViewList/mainViewList';
 import Header from '../components/header/header';
 
 class main extends React.Component {
@@ -9,7 +9,7 @@ class main extends React.Component {
     return(
       <div>
         <Header />
-        <ClubList />
+        <MainViewList />
         <Footer />
       </div>
     )
