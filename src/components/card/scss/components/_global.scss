@@ -53,19 +53,31 @@
     .card-title {
       font-size: 18px;
       font-weight: bold;
-      @include reset-basic-font-style;
       text-align: left;
       padding: $content-padding;
-      margin-top: 10px;
+      margin-top: 14px;
       line-height: 2rem;
       display: block;
+      @include reset-basic-font-style;
     }
 
     p {
+      margin: 6px 0 0 0;
       padding: $content-padding;
       font-size: 12px;
       width: 278px;
       height: 36px;
+      background-color:red;
+      overflow: hidden;
+      @include reset-basic-font-style;
+    }
+    .card-1 {
+      margin: 6px 0 0 0;
+      padding: $content-padding;
+      font-size: 12px;
+      width: 278px;
+      height: 36px;
+      background-color:red;
       overflow: hidden;
       @include reset-basic-font-style;
     }

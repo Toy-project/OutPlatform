@@ -16,8 +16,8 @@ class Card extends React.Component {
           <span className="card-title">
             단체명
           </span>
-          <p>
-            저는 굉장히 심플한 카드에요! 저는 적은 양의 정보를 담는 데에 좋습니다. 
+          <p className="card-1">
+            저는 굉장히 심플한 카드에요! 저는 적은 양의 정보를 담는 데에 좋습니다.
           </p>
         </div>
       </div>
