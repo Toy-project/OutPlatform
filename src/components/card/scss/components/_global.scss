@@ -56,31 +56,30 @@
       text-align: left;
       padding: $content-padding;
       margin-top: 14px;
-      line-height: 2rem;
       display: block;
       @include reset-basic-font-style;
     }
 
     p {
+      @include reset-basic-font-style;
+    }
+
+    .card-contents {
       margin: 6px 0 0 0;
       padding: $content-padding;
       font-size: 12px;
       width: 278px;
       height: 36px;
-      background-color:red;
       overflow: hidden;
-      @include reset-basic-font-style;
+      line-height: 1.2rem;
     }
-    .card-1 {
-      margin: 6px 0 0 0;
-      padding: $content-padding;
-      font-size: 12px;
-      width: 278px;
-      height: 36px;
-      background-color:red;
-      overflow: hidden;
-      @include reset-basic-font-style;
-    }
+  }
+
+  .card-rating {
+    height: $rating-height;
+    padding: 0;
+    margin: 0;
+    width:
   }
 }
 
