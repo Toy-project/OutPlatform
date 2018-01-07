@@ -1,15 +1,23 @@
 import React from 'react';
 import './scss/card.scss';
-import img from './img/sample-1.jpg';
+import '../../scss/common.scss';
+
+import star from '../../images/icons/star-gray.svg';
+import default_image from '../../images/icons/default-image.svg';
+import person_image from '../../images/icons/person-image.svg';
 
 class Card extends React.Component {
   render(){
     return(
       <div className="card">
         <div className="card-image">
-          <img src={img} />
+          <a href="#" className="default">
+            <img src={default_image} />
+          </a>
+          {/* <img src={img} /> */}
+
           <a href="#" className="float">
-            <i class="material-icons">person</i>
+            <img src={person_image} />
           </a>
         </div>
         <div className="card-content">
@@ -17,11 +25,18 @@ class Card extends React.Component {
             단체명
           </span>
           <p className="card-contents ">
-            저는 굉장히 심플한 카드에요! 저는 적은 양의 정보를 담는 데에 좋습니다.
+            저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.
           </p>
-        </div>
-        <div className="card-rating">
-          별
+          <span className="card-rating">
+            <img src={star} className="card-star"/>
+            <img src={star} className="card-star"/>
+            <img src={star} className="card-star"/>
+            <img src={star} className="card-star"/>
+            <img src={star} className="card-star"/>
+            <span className="card-button">
+              <a className="btn">담기</a>
+            </span>
+          </span>
         </div>
       </div>
     );

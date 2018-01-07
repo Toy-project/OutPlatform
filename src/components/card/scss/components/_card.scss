@@ -1,0 +1,102 @@
+.card {
+  position : relative;
+  width: $card-width;
+  height: $card-height;
+  @extend .z-depth-1;
+
+  .card-image {
+    height: $image-height;
+    overflow: hidden;
+  }
+
+  .default {
+    display: block;
+    height: $image-height;
+    background-color: $light-gray;
+    text-align:center;
+    padding: 109px 0 0 0;
+  }
+
+  .float{
+  	position: absolute;
+  	width:69.6px;
+  	height:69.4px;
+  	bottom:101.6px;
+  	right:17.4px;
+    background-color: $white;
+  	border-radius:50px;
+  	text-align: center;
+    @extend .z-depth-1;
+
+    img {
+      padding:21px 0 0 0;
+    }
+  }
+
+  .card-content {
+    height: $content-height;
+    padding: $content-box-padding;
+    margin: 0;
+    color: $thick-gray;
+    display: block;
+
+    .card-title {
+      font-size: $title-size;
+      font-weight: bold;
+      text-align: left;
+      margin-top: 14px;
+      display: block;
+
+    }
+
+    .card-contents {
+      margin: 6px 0 0 0;
+      font-size: $content-size;
+      width: $contents-width;
+      overflow: hidden;
+      line-height: inherit;
+    }
+
+    .card-rating {
+      width: 100%;
+      height: $btn-height;
+      margin: 17px 0 0 0;
+      display: block;
+    }
+
+    .card-star {
+      vertical-align: middle;
+      width: 15px;
+      height: 15px;
+      padding-right:5px;
+    }
+
+    .card-button {
+      padding-left:116px;
+
+      .btn  {
+        border: $btn-border;
+        border-radius: $btn-radius;
+        display: inline-block;
+        width: $btn-width;
+        height: $btn-height;
+        line-height: $btn-height;
+        padding: $btn-padding;
+        text-transform: uppercase;
+        vertical-align: middle;
+        // Gets rid of tap active state
+        //-webkit-tap-highlight-color: transparent;
+
+        font-size : $content-size;
+        text-decoration: none;
+        color: $btn-raised-color;
+        background-color: $btn-background-color;
+        text-align: center;
+        letter-spacing: .5px;
+        cursor: pointer;
+
+        @extend .z-depth-1;
+      }
+    }
+  }
+}

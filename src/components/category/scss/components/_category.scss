@@ -1,0 +1,61 @@
+.category {
+
+  .category_title {
+    font-size: $title-size;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: $thick-gray;
+    margin-bottom:36px;
+  }
+
+  .good_icon {
+    vertical-align: middle;
+    padding:0 5px 5px 0;
+  }
+
+  .category_list {
+    width: $category-list-width;
+    margin: 0 auto;
+    display: table;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      float: left;
+      display: inline-block;
+      margin: 0 5px 5.5px 5px;
+    }
+
+    .btn  {
+      border: $btn-border;
+      border-radius: $btn-radius;
+      display: inline-block;
+      width: $btn-width;
+      height: $btn-height;
+      line-height: $btn-height;
+      padding: $btn-padding;
+      text-transform: uppercase;
+      vertical-align: middle;
+      // Gets rid of tap active state
+      //-webkit-tap-highlight-color: transparent;
+
+      font-size : $btn-font-size;
+      text-decoration: none;
+      color: $btn-raised-color;
+      background-color: $btn-background-color;
+      text-align: center;
+      letter-spacing: .5px;
+      cursor: pointer;
+
+      @extend .z-depth-1;
+    }
+  }
+}

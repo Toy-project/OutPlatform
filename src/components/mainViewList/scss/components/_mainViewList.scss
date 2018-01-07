@@ -1,0 +1,17 @@
+.viewList {
+  padding-top: 108px;
+  max-width: $view-list-width;
+  margin: 0 auto;
+
+  ul {
+    list-style-type: none;
+    margin: 111.5px 0 0 0;
+    padding: 0;
+  }
+
+  li {
+    float: left;
+    display: inline-block;
+    margin: 0 5px 25px 5px;
+  }
+}
