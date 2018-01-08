@@ -12,10 +12,7 @@ class mainViewList extends React.Component {
           <div className="col s12">
             <div className="viewList">
               <Category />
-              <ul>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
+              <ul class="center">
                 <li><Card /></li>
                 <li><Card /></li>
                 <li><Card /></li>

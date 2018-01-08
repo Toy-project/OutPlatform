@@ -1,5 +1,4 @@
 .category {
-
   .category_title {
     font-size: $title-size;
     font-weight: 300;
@@ -8,7 +7,7 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: $thick-gray;
+    color: $gray-2;
     margin-bottom:36px;
   }
 
@@ -18,44 +17,27 @@
   }
 
   .category_list {
-    width: $category-list-width;
-    margin: 0 auto;
-    display: table;
+    max-width: $category-list-width;
+    margin-left: auto;
+    margin-right: auto;
 
     ul {
       list-style-type: none;
+      float: left;
+      text-align: center;
       margin: 0;
       padding: 0;
     }
 
     li {
-      float: left;
       display: inline-block;
       margin: 0 5px 5.5px 5px;
     }
 
     .btn  {
-      border: $btn-border;
-      border-radius: $btn-radius;
-      display: inline-block;
-      width: $btn-width;
-      height: $btn-height;
-      line-height: $btn-height;
-      padding: $btn-padding;
-      text-transform: uppercase;
-      vertical-align: middle;
-      // Gets rid of tap active state
-      //-webkit-tap-highlight-color: transparent;
-
-      font-size : $btn-font-size;
-      text-decoration: none;
-      color: $btn-raised-color;
-      background-color: $btn-background-color;
-      text-align: center;
-      letter-spacing: .5px;
-      cursor: pointer;
-
-      @extend .z-depth-1;
+      @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
+      @include btn-reset-font($btn-font-size, $btn-text-gray-color, $category-btn-height);
+      @include btn-reset-offset($btn-padding);
     }
   }
 }

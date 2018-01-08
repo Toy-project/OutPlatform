@@ -43,3 +43,28 @@ $h6-fontsize: 1rem !default;
 // ==========================================================================
 $num-cols: 12 !default;
 $gutter-width: 1.5rem !default;
+
+// 4. Color
+// ==========================================================================
+$white: #ffffff !default;
+
+$gray-0: #f4f4f4 !default;
+$gray-1: #d8d8d8 !default;
+$gray-2: #797979 !default;
+
+$emerald-1: #68ccb0 !default;
+
+// 5. Button
+// ============================================================
+
+$btn-border: 0px !default;
+$btn-radius: 2px !default;
+$btn-height: 25px !default;
+$btn-width: 70px !default;
+$btn-padding: 0px !default;
+
+$btn-text-white-color: $white !default;
+$btn-background-emerald-color: $emerald-1 !default;
+
+$btn-text-gray-color: $gray-2 !default;
+$btn-background-gray-color: $gray-0 !default;

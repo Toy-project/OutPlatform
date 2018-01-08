@@ -9,11 +9,11 @@ class Category extends React.Component {
   render(){
     return(
       <div className="category">
-        <div class="category_title">
-          <img src={good_icon} class="good_icon"/>
+        <div className="category_title">
+          <img src={good_icon} className="good_icon"/>
           추천 단체를 확인하세요
         </div>
-        <div class="category_list">
+        <div className="category_list">
           <ul>
             <li><a className="btn">디자인</a></li>
             <li><a className="btn">IT/프로그래밍</a></li>

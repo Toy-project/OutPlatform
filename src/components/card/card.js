@@ -1,6 +1,5 @@
 import React from 'react';
 import './scss/card.scss';
-import '../../scss/common.scss';
 
 import star from '../../images/icons/star-gray.svg';
 import default_image from '../../images/icons/default-image.svg';
@@ -20,7 +19,7 @@ class Card extends React.Component {
             <img src={person_image} />
           </a>
         </div>
-        <div className="card-content">
+        <div className="card-content-container">
           <span className="card-title">
             단체명
           </span>
