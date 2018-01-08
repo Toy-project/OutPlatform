@@ -35,12 +35,8 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-            try {
-              input 'Is the website running on now?'
-              sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
-            } catch (Exception e){
-              echo 'error'
-            }
+              def a = input(message: 'Is the website running on now?')
+              echo a
           }
         }
     }
