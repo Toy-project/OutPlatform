@@ -12,13 +12,9 @@ pipeline {
             echo 'Building ${BRANCH_NAME}'
             echo 'Current workspace : ${workspace}'
 
-            // remove shared directory
-            echo 'remove shared directory'
-            sh 'rm -rf /shared/*'
-
             //copy workspace -> shared
             echo 'copy workspace directory'
-            sh 'cp -rf ./* /shared'
+            sh 'cp -rfv ./* /shared'-
           }
         }
 
@@ -32,19 +28,19 @@ pipeline {
             echo 'develop container list'
             sh 'docker exec -i develop ls -al'
 
-            // copy shared -> workspace
-            echo 'copy shared directory'
-            sh 'docker exec -i develop cp -rf /shared/* /app'
-
             // npm install
             echo 'npm install'
-            sh 'docker exec -i develop npm --prefix /app install /app'
+            sh 'docker exec -i develop npm --prefix /shared install'
 
             //pm2 delete & start
-            echo 'pm2 develop delete and start'
-            sh 'docker exec -i develop pm2 delete -s develop'
-            sh 'docker exec -i develop pm2 start /app/ecosystem.json'
-
+            def userInput
+            echo 'pm2 develop start'
+            userInput = input 'Is the website running on now?(Y/N)'
+            if(userInput == true){
+              sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
+            } else {
+              sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
+            }
           }
         }
     }
