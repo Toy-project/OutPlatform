@@ -36,7 +36,7 @@ pipeline {
             //pm2 delete & start
             echo 'pm2 develop start'
             script {
-              def a = true
+              def a = input(message: 'Hello?')
               if(a){
                 echo 'true'
               } else {
