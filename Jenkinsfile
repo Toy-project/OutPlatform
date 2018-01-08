@@ -36,12 +36,11 @@ pipeline {
             //pm2 delete & start
             echo 'pm2 develop start'
             script {
-              try {
-                input 'Is the website running on now?'
-                echo 'restart'
-              } catch (exc) {
-                echo 'start'
-                throw
+              def a = true
+              if(a){
+                echo 'true'
+              } else {
+                echo 'false'
               }
             }
           }
