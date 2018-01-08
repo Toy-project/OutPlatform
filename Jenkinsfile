@@ -35,13 +35,15 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-            try {
-              input 'Is the website running on now?'
-              sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
-            } catch(Exception e) {
-              sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
-            }
+            input 'Is the website running on now?'
+            sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
+          }
+        }
 
+        stage('TEST'){
+          agent any
+          steps {
+            echo "test"
           }
         }
     }
