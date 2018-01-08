@@ -35,11 +35,13 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-            def doesJavaRock = input(message: 'Do you like Java?', ok: 'Yes',
-                        parameters: [booleanParam(defaultValue: true,
-                        description: 'If you like Java, just push the button',name: 'Yes?')])
-
-echo "Java rocks?:" + doesJavaRock
+            def userInput = true
+            input 'Is the website running on now?'
+            if(userInput){
+              echo 'true'
+            } else {
+              echo 'false'
+            }
 
           }
         }
