@@ -35,12 +35,11 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-            def userInput = true
-            input 'Is the website running on now?'
-            if(userInput){
-              echo 'true'
-            } else {
-              echo 'false'
+            try {
+              input 'Is the website running on now?'
+              sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
+            } catch {
+              sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
             }
 
           }
