@@ -36,20 +36,20 @@ pipeline {
             //pm2 delete & start
             echo 'pm2 develop start'
             script {
-              def a = input(
-                message: 'Hello?',
+              def isRunning = input(
+                message: 'Please check below if it's running now',
                 parameters: [
                   [
                     $class: 'BooleanParameterDefinition',
                     defaultValue: true,
                     description: '',
-                    name: 'Please confirm you agree with this'
+                    name: 'On running'
                   ]
                 ])
-              if(a){
-                echo 'true'
+              if(isRunning){
+                sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
               } else {
-                echo 'false'
+                sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
               }
             }
           }
