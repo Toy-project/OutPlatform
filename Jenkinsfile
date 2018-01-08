@@ -14,7 +14,7 @@ pipeline {
 
             //copy workspace -> shared
             echo 'copy workspace directory'
-            sh 'cp -rfv ./* /shared'-
+            sh 'cp -rfv ./* /shared'
           }
         }
 
