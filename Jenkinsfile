@@ -31,6 +31,13 @@ pipeline {
             // npm install
             echo 'npm install'
             sh 'docker exec -i develop npm --prefix /shared install /shared'
+
+
+            //pm2 delete & start
+            def userInput
+            echo 'pm2 develop start'
+            input 'Is the website running on now?(Y/N)'
+            
           }
         }
     }
