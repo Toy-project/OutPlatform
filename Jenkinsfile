@@ -34,10 +34,9 @@ pipeline {
 
 
             //pm2 delete & start
-            def userInput
             echo 'pm2 develop start'
             input 'Is the website running on now?(Y/N)'
-            
+
           }
         }
     }
