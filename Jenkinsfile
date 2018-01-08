@@ -36,7 +36,16 @@ pipeline {
             //pm2 delete & start
             echo 'pm2 develop start'
             script {
-              def a = input(message: 'Hello?')
+              def a = input(
+                message: 'Hello?',
+                parameters: [
+                  [
+                    $class: 'BooleanParameterDefinition',
+                    defaultValue: true,
+                    description: '',
+                    name: 'Please confirm you agree with this'
+                  ]
+                ])
               if(a){
                 echo 'true'
               } else {
