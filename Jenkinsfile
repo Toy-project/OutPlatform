@@ -35,7 +35,7 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-            sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
+            sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
           }
         }
     }
