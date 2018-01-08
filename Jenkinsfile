@@ -35,8 +35,10 @@ pipeline {
 
             //pm2 delete & start
             echo 'pm2 develop start'
-              def a = input(message: 'Is the website running on now?')
+            script {
+              def a = input 'Is the website running on now?'
               echo a
+            }
           }
         }
     }
