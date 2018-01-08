@@ -38,7 +38,7 @@ pipeline {
             try {
               input 'Is the website running on now?'
               sh 'docker exec -i develop pm2 restart /shared/ecosystem.json'
-            } catch {
+            } catch(Exception e) {
               sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
             }
 
