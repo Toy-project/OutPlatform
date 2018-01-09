@@ -23,7 +23,7 @@ class Card extends React.Component {
           <span className="card-title">
             단체명
           </span>
-          <p className="card-contents ">
+          <p className="card-contents">
             저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.
           </p>
           <span className="card-rating">

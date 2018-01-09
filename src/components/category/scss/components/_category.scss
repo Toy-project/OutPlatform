@@ -1,14 +1,11 @@
 .category {
+  @extend .center-align;
+
   .category_title {
     font-size: $title-size;
-    font-weight: 200;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
     color: $gray-2;
     margin-bottom:36px;
+    @extend .thin;
   }
 
   .good_icon {
@@ -22,20 +19,20 @@
     margin-right: auto;
 
     ul {
-      list-style-type: none;
-      float: left;
-      text-align: center;
+      list-style: none;
       margin: 0;
       padding: 0;
+      @extend .left;
+      @extend .center;
     }
 
     li {
       display: inline-block;
-      font-weight: 200;
       margin: 0 5px 5.5px 5px;
     }
 
     .btn  {
+      @extend .thin;
       @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
       @include btn-reset-font($btn-font-size, $btn-text-gray-color, $category-btn-height);
       @include btn-reset-offset($btn-padding);

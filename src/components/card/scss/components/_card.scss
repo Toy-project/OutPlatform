@@ -1,6 +1,6 @@
 .card {
   position : relative;
-  width: $card-width;
+  max-width: $card-width;
   height: $card-height;
   @extend .z-depth-1;
 
@@ -25,7 +25,7 @@
   	right:17.4px;
     background-color: $white;
   	border-radius:50px;
-  	text-align: center;
+  	@extend .center;
     @extend .z-depth-1;
 
     img {
@@ -34,18 +34,16 @@
   }
 
   .card-content-container {
-    height: $content-container-height;
+    max-height: $content-container-height;
     padding: $content-box-padding;
-    margin: 0;
     color: $gray-2;
 
     .card-title {
       font-size: $title-size;
-      font-weight: bold;
-      text-align: left;
       margin-top: 14px;
       display: block;
-
+      @extend .thick;
+      @extend .left-align;
     }
 
     .card-contents {
@@ -58,7 +56,6 @@
 
     .card-rating {
       width: 100%;
-      height: $btn-height;
       margin: 17px 0 0 0;
       display: block;
     }

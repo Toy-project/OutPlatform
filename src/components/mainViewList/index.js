@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../scss/common.scss';
 import './scss/mainViewList.scss';
-import Card from '../card/card';
-import Category from '../category/category';
+import Card from '../card/';
+import Category from '../category/';
 
 class mainViewList extends React.Component {
   render(){
