@@ -19,7 +19,7 @@ class Card extends React.Component {
             <img src={person_image} />
           </a>
         </div>
-        <div className="card-content-container">
+        <div className="card-content-container left-align">
           <span className="card-title">
             단체명
           </span>

@@ -1,7 +1,7 @@
 .category {
   .category_title {
     font-size: $title-size;
-    font-weight: 300;
+    font-weight: 200;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
@@ -31,6 +31,7 @@
 
     li {
       display: inline-block;
+      font-weight: 200;
       margin: 0 5px 5.5px 5px;
     }
 
