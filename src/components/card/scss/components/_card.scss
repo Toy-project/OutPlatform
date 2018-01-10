@@ -1,6 +1,6 @@
 .card {
   position : relative;
-  max-width: $card-width;
+  width: $card-width;
   height: $card-height;
   @extend .z-depth-1;
 

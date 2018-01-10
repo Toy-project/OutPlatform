@@ -1,31 +1,21 @@
 import React from 'react';
-import '../../scss/common.scss';
-import './scss/mainViewList.scss';
-import Card from '../card/';
-import Category from '../category/';
 
-class mainViewList extends React.Component {
-  render(){
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col s12">
-            <div className="viewList">
-              <Category />
-              <ul class="center">
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-              </ul>
-            </div>
-          </div>
+import './scss/mainViewList.scss';
+
+import Category from '../category/';
+import CardList from './components/cardsList';
+
+const mainViewList = () => (
+  <div className="container">
+    <div className="row">
+      <div className="col s12">
+        <div className="viewList">
+          <Category />
+          <CardList />
         </div>
       </div>
-    )
-  }
-}
+    </div>
+  </div>
+)
 
 export default mainViewList;
