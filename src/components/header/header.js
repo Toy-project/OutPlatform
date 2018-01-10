@@ -8,7 +8,10 @@ class Header extends React.Component {
   render(){
     return (
       <div className="top-container">
-        <Nav />
+      <Nav />
+        <div className="container">
+          
+        </div>
       </div>
     )
   }
