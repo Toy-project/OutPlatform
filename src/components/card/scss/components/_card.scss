@@ -12,7 +12,7 @@
   .default {
     display: block;
     height: $image-height;
-    background-color: $gray-2;
+    background-color: $gray-3;
     text-align:center;
     padding: 109px 0 0 0;
   }
@@ -36,7 +36,7 @@
   .card-content-container {
     max-height: $content-container-height;
     padding: $content-box-padding;
-    color: $gray-2;
+    color: $gray-1;
 
     .card-title {
       font-size: $title-size;
