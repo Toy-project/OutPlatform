@@ -26,7 +26,6 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 $large: "only screen and (min-width : #{$large-screen})" !default;
 $medium: "only screen and (min-width : #{$medium-screen})" !default;
 $zero: "only screen and (min-width : #{$zero-screen})" !default;
-
 // 2. Typography
 // ==========================================================================
 
@@ -48,10 +47,15 @@ $gutter-width: 1.5rem !default;
 // ==========================================================================
 $white: #ffffff !default;
 
-$gray-0: #f4f4f4 !default;
-$gray-1: #d8d8d8 !default;
-$gray-2: #797979 !default;
+$gray-0: #676767 !default;
+$gray-1: #7f7f7f !default;
+$gray-2: #979797 !default;
+$gray-3: #d8d8d8 !default;
+$gray-4: #f4f4f4 !default;
 
+$black-0: #555555 !default;
+
+$emerald-0: #d3f2ea !default;
 $emerald-1: #68ccb0 !default;
 
 // 5. Button
@@ -66,5 +70,8 @@ $btn-padding: 0px !default;
 $btn-text-white-color: $white !default;
 $btn-background-emerald-color: $emerald-1 !default;
 
-$btn-text-gray-color: $gray-2 !default;
-$btn-background-gray-color: $gray-0 !default;
+$btn-text-gray-color: $gray-1 !default;
+$btn-background-gray-color: $gray-4 !default;
+
+// 6. url
+$get-path-from-components-to-images: '../../../images' !default;

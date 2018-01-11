@@ -1,17 +1,17 @@
 import React from 'react';
 
-import './scss/category.scss';
+import './scss/index.scss';
 
 import Title from './components/title';
 import List from './components/list';
 
-const Category = () => (
+const Category = ( { name, title }) => (
   <div className="category">
     <div className="category_title">
-      <Title />
+      <Title title={title} />
     </div>
     <div className="category_list">
-      <List />
+      <List name={name} />
     </div>
   </div>
 )

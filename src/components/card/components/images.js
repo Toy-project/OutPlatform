@@ -1,10 +1,10 @@
 import React from 'react';
-import '../scss/card.scss';
+import '../scss/index.scss';
 
 
 // 파일 이름 변경
-import default_image from '../../../images/icons/ic-image-black-24-px.svg'//'../../../images/icons/default-image.svg';
-import person_image from '../../../images/icons/ic-profile.svg'//'../../../images/icons/person-image.svg';
+import default_image from '../../../images/icons/ic-image-black-24-px.svg';
+import person_image from '../../../images/icons/ic-profile.svg';
 
 const Images = () => (
   <div>

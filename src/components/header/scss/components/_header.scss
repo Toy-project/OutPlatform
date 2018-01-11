@@ -1,0 +1,60 @@
+// Main Top
+.top-container {
+  position: relative;
+  overflow: hidden;
+  height: $header-top-container-height;
+  background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
+  background-color: $emerald-0;
+
+
+  .header-contents-container {
+    position: absolute;
+    left:128px;
+    top:149px;
+
+    h1 {
+      font-size: $header-contents-h1-font-size;
+      color: $gray-0;
+
+      @extend .light;
+    }
+
+    p {
+      width: $header-contents-p-width;
+      height: $header-contents-p-height;
+      margin-bottom: 24px;
+      overflow: hidden;
+      font-size: $header-contents-p-font-size;
+      color: $gray-0;
+
+      @extend .left-align;
+    }
+
+    pre {
+      margin-top: 248px;
+      font-size: $header-quoting-pre-font-size;
+      color: $gray-1;
+    }
+
+    .input-field {
+      position: relative;
+      margin: 0;
+      height: 100%;
+
+      input {
+        box-sizing: border-box;
+        width: $header-search-input-width;
+        height: $header-search-input-height;
+        text-indent: 50px;
+        border: solid 0.5px #{$gray-2};
+        background-color: transparent;
+      }
+
+      label {
+        position: absolute;
+        left: 15px;
+        top: 9px;
+      }
+    }
+  }
+}

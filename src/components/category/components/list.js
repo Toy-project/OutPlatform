@@ -1,18 +1,15 @@
 import React from 'react';
 
-import '../scss/category.scss';
+import '../scss/index.scss';
 
-const List = () => (
+const List = ( {name} ) => (
   <div>
     <ul>
-      <li><a className="btn">디자인</a></li>
-      <li><a className="btn">IT/프로그래밍</a></li>
-      <li><a className="btn">컨텐츠제작</a></li>
-      <li><a className="btn">마케팅</a></li>
-      <li><a className="btn">컨설팅</a></li>
-      <li><a className="btn">통/번역</a></li>
-      <li><a className="btn">문서작성</a></li>
-      <li><a className="btn">레슨</a></li>
+      {name.map((item, key) => {
+        return (
+          <li key={key}><a className="btn">{item}</a></li>
+        );
+      })}
     </ul>
   </div>
 )

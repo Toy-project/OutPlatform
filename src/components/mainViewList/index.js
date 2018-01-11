@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './scss/mainViewList.scss';
+import './scss/index.scss';
 
-import Category from '../category/';
+import CategoryList from './components/categoryList';
 import CardList from './components/cardsList';
 
 const mainViewList = () => (
@@ -10,7 +10,7 @@ const mainViewList = () => (
     <div className="row">
       <div className="col s12">
         <div className="viewList">
-          <Category />
+          <CategoryList />
           <CardList />
         </div>
       </div>

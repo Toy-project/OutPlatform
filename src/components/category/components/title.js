@@ -1,13 +1,13 @@
 import React from 'react';
 
-import '../scss/category.scss';
+import '../scss/index.scss';
 
 import good_icon from '../../../images/icons/ic-good.svg'
 
-const Title = () => (
+const Title = ( {title} ) => (
   <div>
     <img src={good_icon} className="good_icon" alt=""/>
-    추천 단체를 확인하세요
+    {title}
   </div>
 )
 

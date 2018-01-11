@@ -1,3 +1,13 @@
+* {
+  font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', sans-serif; /* 1 */
+
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
 a {
   text-decoration: none;
 }
@@ -18,9 +28,4 @@ html{
   }
 
   color: $off-black;
-}
-
-body {
-  font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', sans-serif; /* 1 */
-  font-weight: normal;
 }

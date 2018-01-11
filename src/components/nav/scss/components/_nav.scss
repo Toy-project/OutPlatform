@@ -1,0 +1,26 @@
+nav {
+  background-color: $nav-bg-color;
+  height: $navbar-height-mobile;
+
+  // Navbar Links
+  ul {
+    margin-right: 290px;
+    list-style: none;
+    @extend .right;
+
+    li {
+      margin-left: 95px;
+      @extend .left;
+    }
+
+    a {
+      font-size: $navbar-font-size;
+      line-height: $navbar-line-height-mobile;
+      color: $black-0;
+      padding: 0 15px;
+      cursor: pointer;
+      @extend .thick;
+    }
+
+  }
+}

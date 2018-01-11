@@ -1,5 +1,5 @@
 import React from 'react';
-import '../scss/mainViewList.scss';
+import '../scss/index.scss';
 
 import Card from '../../card/';
 
