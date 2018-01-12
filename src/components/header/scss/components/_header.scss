@@ -1,16 +1,11 @@
 // Main Top
 .top-container {
-  position: relative;
-  overflow: hidden;
   height: $header-top-container-height;
   background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
   background-color: $emerald-0;
 
-
   .header-contents-container {
-    position: absolute;
-    left:128px;
-    top:149px;
+    padding: $header-contents-container-padding;
 
     h1 {
       font-size: $header-contents-h1-font-size;
@@ -20,10 +15,10 @@
     }
 
     p {
-      width: $header-contents-p-width;
+      max-width: $header-contents-p-width;
+      width:100%;
       height: $header-contents-p-height;
-      margin-bottom: 24px;
-      overflow: hidden;
+      margin-bottom: 1.9%;
       font-size: $header-contents-p-font-size;
       color: $gray-0;
 
@@ -31,7 +26,7 @@
     }
 
     pre {
-      margin-top: 248px;
+      padding: $header-contents-pre-padding;
       font-size: $header-quoting-pre-font-size;
       color: $gray-1;
     }

@@ -16,15 +16,15 @@ html{
   line-height: 1.5;
 
   @media #{$zero} {
-    font-size: 14px;
+    font-size: 8px;
   }
 
   @media #{$medium} {
-    font-size: 14.5px;
+    font-size: 10px;
   }
 
   @media #{$large} {
-    font-size: 15px;
+    font-size: 10px;
   }
 
   color: $off-black;
