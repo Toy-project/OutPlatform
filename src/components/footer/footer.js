@@ -1,14 +1,17 @@
 import React from 'react';
-import '../../scss/common.scss';
-import './scss/footer.scss';
+import './scss/index.scss';
 
 class Footer extends React.Component {
   render(){
     return (
-      <footer className="page-footer center-align">
+      <footer className="footer-wrapper">
         <div className="container">
-          <div className="row">
-            <h1>FOOTER</h1>
+          <div className="contact-info-wrapper">
+            <h5>contact</h5>
+            <ul>
+              <li>mail@mail.com</li>
+              <li>toy project</li>
+            </ul>
           </div>
         </div>
       </footer>

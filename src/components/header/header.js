@@ -14,7 +14,7 @@ class Header extends React.Component {
           <div className="header-contents-container">
             <h1>외주 대학교</h1>
             <p>
-              가치와 가치의 뜻있는 연결, 대학생은 서투르고 <br />
+              가치와 가치의 뜻있는 연결, 대학생은 서투르고
               프로답지 못하다는 예상을 깨볼까요?:)
             </p>
             <form>
