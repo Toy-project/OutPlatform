@@ -4,7 +4,7 @@ import './scss/index.scss';
 import Contents from './components/contents';
 import Images from './components/images';
 
-const Card = ({ img, title, contents, rating }) => (
+const Card = ({ club_profile_photo, club_name, club_ex, club_rating }) => (
   <div className="card">
     <div className="card-image">
       <Images
@@ -13,9 +13,9 @@ const Card = ({ img, title, contents, rating }) => (
     </div>
     <div className="card-content-container left-align">
       <Contents
-        title={title}
-        contents={contents}
-        rating={rating}
+        club_name={club_name}
+        club_ex={club_ex}
+        club_rating={club_rating}
       />
     </div>
   </div>

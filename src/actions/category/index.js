@@ -1,9 +1,9 @@
 import * as types from './actionTypes';
 
-export function addCategory(name) {
+export function addCategory(cate_name) {
   return {
     type: types.ADD_CATEGORY,
-    name,
+    cate_name,
   }
 }
 

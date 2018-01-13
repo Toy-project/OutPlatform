@@ -19,10 +19,11 @@ class Header extends React.Component {
             </p>
             <form>
               <div className="input-field">
-                <input type="text" id="search" placeholder='ex) 동아리명, 카테고리' />
-                <label for="search">
+                <label htmlFor="search">
                   <i><img src={ic_magnifier} alt='' /></i>
-              </label>
+                </label>
+                <input type="text" id="search" placeholder='ex) 동아리명, 카테고리' />
+
               </div>
             </form>
             <pre>

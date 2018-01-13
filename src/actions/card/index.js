@@ -1,11 +1,11 @@
 import * as types from './actionTypes';
 
-export function addCards(img, title, contents, rating) {
+export function addCards(club_profile_photo, club_name, club_ex, club_rating) {
   return {
     type: types.ADD_CARDS,
-    img,
-    title,
-    contents,
-    rating
+    club_profile_photo,
+    club_name,
+    club_ex,
+    club_rating
   }
 };

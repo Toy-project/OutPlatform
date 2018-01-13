@@ -3,13 +3,13 @@ import '../scss/index.scss';
 
 import star from '../../../images/icons/star-gray.svg';
 
-const Contents = ({ title, contents, rating }) => (
+const Contents = ({ club_name, club_ex, club_rating }) => (
   <div>
     <span className="card-title">
-      {title}
+      {club_name}
     </span>
     <p className="card-contents">
-      {contents}
+      {club_ex}
     </p>
     <span className="card-rating">
       <img src={star} className="card-star" alt="" />

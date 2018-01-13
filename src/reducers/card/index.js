@@ -1,41 +1,6 @@
 import * as types from '../../actions/card/actionTypes';
 
-const initial = [{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-},
-{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-},
-{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-},
-{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-},
-{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-},
-{
-  img: "test",
-  title: "단체명",
-  contents: "저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.",
-  rating: 3,
-}
+const initial = [
 ]
 
 export default function Card(state = initial, action) {
@@ -44,10 +9,10 @@ export default function Card(state = initial, action) {
       return [
           ...state,
           {
-            img: action.img,
-            title: action.title,
-            contents: action.contents,
-            rating: action.rating,
+            club_profile_photo: action.club_profile_photo,
+            club_name: action.club_name,
+            club_ex: action.club_ex,
+            club_rating: action.club_rating,
           }
       ];
     default :
