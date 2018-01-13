@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './scss/index.scss';
-import Nav from '../nav/nav';
+import { Nav } from '../';
 
 import ic_magnifier from '../../images/icons/ic-magnifier.svg';
 

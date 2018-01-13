@@ -1,8 +1,6 @@
 import React from 'react';
 import '../scss/common.scss';
-import Footer from '../components/footer/footer';
-import MainViewList from '../components/mainViewList/';
-import Header from '../components/header/header';
+import { Header, MainViewList, Footer } from '../components/';
 
 class main extends React.Component {
   render() {
