@@ -9,8 +9,8 @@ class Header extends React.Component {
   render(){
     return (
       <div className="top-container">
-        <Nav />
         <div className="container">
+          <Nav />
           <div className="header-contents-container">
             <h1>외주 대학교</h1>
             <p>

@@ -1,10 +1,12 @@
 // Main Top
 .top-container {
   height: $header-top-container-height;
-  background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
-  background-repeat: no-repeat;
-  background-position: right 100px center;
   background-color: $emerald-0;
+
+  .container {
+    background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
+    background-repeat: no-repeat;
+  }
 
   .header-contents-container {
     padding: $header-contents-container-padding;
