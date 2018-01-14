@@ -32,7 +32,7 @@
     }
 
     .btn  {
-      @extend .thin;
+      @extend .light;
       @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
       @include btn-reset-font($btn-font-size, $btn-text-gray-color, $category-btn-height);
       @include btn-reset-offset($btn-padding);
