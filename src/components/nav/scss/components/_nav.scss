@@ -1,4 +1,10 @@
 nav {
+  @media #{$medium-and-down} {
+    position: static;
+  }
+  
+  position: absolute;
+  width:100%;
   background-color: $nav-bg-color;
   height: $navbar-height-mobile;
 
