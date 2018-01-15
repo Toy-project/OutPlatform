@@ -46,6 +46,7 @@ $gutter-width: 1.5rem !default;
 // 4. Color
 // ==========================================================================
 $white: #ffffff !default;
+$white-0: #fafafa !default;
 
 $gray-0: #676767 !default;
 $gray-1: #7f7f7f !default;
@@ -58,13 +59,26 @@ $black-0: #555555 !default;
 $emerald-0: #d3f2ea !default;
 $emerald-1: #68ccb0 !default;
 
+$popup-bg: rgba(0,0,0, 0.5) !default;
+
 // 5. Button
 // ============================================================
 
-$btn-border: 0px !default;
-$btn-radius: 2px !default;
+//Small and wide
 $btn-height: 25px !default;
 $btn-width: 70px !default;
+
+//Small and regular
+$btn-height-0: 36px !default;
+$btn-width-0: 75px !default;
+
+//big and wide
+$btn-height-1: 40px !default;
+$btn-width-1: 205px !default;
+
+$btn-border: 0px !default;
+$btn-radius: 2px !default;
+
 $btn-padding: 0px !default;
 
 $btn-text-white-color: $white !default;

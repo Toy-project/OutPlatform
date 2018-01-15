@@ -1,9 +1,11 @@
 import React from 'react';
 
 import './scss/index.scss';
-import { Nav } from '../';
+import { Nav } from 'components/';
 
-import ic_magnifier from '../../images/icons/ic-magnifier.svg';
+import ic_magnifier from 'images/icons/ic-magnifier.svg';
+
+import ic_under_arrow from 'images/icons/ic-under-arrow.svg';
 
 class Header extends React.Component {
   render(){
@@ -30,6 +32,9 @@ class Header extends React.Component {
               외주 견적 문의 <br />
               130  회
             </pre>
+            <section>
+              <i><img src={ic_under_arrow} alt='' /></i>
+            </section>
           </div>
         </div>
       </div>

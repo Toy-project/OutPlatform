@@ -1,4 +1,4 @@
-import * as types from '../../actions/category/actionTypes';
+import * as types from 'actions/category/actionTypes';
 
 const initial = {
   cate_name: [],

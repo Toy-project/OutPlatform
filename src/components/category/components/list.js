@@ -7,7 +7,7 @@ const List = ( {cate_name} ) => (
     <ul>
       {cate_name.map((item, key) => {
         return (
-          <li key={key}><a className="btn">{item}</a></li>
+          <li key={key}><button className="btn">{item}</button></li>
         );
       })}
     </ul>

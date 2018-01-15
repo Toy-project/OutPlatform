@@ -1,0 +1,58 @@
+.type-of-Club-Selection-inner {
+  @include popup-reset-options(500px, 300px);
+  left: 30.5%;
+  right: 30.5%;
+  top: 13.4%;
+  bottom: 19.6%;
+
+  @extend .center;
+  @extend .z-index-2;
+
+  ul {
+    width: 100%;
+    list-style: none;
+
+    @extend .center;
+    @extend .left;
+
+    li {
+      display: inline-block;
+
+      &:first-child {
+        margin-right: 30px;
+      }
+      &:last-child {
+        margin-left: 30px;
+      }
+    }
+
+    .circle {
+      font-size: 16px;
+      color: $white;
+      line-height: 120px;
+      width: 120px;
+      height: 120px;
+      background-color: #d8d8d8;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+
+      @extend .thick;
+      @extend .z-depth-1;
+    }
+  }
+
+  button {
+    margin: 31px 28px 19px 28px;
+  }
+
+  .emerald-btn {
+    @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-emerald-color);
+    @include btn-reset-font($btn-font-size, $btn-text-white-color, $btn-height-0);
+  }
+
+  .gray-btn  {
+    @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-gray-color);
+    @include btn-reset-font($btn-font-size, $btn-text-gray-color, $btn-height-0);
+  }
+}

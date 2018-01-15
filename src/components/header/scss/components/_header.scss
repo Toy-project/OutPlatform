@@ -29,12 +29,6 @@
       @extend .left-align;
     }
 
-    pre {
-      padding: $header-contents-pre-padding;
-      font-size: $header-quoting-pre-font-size;
-      color: $gray-1;
-    }
-
     .input-field {
       position: relative;
       margin: 0;
@@ -55,5 +49,17 @@
         top: 9px;
       }
     }
+
+    pre {
+      padding: $header-contents-pre-padding;
+      font-size: $header-quoting-pre-font-size;
+      color: $gray-1;
+    }
+
+    section {
+      padding: $header-botton-to-below-padding;
+      @extend .center;
+    }
+
   }
 }

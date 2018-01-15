@@ -7,6 +7,16 @@
   align-items: center;
 }
 
+.z-index-0 {
+  z-index: 0;
+}
+.z-index-1 {
+  z-index: 1;
+}
+.z-index-2 {
+  z-index: 2;
+}
+
 //Drop shadow
 .z-depth-0 {
   box-shadow: none !important;
@@ -38,7 +48,7 @@
 
 //Text Styles
 .thick { font-weight: 600; }
-.light-0 { font-weight: normal; }
 .light { font-weight: 300; }
 .thin { font-weight: 200; }
-.thin-0 { font-weight: 100; }
+//.thin-0 { font-weight: 100; }
+.normal { font-weight: normal; }

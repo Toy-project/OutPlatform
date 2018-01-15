@@ -1,4 +1,4 @@
-import * as types from '../../actions/card/actionTypes';
+import * as types from 'actions/card/actionTypes';
 
 const initial = [
 ]

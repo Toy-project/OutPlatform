@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../scss/index.scss';
 
-import good_icon from '../../../images/icons/ic-good.svg'
+import good_icon from 'images/icons/ic-good.svg'
 
 const Title = ( {title} ) => (
   <div>

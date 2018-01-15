@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiAddres } from '../../helper/variables';
+import { apiAddres } from 'helper/variables';
 
 const urlGetAllClubLists = `${apiAddres}/club/search`;
 

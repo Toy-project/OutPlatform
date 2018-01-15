@@ -1,0 +1,28 @@
+.register-selection-inner {
+  @include popup-reset-options(330px, 220px);
+  left: 37%;
+  right: 37%;
+  top: 13.4%;
+  bottom: 25.9%;
+
+  @extend .center;
+  @extend .z-index-2;
+
+  p {
+    span {
+      color: $emerald-1;
+    }
+  }
+
+
+  .emerald-btn  {
+    @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
+    @include btn-reset-font($btn-font-size, $btn-text-white-color, $btn-height-0);
+    margin:15px 0 6px 0;
+  }
+
+  .gray-btn  {
+    @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-gray-color);
+    @include btn-reset-font($btn-font-size, $btn-text-gray-color, $btn-height-0);
+  }
+}

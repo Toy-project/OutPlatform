@@ -5,7 +5,7 @@
     font-size: $title-size;
     color: $gray-1;
     margin-bottom:36px;
-    @extend .light-0;
+    @extend .normal;
   }
 
   .good_icon {
@@ -35,7 +35,6 @@
       @extend .light;
       @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
       @include btn-reset-font($btn-font-size, $btn-text-gray-color, $category-btn-height);
-      @include btn-reset-offset($btn-padding);
     }
   }
 }

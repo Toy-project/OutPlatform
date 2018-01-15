@@ -1,0 +1,8 @@
+@mixin popup-reset-options($width, $height) {
+  position:absolute;
+  width: $width;
+  height: $height;
+  margin: auto;
+  border-radius: 2px;
+  background: $white-0;
+}
