@@ -42,10 +42,6 @@
     }
   }
 
-  button {
-    margin: 31px 28px 19px 28px;
-  }
-
   .emerald-btn {
     @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-emerald-color);
     @include btn-reset-font($btn-font-size, $btn-text-white-color, $btn-height-0);
@@ -54,5 +50,9 @@
   .gray-btn  {
     @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-gray-color);
     @include btn-reset-font($btn-font-size, $btn-text-gray-color, $btn-height-0);
+  }
+
+  .emerald-btn, .gray-btn {
+    margin: 31px 28px 19px 28px;
   }
 }

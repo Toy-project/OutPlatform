@@ -7,7 +7,7 @@ nav {
   width:100%;
 
   background-color: $nav-bg-color;
-  height: $navbar-height-mobile;
+  height: $navbar-height-main;
 
   // Navbar Links
   ul {
@@ -22,7 +22,7 @@ nav {
 
     a {
       font-size: $navbar-font-size;
-      line-height: $navbar-line-height-mobile;
+      line-height: $navbar-height-main;
       color: $black-0;
       padding: 0 15px;
       cursor: pointer;
@@ -30,4 +30,17 @@ nav {
     }
 
   }
+}
+
+.isSub {
+  background-color: $nav-sub-bg-color;
+  height: $navbar-height-sub;
+
+  ul {
+    a {
+      line-height: $navbar-height-sub;
+    }
+  }
+
+  @extend .z-depth-1;
 }

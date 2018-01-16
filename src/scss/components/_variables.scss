@@ -29,14 +29,12 @@ $zero: "only screen and (min-width : #{$zero-screen})" !default;
 // 2. Typography
 // ==========================================================================
 
-$off-black: rgba(0, 0, 0, 0.87) !default
+$off-black: rgba(0, 0, 0, 0.87) !default;
 
-$h1-fontsize: 4.2rem !default;
-$h2-fontsize: 3.56rem !default;
-$h3-fontsize: 2.92rem !default;
-$h4-fontsize: 2.28rem !default;
-$h5-fontsize: 1.64rem !default;
-$h6-fontsize: 1rem !default;
+$btn-font-size-12: 12px;
+$btn-font-size-14: 14px;
+$btn-font-size-16: 16px;
+$btn-font-size-20: 20px;
 
 // 3. Grid
 // ==========================================================================
@@ -53,6 +51,7 @@ $gray-1: #7f7f7f !default;
 $gray-2: #979797 !default;
 $gray-3: #d8d8d8 !default;
 $gray-4: #f4f4f4 !default;
+$gray-5: #c1c1c1 !default;
 
 $black-0: #555555 !default;
 
@@ -64,17 +63,28 @@ $popup-bg: rgba(0,0,0, 0.5) !default;
 // 5. Button
 // ============================================================
 
-//Small and wide
+//Small and wide (카드 리스트 작은 버튼)
 $btn-height: 25px !default;
 $btn-width: 70px !default;
 
-//Small and regular
+//Small and regular (회원가입 팝업 작은 버튼)
 $btn-height-0: 36px !default;
 $btn-width-0: 75px !default;
 
-//big and wide
+//big and wide (회원가입 팝업 큰 버튼)
 $btn-height-1: 40px !default;
 $btn-width-1: 205px !default;
+
+//big and thick (클럽 회원가입 큰 버튼)
+$btn-height-2: 56px !default;
+$btn-width-2: 75px !default;
+
+//big and thick (클럽 회원가입 큰 긴 버튼)
+$btn-width-3: 105px !default;
+
+//big and thick (클럽 회원가입 보내기 버튼)
+$btn-height-4: 72px !default;
+$btn-width-4: 245px !default;
 
 $btn-border: 0px !default;
 $btn-radius: 2px !default;
@@ -86,6 +96,8 @@ $btn-background-emerald-color: $emerald-1 !default;
 
 $btn-text-gray-color: $gray-1 !default;
 $btn-background-gray-color: $gray-4 !default;
+
+$btn-background-gray-5-color: $gray-5 !default;
 
 // 6. url
 $get-path-from-components-to-images: '../../../images' !default;

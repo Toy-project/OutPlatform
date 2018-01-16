@@ -4,6 +4,8 @@ import Footer from './footer';
 import Header from './header';
 import MainViewList from './mainViewList';
 import Nav from './nav';
+import RegisterPopup from './registerPopup';
+import Register from './register';
 
 export {
   Card,
@@ -11,5 +13,7 @@ export {
   Footer,
   Header,
   MainViewList,
-  Nav
+  Nav,
+  RegisterPopup,
+  Register,
 };

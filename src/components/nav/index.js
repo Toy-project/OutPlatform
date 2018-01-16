@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './scss/index.scss';
 
-import RegisterSelection from 'components/register/';
+import { RegisterPopup } from 'components/';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -22,10 +23,11 @@ class Nav extends React.Component {
   }
 
   render() {
-    const registerPopup = this.state.showRegister ? <RegisterSelection close={this.registerToggle} /> : '';
+    const subPageStyle = this.props.subPage ? 'isSub' : '';
+    const registerPopup = this.state.showRegister ? <RegisterPopup close={this.registerToggle} /> : '';
     return (
       <div>
-        <nav>
+        <nav className={subPageStyle}>
           <div className="container">
             <ul className="hide-on-med-and-down">
               <li><a href="">장바구니</a></li>
@@ -35,11 +37,16 @@ class Nav extends React.Component {
             </ul>
           </div>
         </nav>
-        {console.log(this.state.showRegister)}
         {registerPopup}
       </div>
     );
   }
+}
+
+Nav.propTypes = {
+  showRegister: PropTypes.bool,
+  registerToggle: PropTypes.func,
+  subPage: PropTypes.bool,
 }
 
 export default Nav;

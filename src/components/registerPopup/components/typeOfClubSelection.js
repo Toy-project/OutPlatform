@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const TypeOfClubSelection = ( { toggleToBack }) => (
   <div className='type-of-Club-Selection-inner'>
@@ -13,7 +14,7 @@ const TypeOfClubSelection = ( { toggleToBack }) => (
       <li><span className="circle">소모임</span></li>
     </ul>
     <button onClick={toggleToBack} className="gray-btn left">이전</button>
-    <button className="emerald-btn right">확인</button>
+    <NavLink className="emerald-btn right" to="/register">확인</NavLink>
   </div>
 )
 

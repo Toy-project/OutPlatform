@@ -1,0 +1,13 @@
+//common
+@import "../../../scss/common.scss";
+
+// global
+@import "components/global";
+
+// variable
+@import "components/variables";
+
+//components
+@import "components/registerSelection";
+@import "components/typeOfClubSelection";
+@import "components/registerMember";

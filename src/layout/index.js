@@ -1,5 +1,7 @@
 import Main from './main';
+import RegisterForClub from './registerForClub';
 
 export {
-  Main
+  Main,
+  RegisterForClub,
 };

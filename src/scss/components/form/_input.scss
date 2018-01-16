@@ -1,0 +1,19 @@
+@mixin placeholder-item() {
+  font-size: $btn-font-size-12;
+  color: $gray-1;
+}
+
+@mixin placeholder-sync($tag) {
+  #{$tag}::-webkit-input-placeholder {
+    @include placeholder-item;
+  }
+  #{$tag}::placeholder {
+    @include placeholder-item;
+  }
+  #{$tag}:-ms-input-placeholder {
+    @include placeholder-item;
+  }
+  #{$tag}::-webkit-input-placeholder {
+    @include placeholder-item;
+  }
+}
