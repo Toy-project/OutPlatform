@@ -8,6 +8,12 @@
   @extend .center;
   @extend .z-index-2;
 
+  p {
+    &.notSelected {
+      color: red;
+    }
+  }
+
   ul {
     width: 100%;
     list-style: none;
@@ -39,6 +45,12 @@
 
       @extend .thick;
       @extend .z-depth-1;
+
+      &:hover,
+      &.selected {
+        background-color: $emerald-1;
+      }
+
     }
   }
 

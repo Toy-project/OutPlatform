@@ -6,12 +6,8 @@ const urlGetAllClubLists = `${apiAddres}/club/search`;
 export function getClubLists(start, count){
   return axios({
     method: 'get',
+    timeout: 20000,
     url: `${urlGetAllClubLists}/${start}/${count}`,
-  })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    responseType: 'json'
+  });
 }

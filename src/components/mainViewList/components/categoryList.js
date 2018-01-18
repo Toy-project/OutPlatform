@@ -2,27 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getAllCategory } from '../../../services/category/';
-import { addCategory } from '../../../actions/category/';
-import { Category } from '../../';
+import { Category } from 'components/';
 
 
 
 class CategoryList extends React.Component {
 
-  initData() {
-    const res = getAllCategory();
-
-    //Add Data
-    res.then((data) => {
-      data.map((item, key) => {
-        return this.props.addCategory(item);
-      });
-    });
-  }
-
   componentDidMount() {
-    this.initData();
   }
 
   render() {
@@ -49,9 +35,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCategory: (data) => {
-      dispatch(addCategory(data.cate_name));
-    }
   }
 }
 

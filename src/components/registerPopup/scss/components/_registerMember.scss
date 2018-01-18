@@ -21,12 +21,10 @@
     margin: 0 auto;
     width: 370.5px;
     height: 100%;
-  }
-  .red {
-    background-color: red;
-  }
-  .input-register {
-    position: relative;
+
+    input, select {
+      box-sizing: border-box;
+    }
 
     input[type=text],
     input[type=password],
@@ -37,47 +35,74 @@
       background-color: $white;
       border: solid 1px #dfdfdf;
       text-indent: 131px;
+
+      &:focus {
+        outline: none;
+      }
+      &.error {
+        border: solid 1px red;
+      }
     }
 
-    input[type=submit] {
-      margin-top:27px;
-      @include btn-reset-shape($btn-width-1, $btn-height-1, $btn-background-emerald-color);
-      @include btn-reset-font($btn-font-size, $btn-text-white-color, $btn-height-1);
-    }
-
-    label {
+    input[type=button] {
       position: absolute;
-      left: 10px;
-      top: 8px;
-      font-size: 16px;
-      color: $gray-1;
+      right:0;
+      top:0;
+      @include btn-reset-shape($btn-width-5, $btn-height-1, $btn-background-gray-5-color);
+      @include btn-reset-font($font-size-12, $btn-text-white-color, $btn-height-1);
+
+      &.member-phone-auth-btn {
+        width: $btn-width-2;
+      }
     }
 
-    a {
-      font-size: 9px;
-      color: inherit;
-      display: block;
-      @extend .right-align;
-    }
+    .input-register {
+      position: relative;
 
-    .member-id-info {
-      margin: 5px 0 22px 0;
-    }
+      input[type=submit] {
+        margin-top:27px;
+        @include btn-reset-shape($btn-width-1, $btn-height-1, $btn-background-emerald-color);
+        @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-1);
+      }
 
-    .member-pw {
-      margin: 0 0 10px 0;
-    }
+      label {
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        font-size: 16px;
+        color: $gray-1;
+      }
 
-    .member-pw-info {
-      margin: 5px 0 16px 0;
-    }
+      a {
+        font-size: 9px;
+        color: inherit;
+        display: block;
+        @extend .right-align;
 
-    .member-email-info {
-      margin: 5px 0 16px 0;
-    }
+        &.red {
+          color: red;
+        }
+      }
 
-    .member-phone {
-      margin: 0 0 10px 0;
+      &.member-id {
+        margin: 5px 0 22px 0;
+      }
+
+      &.member-pw {
+        margin: 0 0 10px 0;
+      }
+
+      &.member-pw_confirm {
+        margin: 5px 0 16px 0;
+      }
+
+      &.member-email {
+        margin: 5px 0 16px 0;
+      }
+
+      &.member-phone {
+        margin: 0 0 10px 0;
+      }
     }
   }
 }

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Nav, Register } from 'components/';
 
-const RegisterForClub = () => (
+const RegisterForClub = ({ match }) => (
   <div>
     <Nav subPage={true} />
-    <Register />
+    <Register type={match.params.type}/>
   </div>
 )
 

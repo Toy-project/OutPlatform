@@ -31,10 +31,10 @@ $zero: "only screen and (min-width : #{$zero-screen})" !default;
 
 $off-black: rgba(0, 0, 0, 0.87) !default;
 
-$btn-font-size-12: 12px;
-$btn-font-size-14: 14px;
-$btn-font-size-16: 16px;
-$btn-font-size-20: 20px;
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-20: 20px;
 
 // 3. Grid
 // ==========================================================================
@@ -67,13 +67,16 @@ $popup-bg: rgba(0,0,0, 0.5) !default;
 $btn-height: 25px !default;
 $btn-width: 70px !default;
 
-//Small and regular (회원가입 팝업 작은 버튼)
+//Small and regular (일반 회원가입 팝업 작은 버튼)
 $btn-height-0: 36px !default;
 $btn-width-0: 75px !default;
 
-//big and wide (회원가입 팝업 큰 버튼)
+//big and wide (일반 회원가입 팝업 큰 버튼)
 $btn-height-1: 40px !default;
 $btn-width-1: 205px !default;
+
+//big and thick (일반 회원가입 보내기 버튼)
+$btn-width-5: 90px !default;
 
 //big and thick (클럽 회원가입 큰 버튼)
 $btn-height-2: 56px !default;

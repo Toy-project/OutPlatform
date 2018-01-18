@@ -6,12 +6,8 @@ const urlGetAllCategory = `${apiAddres}/category`;
 export function getAllCategory(){
   return axios({
     method: 'get',
+    timeout: 20000,
     url: urlGetAllCategory,
-  })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    responseType: 'json'
+  });
 }

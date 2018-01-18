@@ -1,15 +1,35 @@
 import * as types from './actionTypes';
+import { getAllCategory } from 'services/category/';
 
-export function addCategory(cate_name) {
-  return {
-    type: types.ADD_CATEGORY,
-    cate_name,
-  }
-}
+function requestData() {
+	return {type: types.CATE_REQ_DATA}
+};
 
-export function setTitle(title){
-  return {
-    type: types.SET_TITLE,
-    title
+function receiveData(json) {
+	return{
+		type: types.CATE_RECV_DATA,
+		data: json,
+	}
+};
+
+function receiveError(json) {
+	return {
+		type: types.CATE_RECV_ERROR,
+		data: json,
+	}
+};
+
+export function fetchCategory() {
+  return function(dispatch) {
+    dispatch(requestData());
+    return getAllCategory()
+          .then((response) => {
+						response.data.map((item, key) => {
+							return dispatch(receiveData(item.cate_name));
+						})
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
   }
-}
+};

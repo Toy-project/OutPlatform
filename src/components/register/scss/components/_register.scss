@@ -50,12 +50,20 @@
         background-color: $white;
         border: solid 1px #dfdfdf;
         padding-left: 121px;
+
+        &:focus {
+          outline: none;
+        }
+
+        &.error {
+          border: solid 1px red;
+        }
       }
 
       input[type=submit] {
         margin:89px 0 75px 0;
         @include btn-reset-shape($btn-width-4, $btn-height-4, $btn-background-emerald-color);
-        @include btn-reset-font($btn-font-size-20, $btn-text-white-color, $btn-height-4);
+        @include btn-reset-font($font-size-20, $btn-text-white-color, $btn-height-4);
         @extend .thick;
       }
 
@@ -64,7 +72,7 @@
         top: 0;
         right: 0;
         @include btn-reset-shape($btn-width-2, $btn-height-2, $btn-background-gray-5-color);
-        @include btn-reset-font($btn-font-size-14, $btn-text-white-color, $btn-height-2);
+        @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-2);
 
         &.inspect-phone-btn {
           width: $btn-width-3;

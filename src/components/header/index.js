@@ -1,4 +1,5 @@
 import React from 'react';
+import Scroll from 'react-scroll-to-element';
 
 import './scss/index.scss';
 import { Nav } from 'components/';
@@ -8,9 +9,37 @@ import ic_magnifier from 'images/icons/ic-magnifier.svg';
 import ic_under_arrow from 'images/icons/ic-under-arrow.svg';
 
 class Header extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      containerHeight: 0,
+    }
+    this.onClickArrowToBottom = this.onClickArrowToBottom.bind(this);
+  }
+
+  componentDidMount() {
+    window.onload = () => {
+      this.onClickArrowToBottom();
+    }
+
+    window.addEventListener('resize', this.onClickArrowToBottom);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onClickArrowToBottom);
+  }
+
+  onClickArrowToBottom() {
+    const height = document.getElementById('container').offsetHeight;
+
+    this.setState({
+      containerHeight: height,
+    });
+  }
+
   render(){
     return (
-      <div className="top-container">
+      <div id="container" className="top-container">
         <Nav />
         <div className="container">
           <div className="header-contents-container">
@@ -33,7 +62,11 @@ class Header extends React.Component {
               130  회
             </pre>
             <section>
-              <i><img src={ic_under_arrow} alt='' /></i>
+              <i>
+                <Scroll offset={this.state.containerHeight}>
+                  <img src={ic_under_arrow} alt='Arrow To Bottom' className='arrow-to-bottom' />
+                </Scroll>
+              </i>
             </section>
           </div>
         </div>

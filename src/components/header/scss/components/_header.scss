@@ -59,6 +59,10 @@
     section {
       padding: $header-botton-to-below-padding;
       @extend .center;
+
+      .arrow-to-bottom {
+        cursor: pointer;
+      }
     }
 
   }

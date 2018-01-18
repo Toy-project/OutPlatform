@@ -3,15 +3,19 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import App from 'router/';
 import registerServiceWorker from './registerServiceWorker';
-import reducers from './reducers/';
+import configureStore from 'store/';
 
-const store = createStore(reducers);
+import { fetchCards } from 'actions/card';
+import { fetchCategory } from 'actions/category';
 
+const store = configureStore();
+
+store.dispatch(fetchCards(0, 6));
+store.dispatch(fetchCategory());
 
 ReactDOM.render(
     <Provider store={store}>
