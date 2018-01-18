@@ -11,7 +11,7 @@ const Card = ({ club_profile_photo, club_name, club_ex, club_rating }) => (
 
       />
     </div>
-    <div className="card-content-container left-align">
+    <div className="card-content-container">
       <Contents
         club_name={club_name}
         club_ex={club_ex}

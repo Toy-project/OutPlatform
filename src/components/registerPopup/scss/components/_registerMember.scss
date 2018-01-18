@@ -4,9 +4,10 @@
   right: 30.4%;
   top: 4.8%;
   bottom: 4.77%;
+  z-index: 2;
 
-  @extend .center;
-  @extend .z-index-2;
+  @include center;
+
 
   p {
     width: 335px;
@@ -35,6 +36,7 @@
       background-color: $white;
       border: solid 1px #dfdfdf;
       text-indent: 131px;
+      font-size: $font-size-12;
 
       &:focus {
         outline: none;
@@ -75,9 +77,8 @@
 
       a {
         font-size: 9px;
-        color: inherit;
         display: block;
-        @extend .right-align;
+        @include right-align;
 
         &.red {
           color: red;

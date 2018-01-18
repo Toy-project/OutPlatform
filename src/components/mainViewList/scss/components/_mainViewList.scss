@@ -8,8 +8,8 @@
     list-style: none;
     margin: 111.5px 0 0 0;
     padding: 0;
-    @extend .center;
-    @extend .left;
+    float: left;
+    @include center;
   }
 
   li {

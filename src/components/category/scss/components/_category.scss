@@ -1,11 +1,11 @@
 .category {
-  @extend .center-align;
+  @include center;
 
   .category_title {
     font-size: $title-size;
     color: $gray-1;
     margin-bottom:36px;
-    @extend .normal;
+    @include normal;
   }
 
   .good_icon {
@@ -22,8 +22,8 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      @extend .left;
-      @extend .center;
+      float: left;
+      @include center;
     }
 
     li {
@@ -32,9 +32,9 @@
     }
 
     .btn  {
-      @extend .light;
+      @include light;
       @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
-      @include btn-reset-font($btn-font-size, $btn-text-gray-color, $category-btn-height);
+      @include btn-reset-font($font-size-16, $btn-text-gray-color, $category-btn-height);
     }
   }
 }

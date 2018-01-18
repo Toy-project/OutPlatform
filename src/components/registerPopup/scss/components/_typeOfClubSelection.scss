@@ -4,9 +4,10 @@
   right: 30.5%;
   top: 13.4%;
   bottom: 19.6%;
+  z-index: 2;
 
-  @extend .center;
-  @extend .z-index-2;
+  @include center;
+
 
   p {
     &.notSelected {
@@ -17,9 +18,8 @@
   ul {
     width: 100%;
     list-style: none;
-
-    @extend .center;
-    @extend .left;
+    float: left;
+    @include center;
 
     li {
       display: inline-block;
@@ -43,8 +43,8 @@
       display: inline-block;
       cursor: pointer;
 
-      @extend .thick;
-      @extend .z-depth-1;
+      @include thick;
+      @include z-depth-1;
 
       &:hover,
       &.selected {
@@ -55,13 +55,15 @@
   }
 
   .emerald-btn {
+    float: right;
     @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-emerald-color);
-    @include btn-reset-font($btn-font-size, $btn-text-white-color, $btn-height-0);
+    @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
   }
 
   .gray-btn  {
+    float: left;
     @include btn-reset-shape($btn-width-0, $btn-height-0, $btn-background-gray-color);
-    @include btn-reset-font($btn-font-size, $btn-text-gray-color, $btn-height-0);
+    @include btn-reset-font($font-size-14, $btn-text-gray-color, $btn-height-0);
   }
 
   .emerald-btn, .gray-btn {

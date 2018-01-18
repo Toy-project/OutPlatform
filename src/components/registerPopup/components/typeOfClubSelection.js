@@ -50,7 +50,7 @@ class TypeOfClubSelection extends React.Component {
           <li><span className={this.state.finalType === 2 ? selectedClass : normalClass} onClick={this.onFinalType(3)}>소모임</span></li>
         </ul>
         <button onClick={this.props.toggleToBack} className="gray-btn left">이전</button>
-        <NavLink className="emerald-btn right" to={`/register/${this.state.finalType}`}>확인</NavLink>
+        <NavLink className="emerald-btn" to={`/register/${this.state.finalType}`}>확인</NavLink>
       </div>
     );
   }

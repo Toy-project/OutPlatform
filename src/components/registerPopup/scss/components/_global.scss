@@ -10,14 +10,13 @@
   background-color: $popup-bg;
 
   color: $gray-1;
-
-  @extend .z-index-2;
+  z-index: 2;
 
   h3 {
     font-size: 20px;
     color: inherit;
     margin: 19px 0 7px 0;
-    @extend .thick;
+    @include thick;
   }
 
   p {

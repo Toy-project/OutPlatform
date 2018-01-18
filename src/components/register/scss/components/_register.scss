@@ -8,14 +8,14 @@
 
   .container {
     padding: $register-container-padding;
-    @extend .center;
+    @include center;
     color: $gray-1;
 
     h1 {
       font-size: 28px;
       color: inherit;
       margin-bottom: 64px;
-      @extend .thick;
+      @include thick;
     }
 
     .input-register {
@@ -50,6 +50,7 @@
         background-color: $white;
         border: solid 1px #dfdfdf;
         padding-left: 121px;
+        font-size: $font-size-14;
 
         &:focus {
           outline: none;
@@ -64,7 +65,7 @@
         margin:89px 0 75px 0;
         @include btn-reset-shape($btn-width-4, $btn-height-4, $btn-background-emerald-color);
         @include btn-reset-font($font-size-20, $btn-text-white-color, $btn-height-4);
-        @extend .thick;
+        @include thick;
       }
 
       input[type=button] {
@@ -93,7 +94,7 @@
         display: block;
         margin-top: 15px;
         padding-left: 18px;
-        @extend .left-align;
+        @include left-align;
 
         label {
           vertical-align: top;

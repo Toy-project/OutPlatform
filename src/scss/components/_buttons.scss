@@ -4,7 +4,7 @@
   background-color: $background-color;
   border: $btn-border;
   border-radius: $btn-radius;
-  @extend .z-depth-1;
+  @include z-depth-1;
 }
 
 @mixin btn-reset-font($font-size, $color, $line-height) {

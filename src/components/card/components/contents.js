@@ -1,8 +1,6 @@
 import React from 'react';
 import '../scss/index.scss';
 
-import star from 'images/icons/star-gray.svg';
-
 const Contents = ({ club_name, club_ex, club_rating }) => (
   <div>
     <span className="card-title">
@@ -13,11 +11,6 @@ const Contents = ({ club_name, club_ex, club_rating }) => (
     </p>
     <span className="card-rating">
       <span className="card-star">
-        <img src={star} alt="" />
-        <img src={star} alt="" />
-        <img src={star} alt="" />
-        <img src={star} alt="" />
-        <img src={star} alt="" />
       </span>
       <span className="card-button">
         <button className="btn">담기</button>

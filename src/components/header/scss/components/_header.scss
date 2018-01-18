@@ -15,7 +15,7 @@
       font-size: $header-contents-h1-font-size;
       color: $gray-0;
 
-      @extend .light;
+      @include light;
     }
 
     p {
@@ -26,7 +26,7 @@
       font-size: $header-contents-p-font-size;
       color: $gray-0;
 
-      @extend .left-align;
+      @include left-align;
     }
 
     .input-field {
@@ -58,7 +58,7 @@
 
     section {
       padding: $header-botton-to-below-padding;
-      @extend .center;
+      @include center;
 
       .arrow-to-bottom {
         cursor: pointer;

@@ -13,20 +13,20 @@ nav {
   ul {
     margin-right: 290px;
     list-style: none;
-    @extend .right;
+    float: right;
 
     li {
       margin-left: 95px;
-      @extend .left;
+      float: left;
     }
 
     a {
-      font-size: $navbar-font-size;
+      font-size: $font-size-14;
       line-height: $navbar-height-main;
       color: $black-0;
       padding: 0 15px;
       cursor: pointer;
-      @extend .normal;
+      @include normal;
     }
 
   }
@@ -42,5 +42,5 @@ nav {
     }
   }
 
-  @extend .z-depth-1;
+  @include z-depth-1;
 }
