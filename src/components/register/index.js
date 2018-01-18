@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './scss/index.scss';
 
 import { isPhoneGood, isNameGood, isProfileGood } from 'helper/regExp';
+import { getValueId } from 'helper/registerHelper';
 
 class Register extends React.Component {
   constructor(props) {
@@ -25,11 +26,15 @@ class Register extends React.Component {
       "club_history" : '',
       "club_price_duration" : '',
       "union_enabled" : '',
+      "club_name_btn_toggle" : false,
+      "club_phone_btn_toggle" : false,
+      "club_phone_auth_toggle" : false,
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showFormError = this.showFormError.bind(this);
+    this.showButtonError = this.showButtonError.bind(this);
   }
 
   handleChange(e) {
@@ -41,7 +46,7 @@ class Register extends React.Component {
   }
 
   showFormError() {
-    const inputs = document.querySelectorAll('.register-container > input:not([type="button"]):not([type="submit"])');
+    const inputs = document.querySelectorAll('.register-container input:not([type="button"]):not([type="submit"])');
     const selects = document.querySelectorAll('select');
     let isFormValid = true;
 
@@ -60,6 +65,11 @@ class Register extends React.Component {
         isFormValid = false;
       }
     });
+
+    if(!this.state.club_name_btn_toggle) isFormValid = false;
+    if(!this.state.club_phone_btn_toggle) isFormValid = false;
+    if(!this.state.club_phone_auth_toggle) isFormValid = false;
+
 
     return isFormValid;
   }
@@ -110,6 +120,73 @@ class Register extends React.Component {
     return true;
   }
 
+  showButtonError(e) {
+    const str = getValueId(e.target.id);
+    const element = document.getElementById(str);
+    //const error = document.getElementById(`${str}_error`);
+    const isName = str === 'club_name' ? true : false;
+    const isPhone = str === 'club_phone' ? true : false;
+    const isPhoneAuth = str === 'club_phone_auth' ? true : false;
+    const value = element.value;
+
+    // 아이디 중복 확인
+    if(isName) {
+      if(value === '' || !isNameGood(value)){
+        this.showInputError(str);
+      } else {
+        console.log('단체 이름 중복 확인이 필요');
+        if(true){
+          this.setState({
+            ...this.state,
+            club_name_btn_toggle: true,
+          });
+        } else {
+          // if(!this.state.club_name_btn_toggle){
+          //   error.innerHTML = '이미 등록된 단체 이름입니다. 다른 이름을 선택하세요.';
+          //   error.className = 'warning-color';
+          //   element.className = 'error';
+          // }
+        }
+      }
+    }
+
+    //핸드폰 Auth Request
+    if(isPhone) {
+      //핸드폰 Auth 요청
+      if(value === '' || !isPhoneGood(value)){
+        this.showInputError(str);
+      } else {
+        console.log('연락처 인증 요청이 필요');
+        if(true){
+          this.setState({
+            ...this.state,
+            club_phone_btn_toggle: true,
+          });
+        } else {
+          //인증 요청 실패
+        }
+      }
+    }
+
+    if(isPhoneAuth) {
+      //핸드폰 Auth 요청
+      if(value === ''){
+        this.showInputError(str);
+      } else {
+        console.log('연락처 인증 필요');
+
+        if(true){
+          this.setState({
+            ...this.state,
+            club_phone_auth_toggle: true,
+          });
+        } else {
+          //인증 실패
+        }
+      }
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -133,6 +210,7 @@ class Register extends React.Component {
       };
 
       //Post만 날리면 됨.
+      console.log('포스트만 날려');
     }
   }
 
@@ -146,7 +224,7 @@ class Register extends React.Component {
             <div className='input-register name'>
               <label htmlFor='club_name' className='input-title'>동아리 이름</label>
               <input type="text" id='club_name' placeholder='동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!' onChange={this.handleChange}/>
-              <input type="button" value="중복 검사" />
+              <input type="button" id='club_name_btn' onClick={this.showButtonError} value="중복 검사" />
             </div>
             <div className='input-register type'>
               <label htmlFor='cate_id' className='input-title'>동아리 종류</label>
@@ -177,12 +255,12 @@ class Register extends React.Component {
             <div className='input-register phone'>
               <label htmlFor='club_phone' className='input-title'>대표 전화번호</label>
               <input type="text" id='club_phone' onChange={this.handleChange}/>
-              <input type="button" value="인증번호 발송" className='inspect-phone-btn' />
+              <input type="button" id='club_phone_btn' value="인증번호 발송" className='inspect-phone-btn' onClick={this.showButtonError} />
             </div>
             <div className='input-register phone-auth'>
               <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
               <input type="text" id='club_phone_auth' onChange={this.handleChange}/>
-              <input type="button" value="확인" />
+              <input type="button" value="확인" id='club_phone_auth_btn' onClick={this.showButtonError} />
             </div>
             <div className='input-register'>
               <label htmlFor='club_ex' className='input-title'>동아리 설명</label>
