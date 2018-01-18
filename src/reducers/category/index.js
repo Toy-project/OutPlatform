@@ -2,7 +2,7 @@ import * as types from 'actions/category/actionTypes';
 
 const initial = {
   isLoading: false,
-  cate_name: [],
+  data: [],
   title: '추천 단체를 확인하세요',
   error: false,
 }
@@ -20,7 +20,7 @@ export default function Category(state = initial, action){
         ...state,
         isLoading: false,
         error: false,
-        cate_name: [...state.cate_name, action.data],
+        data: [...state.data, action.data],
       };
     case types.CATE_RECV_ERROR:
       return {

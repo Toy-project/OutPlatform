@@ -21,10 +21,10 @@ class CategoryList extends React.Component {
 }
 
 CategoryList.propTypes = {
-  category: PropTypes.shape({
-    cate_name: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string,
-  })
+  // category: PropTypes.shape({
+  //   cate_name: PropTypes.arrayOf(PropTypes.string),
+  //   title: PropTypes.string,
+  // })
 };
 
 const mapStateToProps = (state) => {

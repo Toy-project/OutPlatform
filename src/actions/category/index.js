@@ -25,7 +25,7 @@ export function fetchCategory() {
     return getAllCategory()
           .then((response) => {
 						response.data.map((item, key) => {
-							return dispatch(receiveData(item.cate_name));
+							return dispatch(receiveData(item));
 						})
           })
           .catch((err) => {

@@ -131,6 +131,8 @@ class Register extends React.Component {
         "club_price_duration" : 'test',
         "union_enabled" : this.state.union_enabled ? 1 : 0,
       };
+
+      //Post만 날리면 됨.
     }
   }
 
@@ -150,10 +152,9 @@ class Register extends React.Component {
               <label htmlFor='cate_id' className='input-title'>동아리 종류</label>
               <select id='cate_id' onChange={this.handleChange}>
                 <option value=''></option>
-              {console.log(this.props.category)}
                 {
-                  this.props.category.cate_name.map((item, key) => {
-                    return(<option key={key} value={item}>{item}</option>);
+                  this.props.category.data.map((item, key) => {
+                    return(<option key={key} value={item.cate_id}>{item.cate_name}</option>);
                   })
                 }
               </select>

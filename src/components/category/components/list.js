@@ -2,12 +2,12 @@ import React from 'react';
 
 import '../scss/index.scss';
 
-const List = ( {cate_name} ) => (
+const List = ( {data} ) => (
   <div>
     <ul>
-      {cate_name.map((item, key) => {
+      {data.map((item, key) => {
         return (
-          <li key={key}><button className="btn">{item}</button></li>
+          <li key={key}><button className="btn">{item.cate_name}</button></li>
         );
       })}
     </ul>
