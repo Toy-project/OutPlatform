@@ -6,6 +6,7 @@ import MainViewList from './mainViewList';
 import Nav from './nav';
 import RegisterPopup from './registerPopup';
 import Register from './register';
+import Login from './login';
 
 export {
   Card,
@@ -16,4 +17,5 @@ export {
   Nav,
   RegisterPopup,
   Register,
+  Login
 };

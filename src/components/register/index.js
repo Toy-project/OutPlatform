@@ -210,7 +210,7 @@ class Register extends React.Component {
       };
 
       //Post만 날리면 됨.
-      console.log('포스트만 날려');
+      console.log(data);
     }
   }
 
