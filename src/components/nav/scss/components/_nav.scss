@@ -1,34 +1,56 @@
 nav {
-  @media #{$medium-and-down} {
-    position: static;
-  }
-
   position: absolute;
   width:100%;
 
   background-color: $nav-bg-color;
-  height: $navbar-height-main;
+  min-height: $navbar-height-main;
+  z-index: 1;
 
-  // Navbar Links
-  ul {
+  .main-menu {
     margin-right: 290px;
     list-style: none;
     float: right;
 
     li {
-      margin-left: 95px;
+      margin-left: 130px;
       float: left;
-    }
 
-    a {
-      font-size: $font-size-14;
-      line-height: $navbar-height-main;
-      color: $black-0;
-      padding: 0 15px;
-      cursor: pointer;
-      @include normal;
-    }
+      a {
+        font-size: $font-size-14;
+        line-height: $navbar-height-main;
+        color: $black-0;
+        cursor: pointer;
+        @include normal;
+      }
 
+      &:hover .sub-menu {
+        display: block;
+      }
+
+      .sub-menu {
+        display: none;
+        position:absolute;
+        width: 100%;
+        background-color: #f4f4f4;
+        min-height: $navbar-height-sub;
+        top: $navbar-height-main;
+        right: 0;
+        list-style: none;
+
+        @include z-depth-1;
+
+        ul {
+          margin-right: 185px;
+          list-style: none;
+          float: right;
+
+          li {
+            margin: 0 20px;
+            line-height: $navbar-height-sub;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -36,9 +58,13 @@ nav {
   background-color: $nav-sub-bg-color;
   height: $navbar-height-sub;
 
-  ul {
+  .main-menu {
     a {
       line-height: $navbar-height-sub;
+    }
+
+    .sub-menu {
+      top: $navbar-height-sub;
     }
   }
 

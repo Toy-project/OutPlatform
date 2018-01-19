@@ -13,6 +13,7 @@ class Nav extends React.Component {
     this.state = {
       showRegister : false,
       showLogin : false,
+      showSubmenu: false,
     }
 
     this.registerToggle = this.registerToggle.bind(this);
@@ -31,6 +32,28 @@ class Nav extends React.Component {
     });
   }
 
+  submenuToggleOut(e) {
+    const id = e.taget.id;
+    const element = document.getElementById(id);
+    const elementBackground = document.getElementById(`${id}_bg`);
+
+    if(typeof element === String){
+      element.className.add('sub-menu-hide');
+      elementBackground.className.add('sub-menu-hide');
+    }
+  }
+
+  submenuToggleIn(e) {
+    const id = e.taget.id;
+    const element = document.getElementById(`${id}_sub_menu`);
+    const elementBackground = document.getElementById(`${id}_sub_menu_bg`);
+
+    if(typeof element === String){
+      element.className.add('sub-menu-show');
+      elementBackground.className.add('sub-menu-show');
+    }
+  }
+
   render() {
     const subPageStyle = this.props.subPage ? 'isSub' : '';
     const registerPopup = this.state.showRegister ? <RegisterPopup close={this.registerToggle} /> : '';
@@ -39,11 +62,22 @@ class Nav extends React.Component {
       <div>
         <nav className={subPageStyle}>
           <div className="container">
-            <ul className="hide-on-med-and-down">
+            <ul className="main-menu hide-on-med-and-down">
               <li><a href="">장바구니</a></li>
               <li><a onClick={this.registerToggle}>회원가입</a></li>
               <li><a onClick={this.loginToggle}>로그인</a></li>
-              <li><a href="">마이 페이지</a></li>
+              <li>
+                <a href="" className='my-page'>마이 페이지</a>
+                <div className='sub-menu'>
+                  <div className='container'>
+                    <ul>
+                      <li><a>단체관리</a></li>
+                      <li><a>외주관리</a></li>
+                      <li><a>회원관리</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </nav>

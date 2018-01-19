@@ -241,7 +241,7 @@ class RegisterMember extends React.Component {
     return (
       <div className='register-member-inner'>
         <h3>간편 회원가입</h3>
-        <p class='p'>
+        <p className='p'>
           회원가입시 외주대학교의 <span>이용약관</span> 및 <span>개인정보취급방침</span>을
           읽고 이해하였으며, 이에 동의하는 것으로 간주됩니다.
         </p>
