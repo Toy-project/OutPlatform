@@ -24,9 +24,7 @@ export function fetchCards(paginationStart, paginationCount) {
     dispatch(requestData());
     return getClubLists(paginationStart, paginationCount)
           .then((response) => {
-						response.data.map((item, key) => {
-							return dispatch(receiveData(item));
-						})
+							return dispatch(receiveData(response.data));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));

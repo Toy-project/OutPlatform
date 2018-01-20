@@ -7,6 +7,7 @@ import Nav from './nav';
 import RegisterPopup from './registerPopup';
 import Register from './register';
 import Login from './login';
+import Club from './club';
 
 export {
   Card,
@@ -17,5 +18,6 @@ export {
   Nav,
   RegisterPopup,
   Register,
-  Login
+  Login,
+  Club
 };

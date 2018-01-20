@@ -7,6 +7,7 @@
 
   .card-image {
     height: $image-height;
+    cursor: pointer;
     overflow: hidden;
   }
 
@@ -67,14 +68,15 @@
       z-index: 0;
 
       .card-star {
-        position:absolute;
-        left:0;
-        top: 5px;
-        z-index: 1;
+        i {
+          font-size: 15px;
+          margin-right: 6px;
+          color: $gray-3;
+        }
       }
 
       .card-button {
-        padding-left: 216px;
+        margin-left: 116px;
 
         .btn  {
           @include btn-reset-shape($btn-width, $btn-height, $btn-background-emerald-color);

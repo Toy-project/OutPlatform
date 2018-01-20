@@ -15,16 +15,23 @@ export default function Card(state = initial, action) {
         error: false,
       };
     case types.CARD_RECV_DATA :
+      let datas = [...state.data];
+
+      action.data.forEach((data) => {
+        datas =  [...datas, {
+          club_id: data.club_id,
+          club_profile_photo: data.club_profile_photo,
+          club_name: data.club_name,
+          club_ex: data.club_ex,
+          club_rating: data.club_rating,
+        }];
+      });
+
       return {
           ...state,
           isLoading: false,
           error: false,
-          data: [...state.data, {
-            club_profile_photo: action.data.club_profile_photo,
-            club_name: action.data.club_name,
-            club_ex: action.data.club_ex,
-            club_rating: action.data.club_rating,
-          }],
+          data: datas,
       };
     case types.CARD_RECV_ERROR:
       return {

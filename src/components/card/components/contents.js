@@ -11,6 +11,11 @@ const Contents = ({ club_name, club_ex, club_rating }) => (
     </p>
     <span className="card-rating">
       <span className="card-star">
+        <i className='fa fa-star'></i>
+        <i className='fa fa-star'></i>
+        <i className='fa fa-star'></i>
+        <i className='fa fa-star'></i>
+        <i className='fa fa-star'></i>
       </span>
       <span className="card-button">
         <button className="btn">담기</button>

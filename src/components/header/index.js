@@ -14,22 +14,20 @@ class Header extends React.Component {
     this.state = {
       containerHeight: 0,
     }
-    this.onClickArrowToBottom = this.onClickArrowToBottom.bind(this);
+    this.onArrowToBottom = this.onArrowToBottom.bind(this);
   }
 
   componentDidMount() {
-    window.onload = () => {
-      this.onClickArrowToBottom();
-    }
+    this.onArrowToBottom();
 
-    window.addEventListener('resize', this.onClickArrowToBottom);
+    window.addEventListener('resize', this.onArrowToBottom);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onClickArrowToBottom);
+    window.removeEventListener('resize', this.onArrowToBottom);
   }
 
-  onClickArrowToBottom() {
+  onArrowToBottom() {
     const height = document.getElementById('container').offsetHeight;
 
     this.setState({
