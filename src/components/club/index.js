@@ -1,9 +1,10 @@
 import React from 'react';
 
-import './scss/index.scss';
+import ImageNavigation from './components/imageNavigation';
 
 const Club = () => (
   <div className='club-container'>
+    <ImageNavigation />
   </div>
 )
 

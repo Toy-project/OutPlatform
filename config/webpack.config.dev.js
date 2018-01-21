@@ -140,6 +140,14 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
+          {
+            test: [/\.ttf$/, /\.woff?2$/],
+            loader: require.resolve('url-loader'),
+            include: paths.appSrc,
+            options: {
+              limit: 10000,
+            },
+          },
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,

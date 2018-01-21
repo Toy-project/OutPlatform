@@ -33,10 +33,14 @@ class RegisterMember extends React.Component {
         [e.target.id]: e.target.value,
       });
 
+      console.log(e.target.id);
       this.showInputError(e.target.id);
   }
 
   showFormError() {
+    if(!document.querySelectorAll){
+      alert('Error');
+    }
     const inputs = document.querySelectorAll('.register-member-inner input:not([type="button"]):not([type="submit"])');
     let isFormValid = true;
 
@@ -83,7 +87,7 @@ class RegisterMember extends React.Component {
       if(!isPasswordGood(document.getElementById('mem_pw').value)){
         error.innerHTML = '올바르지 않은 패스워드입니다. 영문,숫자,특수문자 포함 12자이내'
         error.className = 'warning-color';
-      } else if(element.value !== document.getElementById('member_pw').value){
+      } else if(element.value !== document.getElementById('mem_pw').value){
         element.className = 'error';
         error.innerHTML = '비밀번호가 다릅니다.';
         error.className = 'warning-color';

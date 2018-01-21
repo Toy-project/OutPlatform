@@ -25,10 +25,10 @@
     font-size: $font-size-20;
     color: inherit;
     margin: 19px 0 7px 0;
-    @include thick;
   }
 
   p {
+    font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', sans-serif; /* 1 */
     width: 184px;
     height: 40px;
     font-size: $font-size-14;

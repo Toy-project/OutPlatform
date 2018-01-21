@@ -6,6 +6,7 @@
   .container {
     background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
     background-repeat: no-repeat;
+    height: 100%;
   }
 
   .header-contents-container {
@@ -22,7 +23,7 @@
       max-width: $header-contents-p-width;
       width:100%;
       height: $header-contents-p-height;
-      margin-bottom: 1.9%;
+      margin-bottom: 3.3vh;
       font-size: $header-contents-p-font-size;
       color: $gray-0;
 
@@ -51,13 +52,13 @@
     }
 
     pre {
-      padding: $header-contents-pre-padding;
+      margin: $header-contents-pre-margin;
       font-size: $header-quoting-pre-font-size;
       color: $gray-1;
     }
 
     section {
-      padding: $header-botton-to-below-padding;
+      margin: $header-botton-to-below-margin;
       @include center;
 
       .arrow-to-bottom {

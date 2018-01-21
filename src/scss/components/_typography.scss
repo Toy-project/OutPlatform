@@ -1,7 +1,6 @@
 * {
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', sans-serif; /* 1 */
 
-  
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -12,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-html{
+html {
   line-height: 1.5;
 
   @media #{$zero} {

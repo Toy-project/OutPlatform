@@ -9,16 +9,6 @@
 .section {
   padding-top: 1rem;
   padding-bottom: 1rem;
-
-  &.no-pad {
-    padding: 0;
-  }
-  &.no-pad-bot {
-    padding-bottom: 0;
-  }
-  &.no-pad-top {
-    padding-top: 0;
-  }
 }
 
 @mixin reset-offset {

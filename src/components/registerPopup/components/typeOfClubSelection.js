@@ -49,6 +49,7 @@ class TypeOfClubSelection extends React.Component {
     if(type !== -1) {
       type = type.substring('option'.length);
       this.props.history.push(`/register/${type}`);
+      window.location.reload();
     } else {
       element.innerHTML = '단체를 선택해주세요.';
       element.className = 'error';
