@@ -4,7 +4,7 @@ import ic_profile from 'images/icons/ic-profile.svg';
 
 const CommentCard = () => (
   <div className='comment'>
-    <span>
+    <span className='comment-image'>
       <img src={ic_profile} alt ='' className='default'/>
       <h5>USER NAME</h5>
     </span>

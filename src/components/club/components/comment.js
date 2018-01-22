@@ -12,7 +12,7 @@ const Comment = () => (
       <div className='comment-wrapper'>
         <div className='comment-top'>
           <h4>평균 별점</h4>
-          <span>
+        <span className='star-rating'>
             <i className='fa fa-star'></i>
             <i className='fa fa-star'></i>
             <i className='fa fa-star'></i>
@@ -23,7 +23,7 @@ const Comment = () => (
           <h5>000회</h5>
         </div>
         <div className='comment-create'>
-          <span>
+          <span className='star-rating'>
             <i className='fa fa-star'></i>
             <i className='fa fa-star'></i>
             <i className='fa fa-star'></i>
