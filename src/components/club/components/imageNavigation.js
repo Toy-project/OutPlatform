@@ -1,17 +1,34 @@
 import React from 'react';
 
-import '../scss/index.scss';
+import default_image_navigation from 'images/club/default-image-navigation.png';
 
-const ImageNavigation = () => (
-    <div className='imageNavigation-container'>
-      <div className='container'>
-        <div className='imageNavigation-inner'>
-          <img alt="" />
-          {/* <img src={img} /> */}
+class ImageNavigation extends React.Component {
+
+  render() {
+    return (
+      <div className='imageNavigation-container'>
+        <div className='container'>
+          <div className='imageNavigation-inner'>
+            <div className='imageNavigation'>
+              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+
+              <button className='add-image'>등록</button>
+              {/* <span className='badge'>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+              </span> */}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-)
+    );
+  }
+}
 
 ImageNavigation.propTypes = {
 };

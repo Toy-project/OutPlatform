@@ -1,0 +1,44 @@
+.portfolio-container {
+  height: 700px;
+  color: $gray-7;
+
+  .container {
+    .title-wrapper {
+      margin-bottom: 6.2%;
+    }
+
+    .portfolio-card-wrapper {
+      position: relative;
+      padding-bottom: 5px;
+      overflow: hidden;
+
+
+      .portfolio-slide-wrapper {
+        width: 1704px;
+        margin-left: -200px;
+
+        span {
+          display:inline-block;
+          margin: 0 5px;
+        }
+      }
+
+      .left-arrow,
+      .right-arrow {
+        cursor: pointer;
+      }
+
+      .left-arrow {
+        position: absolute;
+        left: 140px;
+        top: 145px;
+
+      }
+      .right-arrow {
+        position: absolute;
+        right: 140px;
+        top: 145px;
+      }
+    }
+  }
+}

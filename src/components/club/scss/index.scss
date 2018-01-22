@@ -2,5 +2,11 @@
 @import "../../../scss/common.scss";
 
 //components
+@import "components/global";
 @import "components/imageNavigation";
-@import "components/club";
+@import "components/snippet";
+@import "components/profile";
+@import "components/portfolioNavigation";
+@import "components/portfolio";
+@import "components/comment";
+@import "components/quotation";

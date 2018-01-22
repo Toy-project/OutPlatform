@@ -18,7 +18,7 @@
   .emerald-btn  {
     @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
     @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
-    margin:15px 0 6px 0;
+    margin: 15px 0 6px 0;
   }
 
   .gray-btn  {

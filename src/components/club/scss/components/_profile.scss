@@ -1,0 +1,38 @@
+.profile-container {
+  height: 510px;
+
+  .profile-inner {
+    width: 100%;
+    color : $gray-7;
+    padding: 4.3% 0 7.8% 0;
+
+    .title-wrapper {
+      margin-top: 0;
+      float: left;
+    }
+
+    .profile-content {
+      max-width: 19.1%;
+      margin-left: 22%;
+      padding: 15px 0 0 0;
+      float: left;
+
+      .contents,
+      .contents-area {
+        margin-bottom: 52px;
+
+        h5 {
+          font-size: $font-size-16;
+        }
+
+        p {
+          padding-top: 7px;
+          font-size: $font-size-12;
+        }
+      }
+
+      .contents-area {
+      }
+    }
+  }
+}

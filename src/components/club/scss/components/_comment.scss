@@ -1,0 +1,219 @@
+.comment-container {
+  width: 100%;
+  height: 1000px;
+  background-color: $white-0;
+  color: $gray-7;
+
+  .title-wrapper {
+    margin-right: 10.5%;
+    float: left;
+  }
+
+  .comment-wrapper {
+    margin-top: 10.5%;
+    width: 52.3%;
+    height: 120px;
+    float: right;
+
+    .comment-top {
+      h4 {
+        display: inline-block;
+        font-size: $font-size-16;
+        color: $gray-7;
+        margin-right: 4%;
+      }
+
+      span {
+        margin-right: 15.6%;
+
+        i {
+          font-size:20px;
+          color: $gray-3;
+          margin: 0 0.5%;
+        }
+      }
+
+      h5 {
+        display: inline-block;
+        font-size: $font-size-16;
+        color: #b3b3b3;
+      }
+    }
+
+    .comment-create {
+      position:relative;
+      width: 100%;
+      height: 120px;
+      background-color: $white;
+      border: solid 1px #dfdfdf;
+      margin-top: 17px;
+
+      span {
+        position:absolute;
+        left:0;
+        top:0;
+        width: 23.9%;
+
+        @include center;
+
+        i {
+          font-size:20px;
+          color: $gray-3;
+          margin: 0 2%;
+          line-height: 120px;
+        }
+      }
+
+      textarea {
+        position: absolute;
+        left:23.9%;
+        top:0;
+        border: none;
+        width: 65.1%;
+        height: 120px;
+        font-size: $font-size-12;
+        padding: 5px;
+        resize: none;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      button  {
+        position: absolute;
+        right:0;
+        top:0;
+        @include btn-reset-shape(11%, 120px, $btn-background-emerald-color);
+        @include btn-reset-font($font-size-14, $btn-text-white-color, 120px);
+      }
+    }
+
+    .comment-list {
+      margin-top: 10px;
+      ul {
+        list-style: none;
+        li {
+          margin-bottom: 10px;
+
+          .comment {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background-color: $white;
+
+            span {
+              position:absolute;
+              left:0;
+              top:51px;
+              width: 23.9%;
+
+              @include center;
+
+              h5 {
+                font-size: $font-size-12;
+                margin-top: 10px;
+              }
+
+              .default {
+                padding: 15px;
+                border-radius: 100px;
+                background-color: #b3b3b3;
+
+                @include z-depth-1;
+              }
+            }
+
+            .border {
+              position: absolute;
+              left: 23.9%;
+              top: 10px;
+              background-color: $gray-3;
+              width: 2px;
+              height: 162px;
+            }
+
+            .border2 {
+              position: absolute;
+              left: 26%;
+              top: 43px;
+              background-color: $gray-3;
+              width: 487.5px;
+              height: 1px;
+            }
+
+            .comment-top {
+              position: absolute;
+              left: 24%;
+              top: 0;
+              width: 76%;
+              height: 41.3px;
+              color: #797979;
+              font-size: $font-size-12;
+              padding: 13px 0 10px 13px;
+              box-sizing: border-box;
+
+              @include left-align;
+
+              span {
+                position: sticky;
+                margin-left: 100px;
+                i {
+                  font-size: 15px;
+                }
+              }
+            }
+
+            .comment-contents {
+              position: absolute;
+              left: 24%;
+              top: 42.3px;
+              width: 70.9%;
+              height: 119px;
+              padding: 15px 0 15px 14px;
+              box-sizing: border-box;
+              font-size: $font-size-12;
+              overflow: hidden;
+              @include left-align;
+            }
+          }
+        }
+      }
+      .pagination {
+        width: 100%;
+        @include center;
+
+        .previous,
+        .next {
+          padding: 0 5px;
+          font-size: $font-size-12;
+          line-height: 25px;
+          cursor: pointer;
+
+          @include normal;
+        }
+
+        .previous {
+          float: left;
+        }
+        .next {
+          float: right;
+        }
+        .page-btn {
+          clear: both;
+          display: inline-block;
+          width: 25px;
+          height: 25px;
+          line-height: 25px;
+          font-size: $font-size-14;
+          box-sizing: border-box;
+          background-color: $white;
+          border: solid 1px #dfdfdf;
+          margin: 0 12.5px;
+          cursor: pointer;
+
+          @include thick;
+          @include center;
+        }
+      }
+    }
+  }
+}

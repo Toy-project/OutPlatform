@@ -1,25 +1,104 @@
 .imageNavigation-container {
-  background-color: $white-0;
-  width: 100%;
   height: 660px;
 
   .container {
     height: 100%;
 
     .imageNavigation-inner {
-      display: block;
+      position: relative;
       margin-left: auto;
       margin-right: auto;
-      width: 68.75%;
+      width: 880px;
       height: 100%;
-      background-color: #e6e6e6;
+      overflow: hidden;
 
-      img {
-        width: 100%;
+      .imageNavigation {
+        width: 3520px;
         height: 100%;
-        background: url("#{$get-path-from-components-to-images}/icons/ic-image-black-24-px.svg") no-repeat 50% 50%;
-        background-size: 80px;
-        border: 0;
+        float: left;
+        background-color: #e6e6e6;
+
+        animation: slide 10s ease infinite;
+      	-moz-animation: slide 10s ease infinite;
+      	-webkit-animation: slide 10s ease infinite;
+      	-o-animation: slide 10s ease infinite;
+
+        .default-image {
+          width: 880px;
+          height: 100%;
+          background: url("#{$get-path-from-components-to-images}/icons/ic-image-black-24-px.svg") no-repeat 50% 50%;
+          background-size: 80px;
+          border: 0;
+          outline: 0;
+        }
+
+        .add-image {
+          position: absolute;
+          left: 30px;
+          top: 25px;
+          border-radius: 100px;
+          border: 0;
+          width: 104px;
+          height: 104px;
+          background-color: $white;
+          font-size: $font-size-20;
+          color: $emerald-1;
+
+          @include z-depth-1;
+          @include thick;
+        }
+
+        @keyframes slide-1 {
+          0%{margin-left: 0px;}
+          10%{margin-left: 0px;}
+        	20%{margin-left: -880px;}
+          40%{margin-left: -880px;}
+          50%{margin-left: -1760px;}
+          70%{margin-left: -1760px;}
+          80%{margin-left: -2640px;}
+          100%{margin-left: -2640px;}
+        }
+
+        @keyframes slide {
+          0%{margin-left: 0px;}
+          10%{margin-left: 0px;}
+        	20%{margin-left: -880px;}
+          40%{margin-left: -880px;}
+          50%{margin-left: -1760px;}
+          70%{margin-left: -1760px;}
+          80%{margin-left: -2640px;}
+          100%{margin-left: -2640px;}
+        }
+        @-moz-keyframes slide {
+          0%{margin-left: 0px;}
+          10%{margin-left: 0px;}
+        	20%{margin-left: -880px;}
+          40%{margin-left: -880px;}
+          50%{margin-left: -1760px;}
+          70%{margin-left: -1760px;}
+          80%{margin-left: -2640px;}
+          100%{margin-left: -2640px;}
+        }
+        @-webkit-keyframes slide {
+          0%{margin-left: 0px;}
+          10%{margin-left: 0px;}
+        	20%{margin-left: -880px;}
+          40%{margin-left: -880px;}
+          50%{margin-left: -1760px;}
+          70%{margin-left: -1760px;}
+          80%{margin-left: -2640px;}
+          100%{margin-left: -2640px;}
+        }
+        @-o-keyframes slide {
+          0%{margin-left: 0px;}
+          10%{margin-left: 0px;}
+        	20%{margin-left: -880px;}
+          40%{margin-left: -880px;}
+          50%{margin-left: -1760px;}
+          70%{margin-left: -1760px;}
+          80%{margin-left: -2640px;}
+          100%{margin-left: -2640px;}
+        }
       }
     }
   }

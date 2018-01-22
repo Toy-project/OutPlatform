@@ -142,11 +142,7 @@ module.exports = {
           },
           {
             test: [/\.ttf$/, /\.woff?2$/],
-            loader: require.resolve('url-loader'),
-            include: paths.appSrc,
-            options: {
-              limit: 10000,
-            },
+            loader: require.resolve('url-loader')
           },
           // Process JS with Babel.
           {

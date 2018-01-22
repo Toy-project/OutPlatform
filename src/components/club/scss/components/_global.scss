@@ -1,0 +1,37 @@
+.club-container {
+  position: relative;
+  left: 0;
+  top: 60px;
+}
+
+.imageNavigation-container,
+.profile-container,
+.snippet-container {
+  width: 100%;
+}
+
+.imageNavigation-container,
+.profile-container {
+  background-color: $white-0;
+}
+
+.comment-container,
+.portfolio-container,
+.profile-container {
+  .title-wrapper {
+    margin: 4.3% 0 0 10.5%;
+
+    h3 {
+      font-size: $font-size-20;
+      color: inherit;
+    }
+
+    span {
+      display: inline-block;
+      background-color: $gray-5;
+      width: 75px;
+      height: 2px;
+      margin-bottom: 5px;
+    }
+  }
+}
