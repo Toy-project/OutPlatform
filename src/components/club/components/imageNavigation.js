@@ -15,7 +15,7 @@ class ImageNavigation extends React.Component {
               <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
               <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
 
-              <button className='add-image'>등록</button>
+              <button className='my-image'></button>
               {/* <span className='badge'>
                 <i></i>
                 <i></i>
