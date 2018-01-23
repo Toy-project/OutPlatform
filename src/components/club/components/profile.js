@@ -32,7 +32,7 @@ const Profile = () => (
             <p>우리 단체에 대한 소개를 올려주세요!</p>
           </div>
           <div className='contents'>
-            <h5>단체종류</h5>
+            <h5>SNS</h5>
             <p>영상제작</p>
           </div>
         </div>
