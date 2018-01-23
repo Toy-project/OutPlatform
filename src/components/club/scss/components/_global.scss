@@ -2,6 +2,7 @@
   position: relative;
   left: 0;
   top: 60px;
+  margin-bottom:60px;
 }
 
 .imageNavigation-container,
@@ -11,13 +12,15 @@
 }
 
 .imageNavigation-container,
-.profile-container {
+.profile-container,
+.smiliarClub-container {
   background-color: $white-0;
 }
 
 .comment-container,
 .portfolio-container,
-.profile-container {
+.profile-container,
+.smiliarClub-container {
   .title-wrapper {
     margin: 4.3% 0 0 10.5%;
 
