@@ -18,6 +18,7 @@ class Nav extends React.Component {
 
     this.registerToggle = this.registerToggle.bind(this);
     this.loginToggle = this.loginToggle.bind(this);
+    this.goToMyPageClub = this.goToMyPageClub.bind(this);
   }
 
   registerToggle() {
@@ -54,6 +55,10 @@ class Nav extends React.Component {
     }
   }
 
+  goToMyPageClub() {
+
+  }
+
   render() {
     const subPageStyle = this.props.subPage ? 'isSub' : '';
     const registerPopup = this.state.showRegister ? <RegisterPopup close={this.registerToggle} /> : '';
@@ -71,7 +76,7 @@ class Nav extends React.Component {
                 <div className='sub-menu'>
                   <div className='container'>
                     <ul>
-                      <li><a>단체관리</a></li>
+                      <li><a onClick={this.goToMyPageClub}>단체관리</a></li>
                       <li><a>외주관리</a></li>
                       <li><a>회원관리</a></li>
                     </ul>

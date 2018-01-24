@@ -8,97 +8,101 @@
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      width: 880px;
       height: 100%;
+      width: 880px;
       overflow: hidden;
 
-      .imageNavigation {
-        width: 3520px;
-        height: 100%;
-        float: left;
+      .default-image {
+        display: inline-block;
+        width: 880px;
+        height: 660px;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-image-black-24-px.svg") no-repeat 50% 50%;
+        background-size: 80px;
         background-color: #e6e6e6;
+        border: 0;
+        outline: 0;
+      }
 
-        animation: slide 10s ease infinite;
-      	-moz-animation: slide 10s ease infinite;
-      	-webkit-animation: slide 10s ease infinite;
-      	-o-animation: slide 10s ease infinite;
+      .slick-dots {
+        position: absolute;
+        bottom: 32px;
+        list-style: none;
+        display: block;
+        text-align: center;
+        padding: 0;
+        width: 100%;
 
-        .default-image {
-          width: 880px;
-          height: 100%;
-          background: url("#{$get-path-from-components-to-images}/icons/ic-image-black-24-px.svg") no-repeat 50% 50%;
-          background-size: 80px;
+        li {
+          position: relative;
+          display: inline-block;
+          margin: 0 2.5px;
+          padding: 0;
+          cursor: pointer;
+        }
+
+        li button {
           border: 0;
-          outline: 0;
+          background: transparent;
+          outline: none;
+          color: transparent;
         }
 
-        .my-image {
-          position: absolute;
-          left: 30px;
-          top: 25px;
-          border-radius: 100px;
-          border: 0;
-          width: 104px;
-          height: 104px;
-          background-color: $gray-3;
-          font-size: $font-size-20;
-          color: $emerald-1;
+        li button:hover,
+        li button:focus { outline: none; }
 
-          @include z-depth-1;
-          @include thick;
-        }
+        li button:hover:before,
+        li button:focus:before { opacity: 1; }
 
-        @keyframes slide-1 {
-          0%{margin-left: 0px;}
-          10%{margin-left: 0px;}
-        	20%{margin-left: -880px;}
-          40%{margin-left: -880px;}
-          50%{margin-left: -1760px;}
-          70%{margin-left: -1760px;}
-          80%{margin-left: -2640px;}
-          100%{margin-left: -2640px;}
+        li button:before {
+          content: "•";
+          width: 15px;
+          height: 15px;
+          font-size: 40px;
+          line-height: 20px;
+          text-align: center;
+          color: black;
+          opacity: 0.25;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
 
-        @keyframes slide {
-          0%{margin-left: 0px;}
-          10%{margin-left: 0px;}
-        	20%{margin-left: -880px;}
-          40%{margin-left: -880px;}
-          50%{margin-left: -1760px;}
-          70%{margin-left: -1760px;}
-          80%{margin-left: -2640px;}
-          100%{margin-left: -2640px;}
+        li.slick-active
+        button:before {
+          color: black;
+          opacity: 0.75;
         }
-        @-moz-keyframes slide {
-          0%{margin-left: 0px;}
-          10%{margin-left: 0px;}
-        	20%{margin-left: -880px;}
-          40%{margin-left: -880px;}
-          50%{margin-left: -1760px;}
-          70%{margin-left: -1760px;}
-          80%{margin-left: -2640px;}
-          100%{margin-left: -2640px;}
-        }
-        @-webkit-keyframes slide {
-          0%{margin-left: 0px;}
-          10%{margin-left: 0px;}
-        	20%{margin-left: -880px;}
-          40%{margin-left: -880px;}
-          50%{margin-left: -1760px;}
-          70%{margin-left: -1760px;}
-          80%{margin-left: -2640px;}
-          100%{margin-left: -2640px;}
-        }
-        @-o-keyframes slide {
-          0%{margin-left: 0px;}
-          10%{margin-left: 0px;}
-        	20%{margin-left: -880px;}
-          40%{margin-left: -880px;}
-          50%{margin-left: -1760px;}
-          70%{margin-left: -1760px;}
-          80%{margin-left: -2640px;}
-          100%{margin-left: -2640px;}
-        }
+      }
+
+      .left-arrow,
+      .right-arrow {
+        cursor: pointer;
+        top: 314px;
+      }
+
+      .left-arrow {
+        position: absolute;
+        left: 30px;
+      }
+
+      .right-arrow {
+        position: absolute;
+        right: 30px;
+      }
+
+      .my-image {
+        position: absolute;
+        left: 30px;
+        top: 25px;
+        border-radius: 100px;
+        border: 0;
+        width: 104px;
+        height: 104px;
+        background-color: $gray-3;
+        font-size: $font-size-20;
+        color: $emerald-1;
+
+        @include z-depth-1;
+        @include thick;
       }
     }
   }

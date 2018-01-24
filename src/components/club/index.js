@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './scss/index.scss';
 
@@ -10,19 +11,20 @@ import Comment from './components/comment';
 import Quotation from './components/quotation';
 import SmiliarClub from './components/smiliarClub';
 
-const Club = () => (
+const Club = ( { myPage } ) => (
   <div className='club-container'>
-    <ImageNavigation />
-    <Snippet />
-    <Profile />
-    <PortfolioNavigation />
-    <Comment />
-    <Quotation />
-    <SmiliarClub />
+    <ImageNavigation myPage={myPage} />
+    <Snippet myPage={myPage} />
+    <Profile myPage={myPage} />
+    <PortfolioNavigation myPage={myPage} />
+    <Comment myPage={myPage} />
+    <Quotation myPage={myPage} />
+    <SmiliarClub myPage={myPage} />
   </div>
-)
+);
 
 Club.propTypes = {
+  myPage: PropTypes.bool,
 };
 
 export default Club;

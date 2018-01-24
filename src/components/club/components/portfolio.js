@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Portfolio = () => (
+const Portfolio = ( { name }) => (
   <div className='portfolio-card'>
     <div className='card-image'>
       <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
     </div>
     <div className='card-content-container'>
       <section>
-        <h4>프로젝트 명</h4>
+        <h4>프로젝트 명 { name }</h4>
         <h5>2017.12.29-2017.08.12</h5>
       </section>
       <p>

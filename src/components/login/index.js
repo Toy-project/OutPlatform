@@ -90,7 +90,7 @@ class Login extends React.Component {
       <div id='popup_container' className='popup_container'>
         <div className='login-inner'>
           <h3>로그인</h3>
-        <p className='p'>
+          <p className='p'>
             아직 외주대학교 회원이 아니신가요?
           </p>
           <form onSubmit={this.handleSubmit}>
