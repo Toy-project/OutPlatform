@@ -1,5 +1,5 @@
 .profile-container {
-  height: 510px;
+  min-height: 510px;
 
   .profile-inner {
     width: 100%;
@@ -12,27 +12,65 @@
     }
 
     .profile-content {
-      max-width: 19.1%;
-      margin-left: 22%;
+      min-width: 165px;
+      margin-left: 175px;
       padding: 15px 0 0 0;
       float: left;
 
       .contents,
       .contents-area {
-        margin-bottom: 52px;
+        height: 70px;
+        margin-bottom: 32px;
 
         h5 {
           font-size: $font-size-16;
         }
 
         p {
-          padding-top: 7px;
+          margin-top: 7px;
           font-size: $font-size-12;
+
+          .tag {
+            padding: 7px 14px;
+            border-radius: 2px;
+            border: solid 0.5px #979797;
+          }
+
+          input[type='text'],
+          select {
+            width: 160px;
+            height: 35px;
+            border-radius: 2px;
+            background-color: #ffffff;
+            border: solid 0.5px #b3b3b3;
+            outline: none;
+            padding-left: 3px;
+          }
+
+          textarea {
+            width: 245px;
+            height: 240px;
+            border-radius: 2px;
+            background-color: #ffffff;
+            border: solid 1px #d8d8d8;
+            font-size: $font-size-14;
+            padding: 3px 0 0 3px;
+            outline: none;
+            resize: none;
+          }
+
+          .sns {
+            input[type='text'] {
+              display: block;
+              margin-top: 5px;
+              height: 30px;
+            }
+          }
         }
       }
 
       .contents-area {
-        height: 245px;
+        height: 273px;
       }
     }
   }

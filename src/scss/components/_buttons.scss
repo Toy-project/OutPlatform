@@ -4,6 +4,7 @@
   background-color: $background-color;
   border: $btn-border;
   border-radius: $btn-radius;
+  outline: none;
   @include z-depth-1;
 }
 

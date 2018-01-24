@@ -7,8 +7,13 @@
 
 .imageNavigation-container,
 .profile-container,
-.snippet-container {
+.snippet-container,
+.portfolio-container {
   width: 100%;
+
+  .container {
+    position: relative;
+  }
 }
 
 .imageNavigation-container,
@@ -36,5 +41,24 @@
       height: 2px;
       margin-bottom: 5px;
     }
+  }
+}
+
+.edit-btn {
+  position: absolute;
+  top: 25px;
+  right: 46px;
+
+  button {
+    margin-left: 5px;
+  }
+
+  .emerald-btn {
+    @include btn-reset-shape(60px, 40px, $emerald-1);
+    @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+  }
+  .gray-btn {
+    @include btn-reset-shape(60px, 40px, $gray-5);
+    @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
   }
 }

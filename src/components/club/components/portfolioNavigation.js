@@ -29,6 +29,7 @@ class PortfolioNavigation extends React.Component {
           <div className='portfolio-card-wrapper'>
             <div className='portfolio-slide-wrapper'>
               <Slider
+                dots={false}
                 arrows={false}
                 ref={ref => this.slider = ref}
                 slidesToShow='4'

@@ -17,9 +17,9 @@ const Club = ( { myPage } ) => (
     <Snippet myPage={myPage} />
     <Profile myPage={myPage} />
     <PortfolioNavigation myPage={myPage} />
-    <Comment myPage={myPage} />
-    <Quotation myPage={myPage} />
-    <SmiliarClub myPage={myPage} />
+    {myPage ? '' : <Comment />}
+    {myPage ? '' : <Quotation />}
+    {myPage ? '' : <SmiliarClub />}
   </div>
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
 
@@ -56,7 +57,9 @@ class Nav extends React.Component {
   }
 
   goToMyPageClub() {
-
+    const type = 1;
+    this.props.history.push(`/myPage/${type}`);
+    window.location.reload();
   }
 
   render() {
@@ -99,4 +102,4 @@ Nav.propTypes = {
   subPage: PropTypes.bool,
 }
 
-export default Nav;
+export default withRouter(Nav);

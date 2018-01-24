@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
+import PropTypes from 'prop-types';
 
 import Arrow_left from 'images/icons/ic-arrow-left.png';
 import Arrow_right from 'images/icons/ic-arrow-right.png';
@@ -19,6 +20,10 @@ class ImageNavigation extends React.Component {
   }
 
   render() {
+    let isSlider;
+    let isArrows;
+    let isFloatingCircle;
+
     const settings = {
       dots: true,
       autoplay: true,
@@ -28,26 +33,51 @@ class ImageNavigation extends React.Component {
       slidesToScroll: 1,
       arrows: false,
     };
+
+    if(this.props.myPage){
+      isSlider = (
+        <div className='add-image'>
+          <span></span>
+          <h3>사진 업로드</h3>
+        </div>
+      );
+      isArrows = '';
+      isFloatingCircle = <button className='my-image myPage'></button>;
+    } else {
+      //Slick
+      isSlider = (
+        <Slider
+        {...settings}
+        ref={ref => this.slider = ref}
+        >
+          <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+          <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+          <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+          <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
+        </Slider>
+      );
+      // Prev, Next Button
+      isArrows = (
+        <div>
+          <div className='left-arrow'>
+            <img src={Arrow_left} alt='' onClick={this.next} />
+          </div>
+          <div className='right-arrow'>
+            <img src={Arrow_right} alt='' onClick={this.next} />
+          </div>
+        </div>
+      );
+
+      //Floating Button
+      isFloatingCircle = <button className='my-image'></button>;
+    }
     return (
       <div className='imageNavigation-container'>
         <div className='container'>
           <div className='imageNavigation-inner'>
-            <Slider
-              {...settings}
-              ref={ref => this.slider = ref}
-              >
-              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
-              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
-              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
-              <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
-            </Slider>
-            <div className='left-arrow'>
-              <img src={Arrow_left} alt='' onClick={this.previous} />
-            </div>
-            <div className='right-arrow'>
-              <img src={Arrow_right} alt='' onClick={this.next} />
-            </div>
-            <button className='my-image'></button>
+            {isSlider}
+            {isArrows}
+            {isFloatingCircle}
           </div>
         </div>
       </div>
@@ -56,6 +86,7 @@ class ImageNavigation extends React.Component {
 }
 
 ImageNavigation.propTypes = {
+  myPage: PropTypes.bool,
 };
 
 export default ImageNavigation;
