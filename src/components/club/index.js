@@ -19,7 +19,7 @@ const Club = ( { myPage } ) => (
     <PortfolioNavigation myPage={myPage} />
     {myPage ? '' : <Comment />}
     {myPage ? '' : <Quotation />}
-    {/* {myPage ? '' : <SmiliarClub />} */}
+    {myPage ? '' : <SmiliarClub />}
   </div>
 );
 
