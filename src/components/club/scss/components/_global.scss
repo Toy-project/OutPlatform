@@ -63,3 +63,15 @@
     @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
   }
 }
+
+.left-arrow {
+  width: 20px;
+  height: 30px;
+  background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-left.png") no-repeat 50% 50%;
+}
+
+.right-arrow {
+  width: 20px;
+  height: 30px;
+  background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-right.png") no-repeat 50% 50%;
+}

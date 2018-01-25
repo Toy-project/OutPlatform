@@ -1,16 +1,19 @@
 .category {
   @include center;
 
-  .category_title {
+  .category-title {
+    display: inline-block;
+    width: 306px;
+    margin-bottom:36px;
+    padding-left: 30px;
+
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-good.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+
     font-size: $title-size;
     color: $gray-1;
-    margin-bottom:36px;
     @include normal;
-  }
-
-  .good_icon {
-    vertical-align: middle;
-    padding:0 5px 5px 0;
   }
 
   .category_list {

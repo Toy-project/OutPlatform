@@ -115,10 +115,16 @@
 
       .left-arrow {
         left: 3.5%;
+        width: 20px;
+        height: 30px;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-left.png") no-repeat 50% 50%;
       }
 
       .right-arrow {
         right: 3.5%;
+        width: 20px;
+        height: 30px;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-right.png") no-repeat 50% 50%;
       }
 
       .my-image {

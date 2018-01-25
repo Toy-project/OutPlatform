@@ -34,28 +34,6 @@ class Nav extends React.Component {
     });
   }
 
-  submenuToggleOut(e) {
-    const id = e.taget.id;
-    const element = document.getElementById(id);
-    const elementBackground = document.getElementById(`${id}_bg`);
-
-    if(typeof element === String){
-      element.className.add('sub-menu-hide');
-      elementBackground.className.add('sub-menu-hide');
-    }
-  }
-
-  submenuToggleIn(e) {
-    const id = e.taget.id;
-    const element = document.getElementById(`${id}_sub_menu`);
-    const elementBackground = document.getElementById(`${id}_sub_menu_bg`);
-
-    if(typeof element === String){
-      element.className.add('sub-menu-show');
-      elementBackground.className.add('sub-menu-show');
-    }
-  }
-
   goToMyPageClub() {
     const type = 1;
     this.props.history.push(`/myPage/${type}`);
@@ -71,17 +49,17 @@ class Nav extends React.Component {
         <nav>
           <div className="container">
             <ul className="main-menu hide-on-med-and-down">
-              <li><a href="">장바구니</a></li>
-              <li><a onClick={this.registerToggle}>회원가입</a></li>
-              <li><a onClick={this.loginToggle}>로그인</a></li>
-              <li>
-                <a href="" className='my-page'>마이 페이지</a>
+              <li>장바구니</li>
+              <li onClick={this.registerToggle}>회원가입</li>
+              <li onClick={this.loginToggle}>로그인</li>
+              <li className='my-page'>
+                마이 페이지
                 <div className='sub-menu'>
                   <div className='container'>
                     <ul>
-                      <li><a onClick={this.goToMyPageClub}>단체관리</a></li>
-                      <li><a>외주관리</a></li>
-                      <li><a>회원관리</a></li>
+                      <li onClick={this.goToMyPageClub}>단체관리</li>
+                      <li>외주관리</li>
+                      <li>회원관리</li>
                     </ul>
                   </div>
                 </div>

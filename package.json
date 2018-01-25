@@ -47,6 +47,7 @@
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.2.0",
     "react-loading-animation": "^1.4.0",
+    "react-rating": "^1.0.4",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-enter": "^0.2.1",

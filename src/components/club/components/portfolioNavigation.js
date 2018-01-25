@@ -3,9 +3,6 @@ import Slider from 'react-slick';
 
 import Portfolio from './portfolio';
 
-import Arrow_left from 'images/icons/ic-arrow-left.png';
-import Arrow_right from 'images/icons/ic-arrow-right.png';
-
 class PortfolioNavigation extends React.Component {
   constructor(props) {
     super(props);
@@ -53,12 +50,8 @@ class PortfolioNavigation extends React.Component {
 
       isArrows = (
         <div>
-          <div className='left-arrow'>
-            <img src={Arrow_left} alt='' onClick={this.previous} />
-          </div>
-          <div className='right-arrow'>
-            <img src={Arrow_right} alt='' onClick={this.next} />
-          </div>
+          <div className='left-arrow' onClick={this.previous}></div>
+          <div className='right-arrow' onClick={this.next}></div>
         </div>
       );
     }

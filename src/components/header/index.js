@@ -4,10 +4,6 @@ import Scroll from 'react-scroll-to-element';
 import './scss/index.scss';
 import { Nav } from 'components/';
 
-import ic_magnifier from 'images/icons/ic-magnifier.svg';
-
-import ic_under_arrow from 'images/icons/ic-under-arrow.svg';
-
 class Header extends React.Component {
   constructor(props){
     super(props);
@@ -37,7 +33,7 @@ class Header extends React.Component {
 
   render(){
     return (
-      <div id="container" className="top-container">
+      <div id="container" Style={`height:${window.innerHeight}px`} className="top-container">
         <Nav />
         <div className="container">
           <div className="header-contents-container">
@@ -49,22 +45,20 @@ class Header extends React.Component {
             <form>
               <div className="input-field">
                 <label htmlFor="search">
-                  <i><img src={ic_magnifier} alt='' /></i>
+                  <i></i>
                 </label>
                 <input type="text" id="search" placeholder='ex) 동아리명, 카테고리' />
 
               </div>
             </form>
-            <pre>
+            <span className='quoting-count'>
               외주 견적 문의 <br />
               130  회
-            </pre>
+            </span>
             <section>
-              <i>
-                <Scroll offset={this.state.containerHeight}>
-                  <img src={ic_under_arrow} alt='Arrow To Bottom' className='arrow-to-bottom' />
-                </Scroll>
-              </i>
+              <Scroll offset={this.state.containerHeight}>
+                <i class='arrow-to-bottom'></i>
+              </Scroll>
             </section>
           </div>
         </div>

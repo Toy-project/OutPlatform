@@ -2,9 +2,6 @@ import React from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 
-import Arrow_left from 'images/icons/ic-arrow-left.png';
-import Arrow_right from 'images/icons/ic-arrow-right.png';
-
 class ImageNavigation extends React.Component {
 
   constructor(props) {
@@ -59,12 +56,8 @@ class ImageNavigation extends React.Component {
       // Prev, Next Button
       isArrows = (
         <div>
-          <div className='left-arrow'>
-            <img src={Arrow_left} alt='' onClick={this.next} />
-          </div>
-          <div className='right-arrow'>
-            <img src={Arrow_right} alt='' onClick={this.next} />
-          </div>
+          <div className='left-arrow' onClick={this.next} ></div>
+          <div className='right-arrow' onClick={this.next}></div>
         </div>
       );
 

@@ -7,7 +7,7 @@ import List from './components/list';
 
 const Category = ( { data, title }) => (
   <div className="category">
-    <div className="category_title">
+    <div className="category-title">
       <Title title={title} />
     </div>
     <div className="category_list">

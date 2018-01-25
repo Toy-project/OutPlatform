@@ -1,7 +1,7 @@
 // Main Top
 .top-container {
-  height: $header-top-container-height;
   background-color: $emerald-0;
+  position: relative;
 
   .container {
     background-image: url("#{$get-path-from-components-to-images}/header/header-bg-1280.png") ;
@@ -44,26 +44,43 @@
         text-indent: 50px;
         border: solid 0.5px #{$gray-2};
         background-color: transparent;
+        outline: none;
       }
 
       label {
         position: absolute;
-        left: 15px;
-        top: 9px;
+        left: 12px;
+        top: 7px;
+
+        i {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.svg");
+          background-repeat: no-repeat;
+          cursor: pointer;
+        }
       }
     }
 
-    pre {
-      margin: $header-contents-pre-margin;
-      font-size: $header-quoting-pre-font-size;
+    .quoting-count {
+      display: block;
+      margin: $header-contents-span-margin;
+      font-size: $header-quoting-span-font-size;
       color: $gray-1;
     }
 
     section {
-      margin: $header-botton-to-below-margin;
       @include center;
 
       .arrow-to-bottom {
+        position: absolute;
+        bottom: 28px;
+        display: inline-block;
+        width: 35px;
+        height: 25px;
+        background-image: url("#{$get-path-from-components-to-images}/icons/ic-under-arrow.svg");
+        background-repeat: no-repeat;
         cursor: pointer;
       }
     }
