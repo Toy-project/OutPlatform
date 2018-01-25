@@ -32,7 +32,7 @@ nav {
         position:absolute;
         width: 100%;
         background-color: #f4f4f4;
-        min-height: $navbar-height-sub;
+        min-height: $navbar-height-main;
         top: $navbar-height-main;
         right: 0;
         list-style: none;
@@ -46,27 +46,27 @@ nav {
 
           li {
             margin: 0 20px;
-            line-height: $navbar-height-sub;
+            line-height: $navbar-height-main;
           }
         }
       }
     }
   }
 }
-
-.isSub {
-  background-color: $nav-sub-bg-color;
-  height: $navbar-height-sub;
-
-  .main-menu {
-    a {
-      line-height: $navbar-height-sub;
-    }
-
-    .sub-menu {
-      top: $navbar-height-sub;
-    }
-  }
-
-  @include z-depth-1;
-}
+//
+// .isSub {
+//   background-color: $nav-sub-bg-color;
+//   height: $navbar-height-sub;
+//
+//   .main-menu {
+//     a {
+//       line-height: $navbar-height-sub;
+//     }
+//
+//     .sub-menu {
+//       top: $navbar-height-sub;
+//     }
+//   }
+//
+//   @include z-depth-1;
+// }

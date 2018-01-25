@@ -63,12 +63,12 @@ class Nav extends React.Component {
   }
 
   render() {
-    const subPageStyle = this.props.subPage ? 'isSub' : '';
+    //const subPageStyle = this.props.subPage ? 'isSub' : '';
     const registerPopup = this.state.showRegister ? <RegisterPopup close={this.registerToggle} /> : '';
     const loginPopup = this.state.showLogin ? <Login close={this.loginToggle} register={this.registerToggle} /> : '';
     return (
       <div>
-        <nav className={subPageStyle}>
+        <nav>
           <div className="container">
             <ul className="main-menu hide-on-med-and-down">
               <li><a href="">장바구니</a></li>
