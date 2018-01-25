@@ -4,7 +4,8 @@
   background-color: $emerald-0;
 
   .container {
-    background-image: url("#{$get-path-from-components-to-images}/header/header_bg.png");
+    background-image: url("#{$get-path-from-components-to-images}/header/header-bg-1280.png") ;
+    background-position: 60% 0;
     background-repeat: no-repeat;
     height: 100%;
   }
