@@ -3,11 +3,15 @@
   height: auto;
   background-color: $white;
 
-  .comment-card-inner{
+  .comment-card-inner {
     overflow: hidden;
 
-    .comment-card-who {
+    .comment-card-who,
+    .comment-card-contents {
       position: relative;
+    }
+
+    .comment-card-who {
       width: 24%;
       float: left;
 
@@ -25,7 +29,7 @@
         .default {
           padding: 10px;
           border-radius: 100px;
-          background-color: #b3b3b3;
+          background-color: $gray-6;
 
           @include z-depth-1;
         }
@@ -35,7 +39,6 @@
     .comment-card-contents {
       width: 76%;
       display: inline-block;
-      position: relative;
 
       .comment-card-date {
         width: 100%;
@@ -55,7 +58,7 @@
           line-height: 41px;
           padding: 0 13px;
 
-          color: #797979;
+          color: $gray-7;
           font-size: $font-size-12;
 
           @include left-align;
@@ -64,7 +67,7 @@
             margin-left: 20%;
 
             i {
-              font-size: 15px;
+              font-size: $font-size-15;
               margin: 0 2.5px;
               color: $gray-3;
             }

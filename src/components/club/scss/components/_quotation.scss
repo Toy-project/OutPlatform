@@ -1,6 +1,6 @@
 .quotation-container {
   height: auto;
-  color: #797979;
+  color: $gray-7;
 
   .quotation-inner {
     padding: 60px 0;
@@ -13,11 +13,15 @@
       min-width: 350px;
       width: 36%;
       height: 36%;
-      background-color: #f6f6f6;
+      background-color: $gray-10;
       padding: 30px;
 
-      .quotation-title {
+      .quotation-title,
+      .quotation-contents {
         width: 100%;
+      }
+
+      .quotation-title {
 
         @include center;
 
@@ -29,7 +33,6 @@
 
       .quotation-contents {
         margin-top: 32px;
-        width: 100%;
         padding: 0 20px;
         overflow: hidden;
 
@@ -37,11 +40,14 @@
           float: left;
           width: 48%;
 
+          .quotation-who,
+          h5 {
+            width: 100%;
+          }
+
           .quotation-who {
             background: url("#{$get-path-from-components-to-images}/icons/ic-profile.png") no-repeat 50% 50%;
             background-color: $white;
-
-            width: 100%;
             border-radius: 100px;
 
             @include z-depth-1;
@@ -50,7 +56,6 @@
           h5 {
             margin-top: 10px;
             font-size: 14px;
-            width: 100%;
             color: #b3b3b3;
             @include center;
           }

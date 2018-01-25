@@ -1,7 +1,7 @@
 .smiliarClub-card {
   width: 330px;
   height: 330px;
-  background-color: white;
+  background-color: $white;
 
   box-sizing: border-box;
 
@@ -10,7 +10,7 @@
   .smiliarClub-card-image {
     width: 100%;
     height: 264px;
-    background-color: #d8d8d8;
+    background-color: $gray-3;
 
     img {
       width: 100%;
@@ -26,7 +26,7 @@
       i {
         padding: 0 2.5px;
         font-size: 15px;
-        color: #d8d8d8;
+        color: $gray-3;
         line-height:27px;
       }
     }
@@ -35,7 +35,7 @@
       height: 27px;
       float: left;
       font-size: $font-size-18;
-      color: #7f7f7f;
+      color: $gray-1;
       margin-right: 15px;
     }
   }

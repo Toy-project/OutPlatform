@@ -37,7 +37,7 @@
           h5 {
             display: inline-block;
             font-size: $font-size-16;
-            color: #b3b3b3;
+            color: $gray-6;
           }
         }
 
@@ -46,7 +46,7 @@
           width: 100%;
           height: 120px;
           background-color: $white;
-          border: solid 1px #dfdfdf;
+          border: solid 1px $gray-9;
           margin-top: 17px;
 
           .star-rating {
@@ -65,10 +65,13 @@
             }
           }
 
-          textarea {
+          textarea,
+          button {
             position: absolute;
-            left:23.9%;
             top:0;
+          }
+          textarea {
+            left:23.9%;
             width: 65.1%;
             height: 118px;
             padding: 5px;
@@ -81,9 +84,7 @@
           }
 
           button  {
-            position: absolute;
             right:0;
-            top:0;
             @include btn-reset-shape(11%, 120px, $btn-background-emerald-color);
             @include btn-reset-font($font-size-14, $btn-text-white-color, 120px);
           }
@@ -129,7 +130,7 @@
               font-size: $font-size-14;
               box-sizing: border-box;
               background-color: $white;
-              border: solid 1px #dfdfdf;
+              border: solid 1px $gray-9;
               margin: 0 12.5px;
               cursor: pointer;
 
