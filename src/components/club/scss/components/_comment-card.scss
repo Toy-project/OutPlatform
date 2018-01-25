@@ -1,83 +1,94 @@
-.comment {
-  position: relative;
+.comment-card {
   width: 100%;
-  height: 180px;
+  height: auto;
   background-color: $white;
 
-  .comment-image {
-    position:absolute;
-    left:0;
-    top:51px;
-    width: 23.9%;
+  .comment-card-inner{
+    overflow: hidden;
 
-    @include center;
+    .comment-card-who {
+      position: relative;
+      width: 24%;
+      float: left;
 
-    h5 {
-      font-size: $font-size-12;
-      margin-top: 10px;
-    }
+      @include center;
 
-    .default {
-      padding: 15px;
-      border-radius: 100px;
-      background-color: #b3b3b3;
+      .comment-image {
+        padding-top: 51px;
+        display: inline-block;
 
-      @include z-depth-1;
-    }
-  }
+        h5 {
+          font-size: $font-size-12;
+          margin-top: 10px;
+        }
 
-  .border {
-    position: absolute;
-    left: 23.9%;
-    top: 10px;
-    background-color: $gray-3;
-    width: 2px;
-    height: 162px;
-  }
+        .default {
+          padding: 10px;
+          border-radius: 100px;
+          background-color: #b3b3b3;
 
-  .border2 {
-    position: absolute;
-    left: 26%;
-    top: 43px;
-    background-color: $gray-3;
-    width: 487.5px;
-    height: 2px;
-  }
-
-  .comment-top {
-    position: absolute;
-    left: 24%;
-    top: 0;
-    width: 76%;
-    height: 41.3px;
-    color: #797979;
-    font-size: $font-size-12;
-    padding: 13px 0 10px 13px;
-    box-sizing: border-box;
-
-    @include left-align;
-
-    span {
-      margin-left: 100px;
-
-      i {
-        font-size: 15px;
-        margin: 0 2.5px;
-        color: $gray-3;
+          @include z-depth-1;
+        }
       }
     }
-  }
 
-  .comment-contents {
-    position: absolute;
-    left: 24%;
-    top: 42.3px;
-    width: 70.9%;
-    height: 119px;
-    padding: 15px 0 15px 14px;
-    box-sizing: border-box;
-    font-size: $font-size-12;
-    overflow: hidden;
-    @include left-align;
+    .comment-card-contents {
+      width: 76%;
+      display: inline-block;
+      position: relative;
+
+      .comment-card-date {
+        width: 100%;
+        position: relative;
+        height: 41px;
+
+        .border2 {
+          position: absolute;
+          left: 6.5px;
+          top: 40px;
+          width: 95%;
+          height: 1px;
+          background-color: $gray-3;
+        }
+
+        .comment-top {
+          line-height: 41px;
+          padding: 0 13px;
+
+          color: #797979;
+          font-size: $font-size-12;
+
+          @include left-align;
+
+          span {
+            margin-left: 20%;
+
+            i {
+              font-size: 15px;
+              margin: 0 2.5px;
+              color: $gray-3;
+            }
+          }
+        }
+      }
+
+      .border {
+        position: absolute;
+        left: 0;
+        top: 5.5%;
+        width: 1px;
+        height: 90%;
+        background-color: $gray-3;
+      }
+
+      .comment-contents {
+        display: block;
+        width: 100%;
+        padding: 15px;
+
+        font-size: $font-size-12;
+        @include left-align;
+      }
+    }
   }
 }

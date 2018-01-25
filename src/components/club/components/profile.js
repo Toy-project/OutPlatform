@@ -144,7 +144,7 @@ class Profile extends React.Component {
               <span></span>
               <h3>단체 프로필</h3>
             </div>
-            <div className='profile-content'>
+            <div className='profile-content hide-on-med-and-down'>
               <div className='contents'>
                 <h5>소속학교</h5>
                 <p>{this.state.isEditToggle ? editInputText('college') : this.state.data.college}</p>
@@ -162,7 +162,7 @@ class Profile extends React.Component {
                 <p>{this.state.isEditToggle ? editInputText('tag') : this.state.data.tag}</p>
               </div>
             </div>
-            <div className='profile-content'>
+            <div className='profile-content hide-on-med-and-down'>
               <div className='contents-area'>
                 <h5>단체소개</h5>
                 <p>{this.state.isEditToggle ? editInputText('snippet', '우리 단체에 대한 소개를 올려주세요!') : viewContents}</p>

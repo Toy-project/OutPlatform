@@ -1,44 +1,45 @@
 .portfolio-container {
-  height: 700px;
+  height: auto;
   color: $gray-7;
 
-  .container {
+  .portfolio-inner {
+    padding: 60px 0;
+
     .title-wrapper {
-      margin-bottom: 6.2%;
+      margin-bottom: 60px;
     }
 
     .portfolio-card-wrapper {
       position: relative;
-      padding-bottom: 5px;
+      width: 100%;
       overflow: hidden;
 
 
       .portfolio-slide-wrapper {
         width: 1704px;
-        height: 700px;
-        margin-left: -200px;
+        height: 500px;
+        //화면 작아질 시 마진을 없애야 함
+        margin-left: -235px;
 
         span {
-          display:inline-block;
-          margin: 0 5px;
+          display: inline-block;
+          padding-bottom: 5px;
         }
       }
 
       .left-arrow,
       .right-arrow {
+        position: absolute;
         cursor: pointer;
+        top: 145px;
       }
 
       .left-arrow {
-        position: absolute;
-        left: 140px;
-        top: 145px;
+        left: 11%;
 
       }
       .right-arrow {
-        position: absolute;
-        right: 140px;
-        top: 145px;
+        right: 11%;
       }
     }
   }
