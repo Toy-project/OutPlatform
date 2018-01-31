@@ -1,0 +1,9 @@
+.portfolio-popup-wrapper {
+  @include popup-reset-options(624px, 600px);
+  left: 26%;
+  right: 26%;
+  top: 4.6%;
+  z-index: 2;
+
+  @include center;
+}

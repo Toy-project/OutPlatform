@@ -50,14 +50,30 @@
       max-height: 60px;
     }
 
-    span {
+    .portfolio-view-btn,
+    .portfolio-edit-btn {
       width: 353px;
 
+      button {
+        margin-top: 16px;
+      }
+    }
+
+    .portfolio-view-btn {
       @include center;
 
       button  {
         margin-top: 16px;
         @include btn-reset-shape(79px, 30px, $gray-6);
+        @include btn-reset-font($font-size-12, $white, 30px);
+      }
+    }
+
+    .portfolio-edit-btn {
+      @include right-align;
+
+      button  {
+        @include btn-reset-shape(79px, 30px, $emerald-1);
         @include btn-reset-font($font-size-12, $white, 30px);
       }
     }

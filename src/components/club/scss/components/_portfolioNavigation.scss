@@ -14,16 +14,47 @@
       width: 100%;
       overflow: hidden;
 
+      .portfolio-slide-wrapper,
+      .portfolio-mypage-slide-inner {
+
+        span {
+          float: left;
+          padding-bottom: 5px;
+        }
+      }
 
       .portfolio-slide-wrapper {
-        width: 1704px;
+        min-width: 1704px;
+        max-width: 9999px;
         height: 500px;
         //화면 작아질 시 마진을 없애야 함
         margin-left: -235px;
+      }
 
-        span {
-          display: inline-block;
-          padding-bottom: 5px;
+      .portfolio-mypage-slide-wrapper {
+        width: 66.6%;
+        margin: 0 auto;
+
+        .portfolio-mypage-slide,
+        .portfolio-mypage-add {
+          width: 416px;
+          float: left;
+          margin: 0 5px;
+        }
+
+        .portfolio-mypage-slide {
+          overflow: hidden;
+
+          .portfolio-mypage-slide-inner {
+            min-width: 416px;
+            max-width: 9999px;
+          }
+        }
+
+        .portfolio-mypage-add {
+          width: 416px;
+          height: 480px;
+          border: solid 1px #d8d8d8;
         }
       }
 

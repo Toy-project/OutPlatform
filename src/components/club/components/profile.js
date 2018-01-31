@@ -24,6 +24,7 @@ class Profile extends React.Component {
 
     this.editToggle = this.editToggle.bind(this);
     this.editSubmit = this.editSubmit.bind(this);
+    this.snippetLimitStringLength = this.snippetLimitStringLength.bind(this);
   }
 
   editToggle() {
@@ -50,6 +51,47 @@ class Profile extends React.Component {
         }
       }
     });
+  }
+
+  snippetLimitStringLength(e) {
+    const target = e.target.id;
+    const element = document.getElementById(target);
+    const error = document.getElementById('snippet_error');
+    const limitation = document.getElementById('snippet_limitation');
+
+    const length = element.value.length;
+    const maxByte = 200;
+    let allowedByte = 0;
+    let allowedValue = null;
+    let totalByte = 0;
+
+    for(let i = 0; i < length; i++){
+      let oneChar = element.value.charAt(i);
+      if(escape(oneChar).length > 4){
+        totalByte += 2;
+      } else {
+        totalByte++;
+      }
+
+      if(totalByte <= maxByte){
+        allowedByte = i + 1;
+      }
+    }
+
+    if(totalByte > maxByte){
+      // 허용되는 바이트까지 자르기
+      allowedValue = element.value.substr(0, allowedByte);
+      element.value = allowedValue;
+      error.innerHTML = '200자가 넘었습니다!';
+      error.className = 'warning-color';
+      element.className = 'error';
+    } else {
+      error.innerHTML = '등록가능합니다.';
+      error.className = 'recommend-color';
+      element.className = '';
+    }
+
+    limitation.innerHTML = `${allowedByte}/200`;
   }
 
   render() {
@@ -94,14 +136,18 @@ class Profile extends React.Component {
           );
         case 'snippet':
           return (
-            <textarea ref={id} placeholder={placeholder} defaultValue={this.state.data.snippet}></textarea>
+            <div>
+              <div id='snippet_limitation' className='snippet-limitation'>0/200</div>
+              <textarea ref={id} id='snippet' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.data.snippet}></textarea>
+              <a id='snippet_error'>최대 200글자까지 허용됩니다.</a>
+            </div>
           )
         case 'sns':
           return (
             <span>
-              <span className='sns'><input type='text' ref='facebook' placeholder={placeholder} /></span>
-              <span className='sns'><input type='text' ref='naver' placeholder={placeholder} /></span>
-              <span className='sns'><input type='text' ref='insta' placeholder={placeholder} /></span>
+              <div className='sns'><input type='text' ref='facebook' placeholder={placeholder} /></div>
+              <div className='sns'><input type='text' ref='naver' placeholder={placeholder} /></div>
+              <div className='sns'><input type='text' ref='insta' placeholder={placeholder} /></div>
             </span>
           )
         default:
@@ -133,7 +179,7 @@ class Profile extends React.Component {
         <span className='sns'>인스타</span>
         <span className='sns'>페이스북</span>
       </span>
-    )
+    );
 
     return(
       <div className='profile-container'>
@@ -144,7 +190,7 @@ class Profile extends React.Component {
               <span></span>
               <h3>단체 프로필</h3>
             </div>
-            <div className='profile-content hide-on-med-and-down'>
+            <div className='profile-content-left hide-on-med-and-down'>
               <div className='contents'>
                 <h5>소속학교</h5>
                 <p>{this.state.isEditToggle ? editInputText('college') : this.state.data.college}</p>
@@ -162,7 +208,7 @@ class Profile extends React.Component {
                 <p>{this.state.isEditToggle ? editInputText('tag') : this.state.data.tag}</p>
               </div>
             </div>
-            <div className='profile-content hide-on-med-and-down'>
+            <div className='profile-content-right hide-on-med-and-down'>
               <div className='contents-area'>
                 <h5>단체소개</h5>
                 <p>{this.state.isEditToggle ? editInputText('snippet', '우리 단체에 대한 소개를 올려주세요!') : viewContents}</p>
