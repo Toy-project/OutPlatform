@@ -1,5 +1,5 @@
 .register-member-inner {
-  @include popup-reset-options(500px, 600px);
+  @include popup-reset-options(500px, 644px);
   left: 30.4%;
   right: 30.4%;
   top: 4.8%;
@@ -23,6 +23,10 @@
     width: 370.5px;
     height: 100%;
 
+    & > .input-register {
+      @include left-align;
+    }
+
     input, select {
       box-sizing: border-box;
     }
@@ -44,6 +48,14 @@
       &.error {
         border: solid 1px red;
       }
+
+      &#mem_phone {
+        width: 279px;
+      }
+
+      &#mem_phone_auth {
+        width: 294px;
+      }
     }
 
     input[type=button] {
@@ -57,15 +69,16 @@
         width: $btn-width-2;
       }
     }
-
-    .input-register {
-      position: relative;
-
+    .submit-resgister {
       input[type=submit] {
         margin-top:27px;
         @include btn-reset-shape($btn-width-1, $btn-height-1, $btn-background-emerald-color);
         @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-1);
       }
+    }
+    .input-register {
+      position: relative;
+      margin-bottom: 10px;
 
       label {
         position: absolute;
@@ -78,31 +91,12 @@
       a {
         font-size: 9px;
         display: block;
+        margin-bottom: 15px;
         @include right-align;
 
         &.red {
           color: red;
         }
-      }
-
-      &.member-id {
-        margin: 5px 0 22px 0;
-      }
-
-      &.member-pw {
-        margin: 0 0 10px 0;
-      }
-
-      &.member-pw_confirm {
-        margin: 5px 0 16px 0;
-      }
-
-      &.member-email {
-        margin: 5px 0 16px 0;
-      }
-
-      &.member-phone {
-        margin: 0 0 10px 0;
       }
     }
   }

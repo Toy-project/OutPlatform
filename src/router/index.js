@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <Route exact path="/" component={Main} />
-      <Route path="/register/:type" component={RegisterForClub} />
+      <Route path="/register/" component={RegisterForClub} />
       <Route path="/club/:club_id" component={Club} />
       <Route path="/myPage/:club_id" component={MyPageClub} />
       <Route path="/typeface" component={TypeFace} />

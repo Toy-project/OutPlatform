@@ -12,9 +12,19 @@ class CategoryList extends React.Component {
   }
 
   render() {
+    let category;
+    if(this.props.category.isLoading){
+      category = 'Loading';
+    } else if(this.props.category.error){
+      category = 'Error';
+    } else {
+      category = <Category {...this.props.category} />
+    }
     return (
-      <div>
-        <Category {...this.props.category} />
+      <div className='category-wrapper'>
+        <div className='category-inner'>
+          {category}
+        </div>
       </div>
     );
   }

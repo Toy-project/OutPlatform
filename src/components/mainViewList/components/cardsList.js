@@ -31,6 +31,11 @@ class CardsList extends React.Component {
   }
 
   loadingData() {
+    //데이터를 로딩중이거나 Error 일 경우는 그냥 리턴
+    if(this.props.cards.isLoading || this.props.cards.error){
+      return false;
+    }
+
     paginationStart += 6; //페이징 시작 점을 증가
 
     //Get Data
@@ -59,6 +64,8 @@ class CardsList extends React.Component {
     return (
       <div>
         <ul id="cardsList" className="center">
+          {this.props.cards.isLoading ? 'Loading' : ''}
+          {this.props.cards.error ? 'Error' : ''}
           {this.props.cards.data.map( (card, key) => {
             return (
               <li key={key}>
@@ -83,6 +90,8 @@ CardsList.propTypes = {
       club_rating : PropTypes.float,
     })),
     title: PropTypes.string,
+    isLoading: PropTypes.bool,
+    Error: PropTypes.bool,
   })
 };
 

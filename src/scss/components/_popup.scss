@@ -28,10 +28,17 @@
   }
 
   p {
-    width: 184px;
+    width: 208px;
     height: auto;
     font-size: $font-size-14;
     color: inherit;
     margin: 0 auto;
+
+    &.warning {
+      margin-top: 15px;
+      width: 230px;
+      font-size: $font-size-12;
+      color: $emerald-1;
+    }
   }
 }

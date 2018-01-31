@@ -3,7 +3,7 @@ import React from 'react';
 import { postMember } from 'services/register';
 
 import { isPhoneGood, isEmailGood, isPasswordGood, isUseridGood } from 'helper/regExp';
-import { getValueId } from 'helper/registerHelper';
+import { getValueId, autoHypenPhone } from 'helper/registerHelper';
 
 class RegisterMember extends React.Component {
   constructor(props){
@@ -14,7 +14,6 @@ class RegisterMember extends React.Component {
       "mem_pw" : '',
       "mem_email" : '',
       "mem_name" : '',
-      "mem_profile_photo": '',
       "mem_phone" : '',
       "mem_mail_agree" : '',
       "mem_userid_btn_validator_toggle" : false,
@@ -33,7 +32,6 @@ class RegisterMember extends React.Component {
         [e.target.id]: e.target.value,
       });
 
-      console.log(e.target.id);
       this.showInputError(e.target.id);
   }
 
@@ -68,36 +66,6 @@ class RegisterMember extends React.Component {
     const isPhone = refId === 'mem_phone' ? true : false;
     const error = document.getElementById(`${refId}_error`);
 
-    //패스워드 검사
-    if(isPassword){
-      if(!isPasswordGood(element.value)){
-        element.className = 'error';
-        error.innerHTML = '올바르지 않은 패스워드입니다. 영문,숫자,특수문자 포함 12자이내'
-        error.className = 'warning-color';
-        return false;
-      } else {
-        error.innerHTML = '사용가능합니다'
-        error.className = 'recommend-color';
-        element.className = '';
-      }
-    }
-
-    if(isPasswordConfirm){
-      const error = document.getElementById('mem_pw_error');
-      if(!isPasswordGood(document.getElementById('mem_pw').value)){
-        error.innerHTML = '올바르지 않은 패스워드입니다. 영문,숫자,특수문자 포함 12자이내'
-        error.className = 'warning-color';
-      } else if(element.value !== document.getElementById('mem_pw').value){
-        element.className = 'error';
-        error.innerHTML = '비밀번호가 다릅니다.';
-        error.className = 'warning-color';
-      } else {
-        element.className = '';
-        error.innerHTML = '사용가능합니다';
-        error.className = 'recommend-color';
-      }
-    }
-
     //Empty Value 체크
     if(element.value === ''){
       element.className = 'error';
@@ -115,17 +83,26 @@ class RegisterMember extends React.Component {
         return false;
       } else {
         element.className = '';
-        error.innerHTML = '';
-        error.className = '';
+        error.innerHTML = '등록 가능한 아이디입니다.';
+        error.className = 'recommend-color';
       }
     }
 
-    //전화번호일 경우
-    if (isPhone){
-      if(!isPhoneGood(element.value)){
+    //패스워드 검사
+    if(isPassword || isPasswordConfirm){
+      const error = document.getElementById('mem_pw_error');
+      if(!isPasswordGood(element.value)){
         element.className = 'error';
+        error.innerHTML = '올바르지 않은 패스워드입니다. 영문,숫자,특수문자 포함 12자이내'
+        error.className = 'warning-color';
         return false;
+      } else if(element.value !== document.getElementById('mem_pw').value){
+        element.className = 'error';
+        error.innerHTML = '비밀번호가 다릅니다.';
+        error.className = 'warning-color';
       } else {
+        error.innerHTML = '사용가능합니다'
+        error.className = 'recommend-color';
         element.className = '';
       }
     }
@@ -141,6 +118,17 @@ class RegisterMember extends React.Component {
         element.className = '';
         error.innerHTML = '등록 가능한 이메일입니다.';
         error.className = 'recommend-color';
+      }
+    }
+
+    //전화번호일 경우
+    if (isPhone){
+      element.value = autoHypenPhone(element.value);
+      if(!isPhoneGood(element.value)){
+        element.className = 'error';
+        return false;
+      } else {
+        element.className = '';
       }
     }
 
@@ -223,8 +211,7 @@ class RegisterMember extends React.Component {
         "mem_userid" : this.state.mem_userid,
         "mem_pw" : this.state.mem_pw,
         "mem_email" : this.state.mem_email,
-        "mem_name" : "test",
-        "mem_profile_photo": "test",
+        "mem_name" : this.state.mem_name,
         "mem_phone" : this.state.mem_phone,
         "mem_mail_agree" : 1
       };
@@ -250,26 +237,30 @@ class RegisterMember extends React.Component {
           읽고 이해하였으며, 이에 동의하는 것으로 간주됩니다.
         </p>
         <form onSubmit={this.handleSubmit}>
-          <div className="input-register member-id">
+          <div className="input-register">
             <label htmlFor="mem_userid">아이디</label>
             <input type="text" id="mem_userid" onChange={this.handleChange} onBlur={this.showButtonError}/>
             <a id='mem_userid_error'>5자 이상 12자 이내로 지어주세요.</a>
           </div>
-          <div className="input-register member-pw">
+          <div className="input-register">
             <label htmlFor="mem_pw">비밀번호</label>
             <input type="password" id="mem_pw" onChange={this.handleChange} />
           </div>
-          <div className="input-register member-pw_confirm">
-            <label htmlFor="mem_pw_confirm">비밀번호</label>
+          <div className="input-register">
+            <label htmlFor="mem_pw_confirm">비밀번호 확인</label>
             <input type="password" id="mem_pw_confirm" onChange={this.handleChange}/>
             <a id='mem_pw_error'>영문,숫자,특수문자 포함 12자이내</a>
           </div>
-          <div className="input-register member-email">
-            <label htmlFor="mem_email">이메일</label>
+          <div className="input-register">
+            <label htmlFor="mem_email">이메일 주소</label>
             <input type="text" id="mem_email" onChange={this.handleChange}/>
             <a id='mem_email_error'>이메일을 입력해주세요.</a>
           </div>
-          <div className="input-register member-phone">
+          <div className="input-register">
+            <label htmlFor="mem_name">이름</label>
+            <input type="text" id="mem_name" onChange={this.handleChange} onBlur={this.showButtonError} />
+          </div>
+          <div className="input-register">
             <label htmlFor="mem_phone">전화번호</label>
             <input type="text" id="mem_phone" onChange={this.handleChange}/>
             <input type="button" id="mem_phone_btn" value="인증번호 발송" onClick={this.showButtonError}/>
@@ -279,7 +270,7 @@ class RegisterMember extends React.Component {
             <input type="text" id="mem_phone_auth" onChange={this.handleChange}/>
             <input type="button" id ="mem_phone_auth_btn" value="확인" className='member-phone-auth-btn' onClick={this.showButtonError}/>
           </div>
-          <div className="input-register">
+          <div className="submit-resgister">
             <input type="submit" value="무료 가입하기"/>
           </div>
         </form>

@@ -58,7 +58,7 @@ class RegisterPopup extends React.Component {
     let showRegisterStep;
 
     if(this.state.registerSelectionToggle){
-      showRegisterStep = <RegisterSelection toggleToClub={this.registerToClubToggle} toggleToRegisterMember={this.registerToMemberToggle} />;
+      showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerToMemberToggle} />;
     } else if(this.state.typeOfClubSelectionToggle) {
       showRegisterStep = <TypeOfClubSelection toggleToBack={this.registerToClubToggle} />;
     } else {

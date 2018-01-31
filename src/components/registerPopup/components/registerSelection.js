@@ -1,17 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router-dom";
 
 class RegisterSelection extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.onCickToClubRegister = this.onCickToClubRegister.bind(this);
+  }
+
+  onCickToClubRegister() {
+    this.props.history.push(`/register/`);
+    window.location.reload();
+  }
 
   render() {
     return (
       <div className='register-selection-inner'>
         <h3>회원가입</h3>
         <p>
-          동아리, 학회, 소모임 등의 <br /> <span>대학교 관련 단체 소속</span>이신가요?
+          단체회원가입과 일반회원가입 중 <br />원하시는 가입 유형을 선택해주세요!
         </p>
-        <button onClick={this.props.toggleToClub} className="emerald-btn">네, 단체 소속이에요.</button>
-        <button onClick={this.props.toggleToRegisterMember} className="gray-btn">아니요, 단체가 아니예요.</button>
+        <button onClick={this.props.toggleToRegisterMember} className="emerald-btn">일반 회원가입</button>
+        <button onClick={this.onCickToClubRegister} className="blue-btn">단체 회원가입</button>
+        <p className='warning'>
+          *일반회원가입으로는 단체 개설이 불가능하니 단체 계정을 하나 더 만들 것을 권장드립니다.
+        </p>
       </div>
     );
   }
@@ -22,4 +36,4 @@ RegisterSelection.propTypes = {
   toggleToRegisterMember: PropTypes.func,
 };
 
-export default RegisterSelection;
+export default withRouter(RegisterSelection);

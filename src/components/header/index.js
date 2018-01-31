@@ -33,7 +33,7 @@ class Header extends React.Component {
 
   render(){
     return (
-      <div id="container" Style={`height:${window.innerHeight}px`} className="top-container">
+      <div id="container" style={{height: window.innerHeight + 'px'}} className="top-container">
         <Nav />
         <div className="container">
           <div className="header-contents-container">
@@ -57,7 +57,7 @@ class Header extends React.Component {
             </span>
             <section>
               <Scroll offset={this.state.containerHeight}>
-                <i class='arrow-to-bottom'></i>
+                <i className='arrow-to-bottom'></i>
               </Scroll>
             </section>
           </div>

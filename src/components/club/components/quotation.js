@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ic_profile from 'images/icons/ic-profile.png';
-
 const Quotation = () => {
   return (
     <div className='quotation-container'>
