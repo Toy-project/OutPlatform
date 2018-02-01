@@ -136,18 +136,18 @@ class Profile extends React.Component {
           );
         case 'snippet':
           return (
-            <div>
-              <div id='snippet_limitation' className='snippet-limitation'>0/200</div>
+            <span>
+              <span id='snippet_limitation' className='snippet-limitation'>0/200</span>
               <textarea ref={id} id='snippet' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.data.snippet}></textarea>
               <a id='snippet_error'>최대 200글자까지 허용됩니다.</a>
-            </div>
+            </span>
           )
         case 'sns':
           return (
             <span>
-              <div className='sns'><input type='text' ref='facebook' placeholder={placeholder} /></div>
-              <div className='sns'><input type='text' ref='naver' placeholder={placeholder} /></div>
-              <div className='sns'><input type='text' ref='insta' placeholder={placeholder} /></div>
+              <span className='sns'><input type='text' ref='facebook' placeholder={placeholder} /></span>
+              <span className='sns'><input type='text' ref='naver' placeholder={placeholder} /></span>
+              <span className='sns'><input type='text' ref='insta' placeholder={placeholder} /></span>
             </span>
           )
         default:

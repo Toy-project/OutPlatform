@@ -31,7 +31,7 @@ class Snippet extends React.Component {
 
   render() {
     let editButton;
-    let editContents = <textarea ref={ref => this.textarea = ref} placeholder='회원가입 단계에서 미리 입력된 동아리 설명이 나타납니다.(30자 이내)'>{this.state.contents}</textarea>;
+    let editContents = <textarea ref={ref => this.textarea = ref} placeholder='회원가입 단계에서 미리 입력된 동아리 설명이 나타납니다.(30자 이내)' defaultValue={this.state.contents}></textarea>;
     let viewContents = this.state.contents.split('\n').map((line, key) => {
       return (<span key={key}>{line}<br /></span>);
     });

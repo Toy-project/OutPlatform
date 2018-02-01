@@ -38,14 +38,17 @@ class PortfolioNavigation extends React.Component {
   }
 
   componentDidMount(){
-    const element = document.getElementById('add');
-    element.addEventListener("transitionend", () => {
-      this.setState({
-        ...this.state,
-        items: [...this.state.items, 'new'],
-      });
-      element.classList.remove('isReady');
-    }, false);
+    if(this.props.myPage) {
+      const element = document.getElementById('add');
+      element.addEventListener("transitionend", () => {
+        this.setState({
+          ...this.state,
+          items: [...this.state.items, 'new'],
+        });
+        this.isEditToggle();
+        element.classList.remove('isReady');
+      }, false);
+    }
   }
 
   handleAdd(e){

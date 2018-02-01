@@ -38,7 +38,7 @@
         left: 44.3%;
         top: 41%;
 
-        span {
+        .image-uploader {
           display: block;
           width: 100px;
           height: 100px;
@@ -46,6 +46,11 @@
           background: url("#{$get-path-from-components-to-images}/icons/ic-add.png") no-repeat 50% 50%;
           background-color: $gray-6;
           cursor: pointer;
+        }
+
+        input[type='file'] {
+          position: absolute;
+          left: -9999px;
         }
 
         h3 {

@@ -6,14 +6,48 @@ class ImageNavigation extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      picture: '',
+    }
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.submitImageLoader = this.submitImageLoader.bind(this);
   }
   next() {
     this.slider.slickNext();
   }
   previous() {
     this.slider.slickPrev();
+  }
+  onDrop(e) {
+    const img = e.target.files[0];
+    const previewEle = document.getElementById('image-preview');
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      previewEle.style.backgroundImage = `url(${reader.result})`;
+      previewEle.style.backgroundRepeat = 'no-repeat';
+      previewEle.style.backgroundSize = 'cover';
+    }, false);
+
+    if (img) {
+      reader.readAsDataURL(img);
+    }
+
+    this.setState({
+      picture: img,
+    });
+  }
+
+  submitImageLoader(e){
+    if(this.state.picture === ''){
+      console.log('이미지를 입력해주세요.');
+      return false;
+    } else {
+      //Posting
+    }
   }
 
   render() {
@@ -34,12 +68,13 @@ class ImageNavigation extends React.Component {
     if(this.props.myPage){
       isSlider = (
         <div className='add-image'>
-          <span></span>
+          <label htmlFor="uploadBtn" className='image-uploader'></label>
+          <input type='file' id='uploadBtn' onChange={this.onDrop} accept="image/*"/>
           <h3>사진 업로드</h3>
         </div>
       );
       isArrows = '';
-      isFloatingCircle = <button className='my-image myPage'></button>;
+      isFloatingCircle = <button onClick={this.submitImageLoader} className='my-image myPage'></button>;
     } else {
       //Slick
       isSlider = (
@@ -67,7 +102,7 @@ class ImageNavigation extends React.Component {
     return (
       <div className='imageNavigation-container'>
         <div className='container'>
-          <div className='imageNavigation-inner'>
+          <div id='image-preview' className='imageNavigation-inner'>
             {isSlider}
             {isArrows}
             {isFloatingCircle}
