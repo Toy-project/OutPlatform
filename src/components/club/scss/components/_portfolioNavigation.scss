@@ -52,9 +52,25 @@
         }
 
         .portfolio-mypage-add {
+          position: relative;
           width: 416px;
           height: 480px;
+          cursor: pointer;
           border: solid 1px #d8d8d8;
+
+          .animation {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            z-index: 2;
+          }
+          &.isReady > .animation {
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform: translate3d(-427px,0,0);
+            opacity: 1;
+          }
+
         }
       }
 

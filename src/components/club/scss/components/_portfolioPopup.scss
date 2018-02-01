@@ -1,9 +1,165 @@
 .portfolio-popup-wrapper {
-  @include popup-reset-options(624px, 600px);
+  @include popup-reset-options(624px, 700px);
   left: 26%;
   right: 26%;
   top: 4.6%;
   z-index: 2;
 
   @include center;
+
+  .portfolio-popup-header,
+  .portfolio-popup-footer {
+    width: 100%;
+  }
+
+  .portfolio-popup-header {
+    position:relative;
+    height: 55%;
+    background-color: #e6e6e6;
+
+    .close-btn,
+    .close-btn:after,
+    .close-btn:before,
+    .ok-btn,
+    .icons {
+      position: absolute;
+    }
+
+    .close-btn,
+    .ok-btn {
+      top: 28px;
+    }
+
+    .close-btn {
+      left: 26px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .close-btn:after,
+    .close-btn:before {
+      left: 0;
+      top: 0;
+      content: '';
+      height: 20px;
+      border-left: 3px solid #797979;
+    }
+
+    .close-btn:after {
+      transform: rotate(45deg);
+    }
+    .close-btn:before {
+      transform: rotate(-45deg);
+    }
+
+    .ok-btn  {
+      right: 26px;
+      @include btn-reset-shape(60px, 40px, $emerald-1);
+      @include btn-reset-font($font-size-18, $white, 40px);
+    }
+
+    .icons {
+      width: 100%;
+      top: 184px;
+      left: 0;
+
+      .add-image-icon,
+      .add-video-icon {
+        display: inline-block;
+        margin: 0 30px;
+        & > span {
+          display: inline-block;
+          width: 100px;
+          height: 100px;
+          border-radius: 100px;
+          background-color: #b3b3b3;
+          cursor: pointer;
+        }
+
+        & > h5 {
+          font-size: $font-size-14;
+          color: inherit;
+        }
+      }
+
+      .add-image-icon > span {
+        background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+    }
+  }
+
+  .portfolio-popup-footer {
+    height: auto;
+    padding: 17px 26px 20px 26px;
+    @include left-align;
+
+    .portfolio-popup-input {
+      margin-bottom : 16px;
+
+      & > label {
+        font-size: $font-size-16;
+        display: block;
+        color: #797979;
+        margin-bottom: 8px;
+
+        @include thick;
+      }
+
+      & > input[type='text'] {
+        border: solid 0.5px #b3b3b3;
+        font-size: $font-size-14;
+      }
+
+      & > input[type='text'] {
+        width: 220px;
+        height: 30px;
+        border: solid 0.5px #b3b3b3;
+        padding-left: 5px;
+        font-size: $font-size-14;
+      }
+
+      & > .from {
+        margin-right: 50px;
+      }
+
+      & > .from,
+      & > .to {
+        & > .year,
+        & > .month,
+        & > .day {
+          border: solid 0.5px #b3b3b3;
+          font-size: $font-size-14;
+          margin-right: 8px;
+        }
+
+        & > .year,
+        & > .month,
+        & > .day {
+          border-radius: 2px;
+        }
+
+        & > .year {
+          width: 82px;
+          height: 30px;
+        }
+
+        & > .month,
+        & > .day {
+          width: 62px;
+          height: 30px;
+        }
+      }
+
+      & > textarea {
+        width: 570px;
+        height: 90px;
+        resize: none;
+        font-size: $font-size-14;
+        padding: 5px;
+      }
+    }
+  }
 }
