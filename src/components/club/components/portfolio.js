@@ -1,6 +1,15 @@
 import React from 'react';
 
 class Portfolio extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit() {
+    this.props.data(this.props.id);
+  }
 
   render() {
     let isButton;
@@ -8,7 +17,7 @@ class Portfolio extends React.Component {
     if(this.props.myPage){
       isButton = (
         <div className='portfolio-edit-btn'>
-          <button onClick={this.props.open}>수정</button>
+          <button onClick={this.handleEdit}>수정</button>
         </div>
       );
     } else {
@@ -25,7 +34,7 @@ class Portfolio extends React.Component {
         </div>
         <div className='card-content-container'>
           <section>
-            <h4>프로젝트 명 { this.props.name }</h4>
+            <h4>프로젝트 명 { this.props.id }</h4>
             <h5>2017.12.29-2017.08.12</h5>
           </section>
           <p>

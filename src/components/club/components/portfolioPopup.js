@@ -44,7 +44,7 @@ class PortfolioPopup extends React.Component{
           <footer className='portfolio-popup-footer'>
             <form>
               <div className='portfolio-popup-input'>
-                <label htmlFor='portfolio-name'>프로젝트 명</label>
+                <label htmlFor='portfolio-name'>프로젝트 명 - {this.props.data}</label>
                 <input type='text' id='portfolio-name' placeholder='20자 이내' />
               </div>
               <div className='portfolio-popup-input'>

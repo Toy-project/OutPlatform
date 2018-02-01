@@ -9,11 +9,9 @@ class PortfolioNavigation extends React.Component {
     super(props);
 
     this.state = {
-      items: ["1",
-              "2",
-              "3",
-              "4"],
+      items: [1, 2, 3, 4],
       editToggle : false,
+      editData : '',
     }
 
     this.next = this.next.bind(this);
@@ -21,6 +19,7 @@ class PortfolioNavigation extends React.Component {
 
     //수정 팝업
     this.isEditToggle = this.isEditToggle.bind(this);
+    this.isEditData = this.isEditData.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
   }
   next() {
@@ -30,10 +29,19 @@ class PortfolioNavigation extends React.Component {
     this.slider.slickPrev();
   }
 
-  isEditToggle(){
+  isEditToggle() {
     this.setState({
       ...this.state,
       editToggle: !this.state.editToggle,
+    });
+  }
+
+  isEditData(data){
+    console.log(data);
+    this.setState({
+      ...this.state,
+      editToggle: !this.state.editToggle,
+      editData: data,
     });
   }
 
@@ -41,11 +49,12 @@ class PortfolioNavigation extends React.Component {
     if(this.props.myPage) {
       const element = document.getElementById('add');
       element.addEventListener("transitionend", () => {
+        //총 갯수 + 1번째의 아이템을 생성 후 추가
         this.setState({
           ...this.state,
           items: [...this.state.items, 'new'],
         });
-        this.isEditToggle();
+        //this.isEditData();
         element.classList.remove('isReady');
       }, false);
     }
@@ -58,9 +67,10 @@ class PortfolioNavigation extends React.Component {
 
   render() {
     let isSlider;
-    let showEditPopup = this.state.editToggle ? <PortfolioPopup close={this.isEditToggle} /> : '';
+    let showEditPopup = this.state.editToggle ? <PortfolioPopup close={this.isEditToggle} data={this.state.editData} /> : '';
+    console.log(this.state);
     const items = this.state.items.map((item,i) => (
-      <span key={i}><Portfolio name={i} myPage={this.props.myPage} open={this.isEditToggle} /></span>
+      <span key={i}><Portfolio id={i} myPage={this.props.myPage} data={this.isEditData} /></span>
     ));
 
     const settings = {
