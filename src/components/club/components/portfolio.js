@@ -5,10 +5,15 @@ class Portfolio extends React.Component {
     super(props);
 
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleView = this.handleView.bind(this);
   }
 
   handleEdit() {
-    this.props.openAndData(this.props.data);
+    this.props.handleUpdate(this.props.data);
+  }
+
+  handleView() {
+    this.props.handleView(this.props.data);
   }
 
   render() {
@@ -23,7 +28,7 @@ class Portfolio extends React.Component {
     } else {
       isButton = (
         <div className='portfolio-view-btn'>
-          <button>더 보기</button>
+          <button onClick={this.handleView}>더 보기</button>
         </div>
       );
     }

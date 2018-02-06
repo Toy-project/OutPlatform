@@ -137,8 +137,8 @@ class ImageNavigation extends React.Component {
 
     let isArrows = (
       <div>
-        <div className='left-arrow' onClick={this.next} ></div>
-        <div className='right-arrow' onClick={this.next}></div>
+        <div className={this.state.club_photo.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
+        <div className={this.state.club_photo.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
       </div>
     );
 

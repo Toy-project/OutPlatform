@@ -1,9 +1,10 @@
 .portfolio-popup-wrapper {
-  @include popup-reset-options(624px, 700px);
+  @include popup-reset-options(628px, 90%);
   left: 26%;
   right: 26%;
   top: 4.6%;
   z-index: 2;
+  overflow: hidden;
 
   @include center;
 
@@ -71,7 +72,7 @@
 
     .icons {
       width: 100%;
-      top: 184px;
+      top: 35%;
       left: 0;
 
       .add-image-icon,
@@ -115,14 +116,17 @@
   }
 
   .portfolio-popup-footer {
-    height: auto;
-    padding: 17px 26px 20px 26px;
+    padding: 5% 26px;
     @include left-align;
+
+    .portfolio-popup-footer-inner {
+      height: auto;
+    }
 
     .portfolio-popup-input {
       margin-bottom : 16px;
 
-      & > label {
+      > label {
         font-size: $font-size-16;
         display: block;
         color: #797979;
@@ -131,12 +135,12 @@
         @include thick;
       }
 
-      & > input[type='text'] {
+      > input[type='text'] {
         border: solid 0.5px #b3b3b3;
         font-size: $font-size-14;
       }
 
-      & > input[type='text'] {
+      > input[type='text'] {
         width: 220px;
         height: 30px;
         border: solid 0.5px #b3b3b3;
@@ -144,41 +148,41 @@
         font-size: $font-size-14;
       }
 
-      & > .from {
+      > .from {
         margin-right: 50px;
       }
 
-      & > .from,
-      & > .to {
-        & > .year,
-        & > .month,
-        & > .day {
+      > .from,
+      > .to {
+        > .year,
+        > .month,
+        > .day {
           border: solid 0.5px #b3b3b3;
           font-size: $font-size-14;
           margin-right: 8px;
         }
 
-        & > .year,
-        & > .month,
-        & > .day {
+        > .year,
+        > .month,
+        > .day {
           border-radius: 2px;
         }
 
-        & > .year {
+        > .year {
           width: 82px;
           height: 30px;
         }
 
-        & > .month,
-        & > .day {
+        > .month,
+        > .day {
           width: 62px;
           height: 30px;
         }
       }
 
-      & > textarea {
+      > textarea {
         width: 570px;
-        height: 90px;
+        height: 100px;
         resize: none;
         font-size: $font-size-14;
         padding: 5px;

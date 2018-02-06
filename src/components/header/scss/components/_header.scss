@@ -42,23 +42,28 @@
         width: $header-search-input-width;
         height: $header-search-input-height;
         text-indent: 50px;
-        border: solid 0.5px #{$gray-2};
+        border: solid 0.5px #{$gray-6};
         background-color: transparent;
         outline: none;
       }
 
       label {
         position: absolute;
-        left: 12px;
-        top: 7px;
+        left: 0;
+        top: 0;
+        //background-color: $gray-6;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
 
         i {
-          display: inline-block;
-          width: 20px;
-          height: 20px;
+          display: block;
+          height: 100%;
+          height: 100%;
           background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.png");
+          background-position: center center;
           background-repeat: no-repeat;
-          cursor: pointer;
+          background-color: $gray-6;
         }
       }
     }

@@ -103,50 +103,6 @@
             }
           }
 
-          // .pagination {
-          //   width: 100%;
-          //   @include center;
-          //
-          //   // .previous,
-          //   // .next {
-          //   //   padding: 0 5px;
-          //   //   font-size: $font-size-12;
-          //   //   line-height: 25px;
-          //   //   cursor: pointer;
-          //   //
-          //   //   @include normal;
-          //   // }
-          //
-          //   .previous {
-          //     float: left;
-          //   }
-          //   .next {
-          //     float: right;
-          //   }
-          //
-          //   .linkClassLast,
-          //   .linkClassFirst {
-          //     display: none;
-          //   }
-          //
-          //   .page-btn {
-          //     clear: both;
-          //     padding: 0 5px 3px 5px;
-          //     width: auto;
-          //     height: 25px;
-          //     line-height: 25px;
-          //     font-size: $font-size-14;
-          //     color: #797979;
-          //     box-sizing: border-box;
-          //     background-color: $white;
-          //     border: solid 1px $gray-9;
-          //     margin: 0 12.5px;
-          //     cursor: pointer;
-          //
-          //     @include thick;
-          //     @include center;
-          //   }
-          // }
           .pagination {
             margin-top: 5px;
             display:inline-block;
@@ -200,7 +156,7 @@
               &:hover,
               &:focus {
                 z-index: 2;
-                color: red;
+                color: $red;
               }
             }
 
@@ -210,7 +166,7 @@
               &:hover,
               &:focus {
                 z-index: 3;
-                color: red;
+                color: $red;
               }
             }
 

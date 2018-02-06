@@ -64,6 +64,16 @@
   }
 }
 
+.left-arrow,
+.right-arrow {
+  cursor: pointer;
+  
+  &.disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
 .left-arrow {
   width: 20px;
   height: 30px;

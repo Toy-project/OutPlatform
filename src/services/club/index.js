@@ -15,10 +15,10 @@ export function getClubById(club_id){
       data: {
         'club_id': club_id,
         'club_name': 'test',
-        'club_profile_photo': 'test',
+        'club_profile_photo': '',
         'club_copyright': 'test',
         'club_phone': 'test',
-        'club_photo': ['http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif','http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif'],
+        'club_photo': [],
         'club_ex': 'test',
         'club_college': 'test',
         'cate_id': 1,

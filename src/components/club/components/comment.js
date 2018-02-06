@@ -15,20 +15,18 @@ class Comment extends React.Component {
     super(props);
     this.state = {
       activePage: 1,
-      start: this.props.start,
+      updatedCommentId: -1,
     }
 
     this.setRating = this.setRating.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleAddComment = this.handleAddComment.bind(this);
-    console.log('s');
+
     //Fetch comment Data
-    this.props.fetchComment(this.props.club_id, this.state.start, this.props.end );
+    this.props.fetchComment(this.props.club_id, this.props.start, this.props.end );
   }
 
   handlePageChange(pageNumber){
-    console.log(pageNumber);
-    console.log(this.state.start);
     let start; //스타트 번호
 
     //같은 페이지 번호일 경우
@@ -36,6 +34,7 @@ class Comment extends React.Component {
       return false;
     }
 
+    //Data Fetch
     start = (pageNumber * 2) - 2 + pageNumber;
     this.props.fetchComment(this.props.club_id, start, this.props.end);
 
@@ -47,12 +46,31 @@ class Comment extends React.Component {
 
   //댓글 추가시 별 셋팅
   setRating(rate) {
-    console.log(rate);
+    //Set rating value to hidden input
+    const element = document.getElementById('hiddenRatingValue');
+    element.value = rate;
   }
 
   //댓글 추가
   handleAddComment() {
-    //Call API
+    const rating = document.getElementById('hiddenRatingValue').value;
+    const data = {
+      'comment_contents': this.refs.comment_contents.value,
+      'club_rating': rating,
+      // 'club_id':
+      // 'mem_id':
+    }
+    let updatedCommentId;
+
+    //Call Post API
+    //updatedCommentId = APICALL
+    this.setState({
+      ...this.state,
+      updatedCommentId: updatedCommentId,
+    });
+
+    //Fetch Data
+    this.props.fetchComment(this.props.club_id, this.props.start, this.props.end);
   }
 
   render() {
@@ -60,43 +78,21 @@ class Comment extends React.Component {
       const results = checkStatusComponent(this.props.comment);
       if(results) {
         const comment = this.props.comment.data;
-        let count;
 
         //데이터가 없을 경우
         if(checkEmptyData(comment)){
           return false;
         }
 
-        //전체 댓글 갯수
-        count = comment.count;
-
         return (
-          <div className='comment-list'>
-            <ul>
-              {comment.rows.map((data, key) => {
-                return <li key={key}><CommentCard data={data} /></li>;
-              })}
-            </ul>
-            <div className='pagination'>
-              {/* <div className='previous'>이전</div>
-              <div className='page-btn'>1</div>
-              <div className='page-btn'>2</div>
-              <div className='page-btn'>3</div>
-              <div className='next'>다음</div> */}
-              <Pagination
-                activePage={this.state.activePage}
-                itemsCountPerPage={3}
-                totalItemsCount={count}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-                prevPageText={'이전'}
-                nextPageText={'다음'}
-                linkClassPrev={'previous'}
-                linkClassNext={'next'}
-                getPageUrl={this.getPageUrl}
-              />
-            </div>
-          </div>
+          <ul>
+            {comment.rows.map((data, key) => {
+              if(this.state.updatedCommentId === data.comment_id){
+                //애니메이션 추가
+              }
+              return <li key={key}><CommentCard data={data} /></li>;
+            })}
+          </ul>
         );
       }
     }
@@ -130,10 +126,27 @@ class Comment extends React.Component {
                         />
                       </span>
                     </div>
-                    <textarea></textarea>
+                    <textarea ref='comment_contents'></textarea>
                     <button onClick={this.handleAddComment}>등록</button>
+                    <input type='hidden' id='hiddenRatingValue'></input>
                   </div>
-                  {comment()}
+                  <div className='comment-list'>
+                    {comment()}
+                    <div className='pagination'>
+                      <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={3}
+                        totalItemsCount={this.props.comment.data.count}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange}
+                        prevPageText={'이전'}
+                        nextPageText={'다음'}
+                        linkClassPrev={'previous'}
+                        linkClassNext={'next'}
+                        getPageUrl={this.getPageUrl}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

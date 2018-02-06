@@ -39,11 +39,6 @@ class Club extends React.Component {
       if(results) {
         const portfolio = this.props.portfolio.data;
 
-        //데이터가 없을 경우
-        if(checkEmptyData(portfolio)){
-          return false;
-        }
-
         return (
           <PortfolioNavigation
             myPage={this.state.myPage}
@@ -90,12 +85,11 @@ class Club extends React.Component {
              />
             {portfolio()}
             {/* comment */}
-            {<Comment
+            {this.state.myPage ? '' : <Comment
               club_id={this.props.club_id}
               club_rating={club.club_rating}
               start={1}
               end={3}
-              incresement={3}
             />}
             {/* comment */}
             {this.state.myPage ? '' : <Quotation />}

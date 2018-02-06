@@ -6,6 +6,13 @@ nav {
   min-height: $navbar-height-main;
   z-index: 1;
 
+  .logo {
+    float: left;
+    margin-left: 133px;
+    font-size: $font-size-14;
+    line-height: $navbar-height-main;
+    cursor: pointer;
+  }
   .main-menu {
     margin-right: 290px;
     list-style: none;

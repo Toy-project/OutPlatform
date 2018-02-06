@@ -20,6 +20,7 @@ class Nav extends React.Component {
     this.registerToggle = this.registerToggle.bind(this);
     this.loginToggle = this.loginToggle.bind(this);
     this.goToMyPageClub = this.goToMyPageClub.bind(this);
+    this.goToMain = this.goToMain.bind(this);
   }
 
   registerToggle() {
@@ -40,6 +41,11 @@ class Nav extends React.Component {
     window.location.reload();
   }
 
+  goToMain(){
+    this.props.history.push(`/`);
+    window.location.reload();
+  }
+
   render() {
     //const subPageStyle = this.props.subPage ? 'isSub' : '';
     const registerPopup = this.state.showRegister ? <RegisterPopup close={this.registerToggle} /> : '';
@@ -48,6 +54,9 @@ class Nav extends React.Component {
       <div>
         <nav>
           <div className="container">
+            <div className='logo' onClick={this.goToMain}>
+              외주대학교
+            </div>
             <ul className="main-menu hide-on-med-and-down">
               <li>장바구니</li>
               <li onClick={this.registerToggle}>회원가입</li>
