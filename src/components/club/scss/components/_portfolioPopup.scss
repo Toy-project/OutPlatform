@@ -17,6 +17,16 @@
     height: 55%;
     background-color: #e6e6e6;
 
+    .preview {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      & > img {
+        width: 100%;
+      }
+    }
+
     .close-btn,
     .close-btn:after,
     .close-btn:before,
@@ -68,7 +78,8 @@
       .add-video-icon {
         display: inline-block;
         margin: 0 30px;
-        & > span {
+        .image-icon,
+        .video-icon {
           display: inline-block;
           width: 100px;
           height: 100px;
@@ -77,16 +88,28 @@
           cursor: pointer;
         }
 
+        .image-icon {
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+
+        .video-icon {
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-video.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 50%;
+        }
+
         & > h5 {
           font-size: $font-size-14;
           color: inherit;
         }
-      }
 
-      .add-image-icon > span {
-        background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
-        background-repeat: no-repeat;
-        background-position: center center;
+        & > input[type='file'] {
+          position: absolute;
+          left: -9999px;
+        }
       }
     }
   }

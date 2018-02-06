@@ -8,7 +8,7 @@ class Portfolio extends React.Component {
   }
 
   handleEdit() {
-    this.props.data(this.props.id);
+    this.props.openAndData(this.props.data);
   }
 
   render() {
@@ -34,11 +34,14 @@ class Portfolio extends React.Component {
         </div>
         <div className='card-content-container'>
           <section>
-            <h4>프로젝트 명 { this.props.id }</h4>
-            <h5>2017.12.29-2017.08.12</h5>
+            <h4>{this.props.data.career_name}</h4>
+            <h5>
+              {this.props.data.career_due_start} -
+              {this.props.data.career_due_end}
+            </h5>
           </section>
           <p>
-            저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.저희 동아리는 광고 / 마케팅 동아리로써 다수의 공모전 입상 경험이 있습니다.
+            {this.props.data.career_ex}
           </p>
           {isButton}
         </div>

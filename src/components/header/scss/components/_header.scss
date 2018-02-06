@@ -56,7 +56,7 @@
           display: inline-block;
           width: 20px;
           height: 20px;
-          background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.svg");
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.png");
           background-repeat: no-repeat;
           cursor: pointer;
         }
@@ -79,7 +79,7 @@
         display: inline-block;
         width: 35px;
         height: 25px;
-        background-image: url("#{$get-path-from-components-to-images}/icons/ic-under-arrow.svg");
+        background-image: url("#{$get-path-from-components-to-images}/icons/ic-under-arrow.png");
         background-repeat: no-repeat;
         cursor: pointer;
       }

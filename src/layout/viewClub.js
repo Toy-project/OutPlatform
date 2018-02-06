@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Nav } from 'components/';
 import { Club, Footer } from 'components/';
 
-const viewClub = () => (
+const viewClub = ( { match }) => (
   <div>
     <Nav subPage={true} />
-    <Club />
+    <Club club_id={match.params.club_id}/>
     <Footer />
   </div>
 )

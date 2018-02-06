@@ -19,7 +19,7 @@
 
       .default-image {
         display: inline-block;
-        background: url("#{$get-path-from-components-to-images}/icons/ic-image-black-24-px.svg") no-repeat 50% 50%;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png") no-repeat 50% 50%;
         background-size: 80px;
         border: 0;
         outline: 0;
@@ -28,15 +28,25 @@
       .slick-dots,
       .left-arrow,
       .right-arrow,
-      .my-image,
+      .add-profile,
       .add-image {
         position: absolute;
+        outline: none;
+      }
+
+      .add-image,
+      .add-profile {
+        input[type='file'] {
+          position: absolute;
+          left: -9999px;
+        }
       }
 
       .add-image {
         width: 100px;
-        left: 44.3%;
-        top: 41%;
+        left: 44%;
+        top: 40.6%;
+        z-index: 1;
 
         .image-uploader {
           display: block;
@@ -48,17 +58,54 @@
           cursor: pointer;
         }
 
-        input[type='file'] {
-          position: absolute;
-          left: -9999px;
-        }
-
         h3 {
           margin-top: 5px;
           color: $gray-7;
           font-size: $font-size-14;
           width: 100%;
           @include center;
+        }
+      }
+
+
+      .add-profile {
+        left: 30px;
+        top: 25px;
+      }
+
+      .upload-btn-profile,
+      .upload-btn-slide {
+        display: block;
+        border-radius: 100px;
+        border: 0;
+        width: 104px;
+        height: 104px;
+        line-height: 104px;
+        background-color: $gray-3;
+        cursor: pointer;
+        z-index: 2;
+
+        @include z-depth-1;
+        @include center;
+        @include thick;
+
+        &.beforeUpload:before {
+          content: '프로필 사진';
+        }
+
+        &.afterUpload:before {
+          content: '등록';
+        }
+
+        &.afterUpload,
+        &.beforeUpload {
+          background-color: $white;
+        }
+
+        &.afterUpload:before,
+        &.beforeUpload:before {
+          font-size: $font-size-20;
+          color: $emerald-1;
         }
       }
 
@@ -130,28 +177,6 @@
         width: 20px;
         height: 30px;
         background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-right.png") no-repeat 50% 50%;
-      }
-
-      .my-image {
-        left: 30px;
-        top: 25px;
-        border-radius: 100px;
-        border: 0;
-        width: 104px;
-        height: 104px;
-        background-color: $gray-3;
-
-        @include z-depth-1;
-        @include thick;
-
-        &.myPage {
-          background-color: $white;
-        }
-        &.myPage:before {
-          font-size: $font-size-20;
-          color: $emerald-1;
-          content: '등록';
-        }
       }
     }
   }

@@ -6,14 +6,15 @@ class Profile extends React.Component {
     super(props);
 
     this.state = {
-      isMyPageToggle: this.props.myPage,
+      myPage: this.props.myPage,
       isEditToggle: false,
+      isSubmited: false,
       data: {
-        college: '',
-        type: '',
+        club_college: this.props.club_college,
+        cate_id: this.props.cate_id,
         countOfMember: '',
-        tag: '',
-        snippet: '',
+        tag_id: this.props.tag_id,
+        club_ex: this.props.club_ex,
         sns: {
           naver: '',
           facebook: '',
@@ -30,12 +31,14 @@ class Profile extends React.Component {
   editToggle() {
     this.setState({
       isEditToggle: !this.state.isEditToggle,
+      isSubmited: false,
     });
   }
 
   editSubmit() {
     this.setState({
       isEditToggle: !this.state.isEditToggle,
+      isSubmited: true,
       data: {
         ...this.state,
         college: this.refs.college.value,
@@ -51,6 +54,12 @@ class Profile extends React.Component {
         }
       }
     });
+  }
+
+  componentDidUpdate() {
+    if(this.state.isSubmited){
+        // POST API
+    }
   }
 
   snippetLimitStringLength(e) {
@@ -96,28 +105,29 @@ class Profile extends React.Component {
 
   render() {
     let editButton;
-    let viewContents = this.state.data.snippet.split('\n').map((line, key) => {
+    let viewContents = this.state.data.club_ex.split('\n').map((line, key) => {
       return (<span key={key}>{line}<br /></span>);
     });
     let viewSNS;
     let editInputText = (id, placeholder) => {
       switch(id){
         case 'college':
+          console.log(this.state.data.club_college);
           return (
-            <select defaultValue='서울대학교' ref={id}>
+            <select defaultValue={this.state.data.club_college} ref={id}>
               <option value="서울대학교">서울대학교</option>
               <option value="우리대학교">우리대학교</option>
               <option value="하나대학교">하나대학교</option>
-              <option value="신나대학교">신나대학교</option>
+              <option value="test">신나대학교</option>
             </select>
           );
         case 'type':
           return (
-            <select defaultValue='Type1' ref={id}>
-              <option value="Type1">Type1</option>
-              <option value="Type2">Type2</option>
-              <option value="Type3">Type3</option>
-              <option value="Type4">Type4</option>
+            <select defaultValue={this.state.data.cate_id} ref={id}>
+              <option value="1">Type1</option>
+              <option value="2">Type2</option>
+              <option value="3">Type3</option>
+              <option value="4">Type4</option>
             </select>
           );
         case 'countOfMember':
@@ -128,17 +138,17 @@ class Profile extends React.Component {
           );
         case 'tag':
           return (
-            <select defaultValue='#성실한' ref={id}>
-              <option value="#성실한">#성실한</option>
-              <option value="#개성있는">#개성있는</option>
-              <option value="#잘하는">#잘하는</option>
+            <select defaultValue={this.state.data.tag_id} ref={id}>
+              <option value="1">#성실한</option>
+              <option value="2">#개성있는</option>
+              <option value="3">#잘하는</option>
             </select>
           );
         case 'snippet':
           return (
             <span>
               <span id='snippet_limitation' className='snippet-limitation'>0/200</span>
-              <textarea ref={id} id='snippet' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.data.snippet}></textarea>
+              <textarea ref={id} id='snippet' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.data.club_ex}></textarea>
               <a id='snippet_error'>최대 200글자까지 허용됩니다.</a>
             </span>
           )
@@ -156,7 +166,7 @@ class Profile extends React.Component {
     }
 
     //수정 버튼 Toggle
-    if(this.state.isMyPageToggle && !this.state.isEditToggle){
+    if(this.state.myPage && !this.state.isEditToggle){
       editButton = (
         <div className='edit-btn'>
           <button className='emerald-btn' onClick={this.editToggle}>수정</button>
@@ -193,11 +203,11 @@ class Profile extends React.Component {
             <div className='profile-content-left hide-on-med-and-down'>
               <div className='contents'>
                 <h5>소속학교</h5>
-                <p>{this.state.isEditToggle ? editInputText('college') : this.state.data.college}</p>
+                <p>{this.state.isEditToggle ? editInputText('college') : this.state.data.club_college}</p>
               </div>
               <div className='contents'>
                 <h5>단체종류</h5>
-                <p>{this.state.isEditToggle ? editInputText('type') : this.state.data.type}</p>
+                <p>{this.state.isEditToggle ? editInputText('type') : this.state.data.cate_id}</p>
               </div>
               <div className='contents'>
                 <h5>활동인원</h5>
@@ -205,7 +215,7 @@ class Profile extends React.Component {
               </div>
               <div className='contents'>
                 <h5>태그</h5>
-                <p>{this.state.isEditToggle ? editInputText('tag') : this.state.data.tag}</p>
+                <p>{this.state.isEditToggle ? editInputText('tag') : this.state.data.tag_id}</p>
               </div>
             </div>
             <div className='profile-content-right hide-on-med-and-down'>

@@ -15,8 +15,11 @@
     display: block;
     height: $image-height;
     background-color: $gray-3;
-    text-align:center;
     padding: 109px 0 0 0;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png") no-repeat 50% 50%;
+    cursor : pointer;
+
+    @include center;
   }
 
   .float{
@@ -26,6 +29,7 @@
   	bottom:101.6px;
   	right:17.4px;
     background-color: $white;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-profile.png") no-repeat 50% 50%;
   	border-radius:50px;
     z-index: 1;
 
