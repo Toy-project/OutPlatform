@@ -20,7 +20,7 @@ export default function Category(state = initial, action){
         ...state,
         isLoading: false,
         error: false,
-        data: [...state.data, action.data],
+        data: action.data.rows,
       };
     case types.CATE_RECV_ERROR:
       return {

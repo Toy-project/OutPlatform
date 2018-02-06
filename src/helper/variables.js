@@ -1,1 +1,1 @@
-export const apiAddres = 'http://220.230.122.177:3000';
+export const apiAddres = 'http://220.230.122.177:80';

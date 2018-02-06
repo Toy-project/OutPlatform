@@ -16,7 +16,9 @@
     height: $image-height;
     background-color: $gray-3;
     padding: 109px 0 0 0;
-    background-image: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png") no-repeat 50% 50%;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png");
+    background-repeat: no-repeat;
+    background-position: center center;
     cursor : pointer;
 
     @include center;
@@ -29,16 +31,15 @@
   	bottom:101.6px;
   	right:17.4px;
     background-color: $white;
-    background-image: url("#{$get-path-from-components-to-images}/icons/ic-profile.png") no-repeat 50% 50%;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-profile.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 27px 27px;
   	border-radius:50px;
     z-index: 1;
 
   	@include center;
     @include z-depth-1;
-
-    img {
-      padding:21px 0 0 0;
-    }
   }
 
   .card-content-container {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Category } from 'components/';
 
-
+import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
 
 class CategoryList extends React.Component {
 
@@ -12,18 +12,23 @@ class CategoryList extends React.Component {
   }
 
   render() {
-    let category;
-    if(this.props.category.isLoading){
-      category = 'Loading';
-    } else if(this.props.category.error){
-      category = 'Error';
-    } else {
-      category = <Category {...this.props.category} />
+    let category = () => {
+      if(!checkStatusComponent(this.props.category)) {
+
+      } else {
+        const category = this.props.category;
+
+        if(checkEmptyData(category)) {
+          return false;
+        }
+
+        return <Category {...category} />
+      }
     }
     return (
       <div className='category-wrapper'>
         <div className='category-inner'>
-          {category}
+          {category()}
         </div>
       </div>
     );

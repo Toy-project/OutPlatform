@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { getClubLists } from 'services/card/';
+import { getClubAll } from 'services/club';
 
 function requestData() {
 	return {type: types.CARD_REQ_DATA}
@@ -19,10 +19,10 @@ function receiveError(json) {
 	}
 };
 
-export function fetchCards(paginationStart, paginationCount) {
+export function fetchCards(start, end) {
   return function(dispatch) {
     dispatch(requestData());
-    return getClubLists(paginationStart, paginationCount)
+    return getClubAll(start, end)
           .then((response) => {
 							return dispatch(receiveData(response.data));
           })

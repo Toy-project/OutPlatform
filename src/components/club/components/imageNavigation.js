@@ -73,7 +73,8 @@ class ImageNavigation extends React.Component {
 
   onUpload(){
     //단체 프로필 업로드
-    //업데이트 한 사진이 없을 때
+
+    //업데이트 한 사진이 있을 때 API CALL
     if(this.state.isUploadButton_slide){
       //Upload Slide Image
       console.log('Upload Slide Image');

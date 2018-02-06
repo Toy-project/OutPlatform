@@ -6,6 +6,8 @@ import '../scss/index.scss';
 
 import { fetchCards } from 'actions/card';
 
+import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
+
 // import { getClubLists } from 'services/card/';
 import { Card } from 'components/';
 
@@ -30,16 +32,8 @@ class CardsList extends React.Component {
     window.removeEventListener('scroll', this.handleOnScroll);
   }
 
-  loadingData() {
-    //데이터를 로딩중이거나 Error 일 경우는 그냥 리턴
-    if(this.props.cards.isLoading || this.props.cards.error){
-      return false;
-    }
-
-    paginationStart += 6; //페이징 시작 점을 증가
-
-    //Get Data
-    this.props.fetchCards(paginationStart, paginationCount);
+  loadingData(end) {
+    this.props.fetchCards(paginationStart, end);
   }
 
   handleOnScroll() {
@@ -55,26 +49,49 @@ class CardsList extends React.Component {
 
     //스크롤이 리스트의 끝을 지날 때 데이터 로딩
     if(windowBottom >= cardsListBottom){
-      this.loadingData();
+      paginationStart += 6; //페이징 시작 점을 증가
+      let currentCount = paginationStart; // 현재 카운트 한 수
+
+      //총 카운트 > 현재 카운트
+      if(this.props.cards.count > currentCount){
+        let nextCount = (currentCount + paginationCount);
+
+        //총 카운트 < 이 다음의 카운트 보다 작을 때
+        if(this.props.cards.count < nextCount){
+          this.loadingData(nextCount - this.props.cards.count);
+        } else {
+          this.loadingData(paginationCount);
+        }
+      }
     }
   }
 
   render() {
+    const card = () => {
+      if(!checkStatusComponent(this.props.cards)){
+        //로딩이나 에러
+      } else {
+        const card = this.props.cards.data;
 
+        if(checkEmptyData(card)){
+          return false;
+        }
+
+        return card.map( (card, key) => {
+          return (
+            <li key={key}>
+              <Card
+                {...card}
+              />
+            </li>
+          );
+        });
+      }
+    }
     return (
       <div>
         <ul id="cardsList" className="center">
-          {this.props.cards.isLoading ? 'Loading' : ''}
-          {this.props.cards.error ? 'Error' : ''}
-          {this.props.cards.data.map( (card, key) => {
-            return (
-              <li key={key}>
-                <Card
-                  {...card}
-                />
-              </li>
-            );
-          })}
+          {card()}
         </ul>
       </div>
     );
