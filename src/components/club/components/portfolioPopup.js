@@ -185,8 +185,8 @@ class PortfolioPopup extends React.Component{
       '25', '26', '27', '28', '29', '30', '31'
     ];
     const defaultFromAndTo = '0-0-0';
-    const from = this.state.career_due_start ? dateFormat(this.state.career_due_start, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
-    const to = this.state.career_due_end ? dateFormat(this.state.career_due_end, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
+    const from = !isNaN(this.state.career_due_start) ? dateFormat(this.state.career_due_start, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
+    const to = !isNaN(this.state.career_due_end) ? dateFormat(this.state.career_due_end, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
 
     let setYear = [];
 
