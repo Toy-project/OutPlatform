@@ -11,7 +11,6 @@ class RegisterSelection extends React.Component {
 
   onCickToClubRegister() {
     this.props.history.push(`/register/`);
-    window.location.reload();
   }
 
   render() {

@@ -72,7 +72,9 @@
           -o-appearance:none;       /* 사파리 */
           appearance: none;         /* 화살표 없애기 공통*/
 
-          background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-left.png") no-repeat 96%;
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-select-down-arrow.png");
+          background-repeat: no-repeat;
+          background-position: 96%;
         }
 
         select::-ms-expand{

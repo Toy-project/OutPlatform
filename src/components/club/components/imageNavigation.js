@@ -2,14 +2,16 @@ import React from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 
+import { isNull } from 'helper/common';
+
 class ImageNavigation extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      club_photo: this.props.club_photo,
-      club_profile_photo: this.props.club_profile_photo,
+      club_photo: isNull(this.props.club_photo) ? [] : this.props.club_photo,
+      club_profile_photo: isNull(this.props.club_profile_photo) ? [] : this.props.club_profile_photo,
       club_photo_updated_slide: [],
       club_photo_updated_profile: [],
       club_photo_upload_slide: false,

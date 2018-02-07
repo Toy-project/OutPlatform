@@ -20,11 +20,13 @@ function receiveError(json) {
 	}
 };
 
-export function fetchClub(club_id) {
+export function fetchClub(club_id, cate_id, tag_id) {
   return function(dispatch){
     dispatch(requestData());
-    return getClubById(club_id)
+    console.log(cate_id, tag_id);
+    return getClubById(club_id, cate_id, tag_id)
           .then((response) => {
+            console.log(response.data);
             return dispatch(receiveData(response.data));
           })
           .catch((err) => {

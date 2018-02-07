@@ -1,9 +1,9 @@
 import React from 'react';
+import  { withRouter } from 'react-router-dom';
 
-import { postMember } from 'services/register';
+import { getMemberUserId, getMemberEmail, createMember } from 'services/member';
 
-import { isPhoneGood, isEmailGood, isPasswordGood, isUseridGood } from 'helper/regExp';
-import { getValueId, autoHypenPhone } from 'helper/registerHelper';
+import { getValueId, inputValidator } from 'helper/registerHelper';
 
 class RegisterMember extends React.Component {
   constructor(props){
@@ -16,23 +16,27 @@ class RegisterMember extends React.Component {
       "mem_name" : '',
       "mem_phone" : '',
       "mem_mail_agree" : '',
-      "mem_userid_btn_validator_toggle" : false,
-      "mem_phone_btn_validator_toggle" : false,
-      "mem_phone_auth_btn_validator_toggle" : false,
+      "verified_userid" : false,
+      "verified_mem_email" : false,
+      "mem_phone_btn_toggle" : false,
+      "mem_phone_auth_toggle" : false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showFormError = this.showFormError.bind(this);
-    this.showButtonError = this.showButtonError.bind(this);
+
+    //동일한 데이터 검색
+    this.verifyDuplication = this.verifyDuplication.bind(this);
+    this.verifyPhone = this.verifyPhone.bind(this);
   }
 
   handleChange(e) {
-      this.setState({
-        [e.target.id]: e.target.value,
-      });
+    inputValidator(e.target.id, 'mem');
 
-      this.showInputError(e.target.id);
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
 
   showFormError() {
@@ -43,169 +47,105 @@ class RegisterMember extends React.Component {
     let isFormValid = true;
 
     inputs.forEach((input) => {
-      const isInputValid = this.showInputError(input.id);
+      const isInputValid = inputValidator(input.id, 'mem');
 
       if(!isInputValid) {
         isFormValid = false;
       }
     });
 
-    if(!this.state.mem_userid_btn_validator_toggle) isFormValid = false;
-    if(!this.state.mem_phone_btn_validator_toggle) isFormValid = false;
-    if(!this.state.mem_phone_auth_btn_validator_toggle) isFormValid = false;
+    if(!this.state.verified_userid) isFormValid = false;
+    if(!this.state.verified_mem_email) isFormValid = false;
+    if(!this.state.mem_phone_btn_toggle) isFormValid = false;
+    if(!this.state.mem_phone_auth_toggle) isFormValid = false;
 
     return isFormValid;
   }
 
-  showInputError(refId) {
-    const element = document.getElementById(refId);
-    const isUserid = refId === 'mem_userid' ? true : false;
-    const isPassword = refId === 'mem_pw' ? true : false;
-    const isPasswordConfirm = refId === 'mem_pw_confirm' ? true : false;
-    const isEmail = refId === 'mem_email' ? true : false;
-    const isPhone = refId === 'mem_phone' ? true : false;
-    const error = document.getElementById(`${refId}_error`);
+  verifyDuplication(e) {
+    const target = getValueId(e.target.id);
+    const element = document.getElementById(target);
+    const error = document.getElementById(`${target}_error`);
+    const verified = inputValidator(target, 'mem');
+    const isUserid = target === 'mem_userid' ? true : false;
+    const isEmail = target === 'mem_email' ? true : false;
 
-    //Empty Value 체크
-    if(element.value === ''){
-      element.className = 'error';
-      return false;
-    } else {
-      element.className = '';
+    if(verified && isUserid) {
+      getMemberUserId(e.target.value)
+        .then((response) => {
+          if(response.data){
+            element.className = '';
+            error.innerHTML = '이미 등록된 아이디입니다.';
+            error.className = 'warning-color';
+          } else {
+            element.className = '';
+            error.innerHTML = '이용가능한 아이디입니다.';
+            error.className = 'recommend-color';
+
+            this.setState({
+              ...this.state,
+              verified_userid: !this.state.verified_userid,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
-    //아이디일 경우
-    if (isUserid){
-      if(!isUseridGood(element.value)){
-        element.className = 'error';
-        error.innerHTML = '올바르지 않는 아이디입니다. 5자 이상 12자 이내로 지어주세요';
-        error.className = 'warning-color';
-        return false;
-      } else {
-        element.className = '';
-        error.innerHTML = '등록 가능한 아이디입니다.';
-        error.className = 'recommend-color';
-      }
-    }
+    if(verified && isEmail) {
+      getMemberEmail(e.target.value)
+        .then((response) => {
+          if(response.data){
+            element.className = '';
+            error.innerHTML = '이미 등록된 이메일입니다.';
+            error.className = 'warning-color';
+          } else {
+            element.className = '';
+            error.innerHTML = '이용가능한 이메일입니다.';
+            error.className = 'recommend-color';
 
-    //패스워드 검사
-    if(isPassword || isPasswordConfirm){
-      const error = document.getElementById('mem_pw_error');
-      if(!isPasswordGood(element.value)){
-        element.className = 'error';
-        error.innerHTML = '올바르지 않은 패스워드입니다. 영문,숫자,특수문자 포함 12자이내'
-        error.className = 'warning-color';
-        return false;
-      } else if(element.value !== document.getElementById('mem_pw').value){
-        element.className = 'error';
-        error.innerHTML = '비밀번호가 다릅니다.';
-        error.className = 'warning-color';
-      } else {
-        error.innerHTML = '사용가능합니다'
-        error.className = 'recommend-color';
-        element.className = '';
-      }
+            this.setState({
+              ...this.state,
+              verified_mem_email: !this.state.verified_mem_email,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-
-    //이메일일 경우
-    if (isEmail){
-      if(!isEmailGood(element.value)){
-        element.className = 'error';
-        error.innerHTML = '올바르지 않는 이메일 형식입니다.';
-        error.className = 'warning-color';
-        return false;
-      } else {
-        element.className = '';
-        error.innerHTML = '등록 가능한 이메일입니다.';
-        error.className = 'recommend-color';
-      }
-    }
-
-    //전화번호일 경우
-    if (isPhone){
-      element.value = autoHypenPhone(element.value);
-      if(!isPhoneGood(element.value)){
-        element.className = 'error';
-        return false;
-      } else {
-        element.className = '';
-      }
-    }
-
-    return true;
   }
 
-  showButtonError(e) {
-    const str = getValueId(e.target.id);
-    const element = document.getElementById(str);
-    const error = document.getElementById(`${str}_error`);
-    const isUserid = str === 'mem_userid' ? true : false;
-    const isPhone = str === 'mem_phone' ? true : false;
-    const isPhoneAuth = str === 'mem_phone_auth' ? true : false;
-    const value = element.value;
+  verifyPhone(e) {
+    const target = getValueId(e.target.id);
+    const element = document.getElementById(target);
+    const error = document.getElementById('mem_phone_error');
+    const verified = inputValidator(target, 'mem');
+    const isPhone = target === 'mem_phone' ? true : false;
+    const isPhoneAuth = target === 'mem_phone_auth' ? true : false;
 
-    // 아이디 중복 확인
-    if(isUserid) {
-      if(value === '' || !isUseridGood(value)){
-        this.showInputError(str);
-      } else {
-        console.log('아이디 중복 확인이 필요');
-        if(true){
-          this.setState({
-            ...this.state,
-            mem_userid_btn_validator_toggle: true,
-          });
-        } else {
-          if(!this.state.mem_userid_btn_validator_toggle){
-            error.innerHTML = '이미 등록된 사용자 이름입니다. 다른 이름을 선택하세요.';
-            error.className = 'warning-color';
-            element.className = 'error';
-          }
-        }
-      }
+    if(verified && isPhone){
+      //인증
+      this.setState({
+        ...this.state,
+        mem_phone_btn_toggle: !this.state.mem_phone_btn_toggle,
+      });
     }
 
-    //핸드폰 Auth Request
-    if(isPhone) {
-      //핸드폰 Auth 요청
-      if(value === '' || !isPhoneGood(value)){
-        this.showInputError(str);
-      } else {
-        console.log('연락처 인증 요청이 필요');
-        if(true){
-          this.setState({
-            ...this.state,
-            mem_phone_btn_validator_toggle: true,
-          });
-        } else {
-          //인증 요청 실패
-        }
-      }
-    }
-
-    if(isPhoneAuth) {
-      //핸드폰 Auth 요청
-      if(value === ''){
-        this.showInputError(str);
-      } else {
-        console.log('연락처 인증 필요');
-
-        if(true){
-          this.setState({
-            ...this.state,
-            mem_phone_auth_btn_validator_toggle: true,
-          });
-        } else {
-          //인증 실패
-        }
-      }
+    if(verified && isPhoneAuth){
+      //인증 확인
+      this.setState({
+        ...this.state,
+        mem_phone_auth_toggle: !this.state.mem_phone_auth_toggle,
+      });
     }
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
-    if(this.showFormError() && this.isAvailable()) {
+    if(this.showFormError()) {
       //Data를 폼에서 가져옴
       const data = {
         "mem_userid" : this.state.mem_userid,
@@ -217,14 +157,16 @@ class RegisterMember extends React.Component {
       };
 
       //Post 요청(Member)
-      const res = postMember(data);
-
-      //True : 성공 , False: Error
-      if(res){
-        window.location.reload();
-      }
-    } else {
-      // To do when failing submit
+      createMember(data)
+        .then((response) => {
+          alert('회원가입완료!');
+          this.props.history.push(`/`);
+          window.location.reload();
+        })
+        .catch((err) => {
+          alert('에러!');
+          console.log(err);
+        })
     }
   }
 
@@ -239,7 +181,7 @@ class RegisterMember extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className="input-register">
             <label htmlFor="mem_userid">아이디</label>
-            <input type="text" id="mem_userid" onChange={this.handleChange} onBlur={this.showButtonError}/>
+            <input type="text" id="mem_userid" onChange={this.handleChange} onBlur={this.verifyDuplication}/>
             <a id='mem_userid_error'>5자 이상 12자 이내로 지어주세요.</a>
           </div>
           <div className="input-register">
@@ -253,7 +195,7 @@ class RegisterMember extends React.Component {
           </div>
           <div className="input-register">
             <label htmlFor="mem_email">이메일 주소</label>
-            <input type="text" id="mem_email" onChange={this.handleChange}/>
+            <input type="text" id="mem_email" onChange={this.handleChange} onBlur={this.verifyDuplication}/>
             <a id='mem_email_error'>이메일을 입력해주세요.</a>
           </div>
           <div className="input-register">
@@ -263,12 +205,13 @@ class RegisterMember extends React.Component {
           <div className="input-register">
             <label htmlFor="mem_phone">전화번호</label>
             <input type="text" id="mem_phone" onChange={this.handleChange}/>
-            <input type="button" id="mem_phone_btn" value="인증번호 발송" onClick={this.showButtonError}/>
+            <input type="button" id="mem_phone_btn" value="인증번호 발송" onClick={this.verifyPhone}/>
           </div>
           <div className="input-register">
             <label htmlFor="mem_phone_auth">인증번호</label>
             <input type="text" id="mem_phone_auth" onChange={this.handleChange}/>
-            <input type="button" id ="mem_phone_auth_btn" value="확인" className='member-phone-auth-btn' onClick={this.showButtonError}/>
+            <input type="button" id ="mem_phone_auth_btn" value="확인" className='member-phone-auth-btn' onClick={this.verifyPhone}/>
+            <a id='mem_phone_error'>핸드폰 인증을 해주세요!</a>
           </div>
           <div className="submit-resgister">
             <input type="submit" value="무료 가입하기"/>
@@ -282,4 +225,4 @@ class RegisterMember extends React.Component {
 RegisterMember.propTypes = {
 };
 
-export default RegisterMember;
+export default withRouter(RegisterMember);

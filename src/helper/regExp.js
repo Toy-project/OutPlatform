@@ -14,6 +14,10 @@ export function isUseridGood(val) {
   return /^[a-zA-Z0-9]{5,12}$/.test(val);
 }
 
+export function isUsernameGood(val) {
+  return /^[가-힣a-zA-Z\s]{5,12}$/.test(val);
+}
+
 export function isNameGood(val) {
   return /^[가-힣a-zA-Z\s]{2,10}$/.test(val);
 }

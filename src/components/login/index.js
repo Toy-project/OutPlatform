@@ -1,6 +1,11 @@
 import React from 'react';
+import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
+
+import { memberLogin, clubLogin } from 'services/auth';
+
+import { inputValidator } from 'helper/registerHelper';
 
 class Login extends React.Component {
 
@@ -10,7 +15,7 @@ class Login extends React.Component {
     this.state = {
       'userid' : '',
       'pw' : '',
-      'login_toggle' : '',
+      'type' : '',
     }
 
     this.registerToggle = this.registerToggle.bind(this);
@@ -28,11 +33,20 @@ class Login extends React.Component {
   }
 
   handleChange(e) {
+    inputValidator(e.target.id, 'login');
+
+    //체크버튼일 경우
+    if(e.target.id === 'type'){
+      this.setState({
+        [e.target.id]: e.target.checked,
+      });
+
+      return false;
+    }
+
     this.setState({
       [e.target.id]: e.target.value,
     });
-
-    this.showInputError(e.target.id);
   }
 
   showFormError() {
@@ -40,7 +54,7 @@ class Login extends React.Component {
     let isFormValid = true;
 
     inputs.forEach((input) => {
-      const isInputValid = this.showInputError(input.id);
+      const isInputValid = inputValidator(input.id, 'login');
 
       if(!isInputValid){
 
@@ -51,24 +65,35 @@ class Login extends React.Component {
     return isFormValid;
   }
 
-  showInputError(id){
-    const element = document.getElementById(id);
-
-    if(element.value === ''){
-      element.className = 'error';
-      return false;
-    } else {
-      element.className = '';
-    }
-
-    return true;
-  }
-
   handleSubmit(e) {
     e.preventDefault();
 
     if(this.showFormError()){
+      const userid = this.state.userid;
+      const pw = this.state.pw;
+
       // Login API 실행
+      if(!this.state.type) {
+        memberLogin(userid, pw)
+          .then((response) => {
+            localStorage.setItem('mem_user', JSON.stringify(response.data));
+            this.props.history.push(`/`);
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        clubLogin(userid, pw)
+          .then((response) => {
+            localStorage.setItem('club_user', JSON.stringify(response.data));
+            this.props.history.push(`/`);
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   }
 
@@ -96,6 +121,13 @@ class Login extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <input type='text' id='userid' onChange={this.handleChange} placeholder='아이디를 입력해주세요.' />
             <input type='password' id='pw' onChange={this.handleChange} placeholder='패스워드를 입력해주세요.' />
+
+            <div className='type'>
+              <label htmlFor='type' className='title'>단체</label>
+              <input type="checkbox" id='type' onChange={this.handleChange}/>
+              <label htmlFor='type'></label>
+            </div>
+
             <input type='submit' value='로그인' />
             <button onClick={this.registerToggle} className='gray-btn'>간편 가입하기</button>
           </form>
@@ -108,4 +140,4 @@ class Login extends React.Component {
 Login.propTypes = {
 };
 
-export default Login;
+export default withRouter(Login);

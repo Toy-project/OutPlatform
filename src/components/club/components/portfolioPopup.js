@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { isNull } from 'helper/common';
+
 class PortfolioPopup extends React.Component{
   constructor(props) {
     super(props);
@@ -8,7 +10,7 @@ class PortfolioPopup extends React.Component{
       career_id: this.props.data.career_id,
       career_name: this.props.data.career_name,
       career_ex: this.props.data.career_ex,
-      career_photo: this.props.data.career_photo,
+      career_photo: isNull(this.props.data.career_photo) ? [] : this.props.data.career_photo,
       career_due_start: this.props.data.career_due_start,
       career_due_end: this.props.data.career_due_end,
       //career_peple: this.props.data.career_peple,

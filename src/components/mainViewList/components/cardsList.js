@@ -55,10 +55,9 @@ class CardsList extends React.Component {
       //총 카운트 > 현재 카운트
       if(this.props.cards.count > currentCount){
         let nextCount = (currentCount + paginationCount);
-
         //총 카운트 < 이 다음의 카운트 보다 작을 때
         if(this.props.cards.count < nextCount){
-          this.loadingData(nextCount - this.props.cards.count);
+          this.loadingData(this.props.cards.count - currentCount);
         } else {
           this.loadingData(paginationCount);
         }
@@ -101,10 +100,13 @@ class CardsList extends React.Component {
 CardsList.propTypes = {
   cards: PropTypes.shape({
     data: PropTypes.arrayOf(PropTypes.shape({
-      club_profile_photo : PropTypes.string,
+      club_id : PropTypes.number,
       club_name : PropTypes.string,
-      club_ex : PropTypes.string,
+      club_copyright : PropTypes.string,
       club_rating : PropTypes.float,
+      club_profile_photo : PropTypes.string,
+      cate_id: PropTypes.number,
+      tag_id: PropTypes.number,
     })),
     title: PropTypes.string,
     isLoading: PropTypes.bool,

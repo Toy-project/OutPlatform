@@ -5,13 +5,15 @@ import Slider from 'react-slick';
 import Portfolio from './portfolio';
 import PortfolioPopup from './portfolioPopup';
 
+import { isNull } from 'helper/common';
+
 class PortfolioNavigation extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: this.props.data, //포트폴리오 아이템
-      length: this.props.data.length, //data 길이
+      data: isNull(this.props.data) ? [] : this.props.data, //포트폴리오 아이템
+      length: isNull(this.props.data) ? 0 : this.props.data.length, //data 길이
       popupToggle : false, //팝업 토글
       editData : '', //수정할 데이터
       type: 0, // 생성 = 0 or 수정 = 1 or 보기 = 2

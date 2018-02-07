@@ -19,10 +19,10 @@ function receiveError(json) {
 	}
 };
 
-export function fetchCategory() {
+export function fetchCategory(start, end) {
   return function(dispatch) {
     dispatch(requestData());
-    return getAllCategory()
+    return getAllCategory(start, end)
           .then((response) => {
 						return dispatch(receiveData(response.data));
           })

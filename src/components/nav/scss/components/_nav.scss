@@ -28,32 +28,45 @@ nav {
       cursor: pointer;
       @include normal;
 
-      &:hover .sub-menu {
+      &:hover .sub-menu,
+      &:hover .sub-menu-bg {
         display: block;
       }
 
       .sub-menu {
         display: none;
-        position:absolute;
-        width: 100%;
-        background-color: #f4f4f4;
+        position: absolute;
         min-height: $navbar-height-main;
         top: $navbar-height-main;
-        right: 0;
         list-style: none;
+        width: 300px;
+        z-index: 2;
+        margin-left: -120px;
 
-        @include z-depth-1;
+        @include center;
 
-        ul {
-          margin-right: 185px;
+        > ul {
           list-style: none;
-          float: right;
+          display: inline-block;
 
-          li {
+          > li {
             margin: 0 20px;
             line-height: $navbar-height-main;
           }
         }
+      }
+
+      .sub-menu-bg {
+        display: none;
+        position: absolute;
+        background-color: #f6f6f6;
+        width: 100%;
+        min-height: $navbar-height-main;
+        top: $navbar-height-main;
+        left: 0;
+        z-index: 1;
+
+        @include z-depth-1;
       }
     }
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
 
@@ -26,8 +27,14 @@ class Club extends React.Component {
       myPage: this.props.myPage,
     }
 
+    const param = new URLSearchParams(this.props.location.search);
+    const cate_id = param.get('cate_id');
+    const tag_id = param.get('tag_id');
+
+    console.log(cate_id, tag_id);
+
     //Fetch club data
-    this.props.fetchClub(this.props.club_id);
+    this.props.fetchClub(this.props.club_id, cate_id, tag_id);
     //Fetch portfolio data
     this.props.fetchPortfolio(this.props.club_id);
   }
@@ -99,6 +106,7 @@ class Club extends React.Component {
         );
       }
     }
+
     return (
       <div className='club-container'>
         {club()}
@@ -131,13 +139,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchClub: (index) => {
-      dispatch(fetchClub(index));
+    fetchClub: (club_id, cate_id, tag_id) => {
+      dispatch(fetchClub(club_id, cate_id, tag_id));
     },
-    fetchPortfolio: (index) => {
-      dispatch(fetchPortfolio(index));
+    fetchPortfolio: (club_id) => {
+      dispatch(fetchPortfolio(club_id));
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Club);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Club));

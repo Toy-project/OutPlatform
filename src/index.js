@@ -15,7 +15,7 @@ import { fetchCategory } from 'actions/category';
 const store = configureStore();
 
 store.dispatch(fetchCards(0, 6));
-store.dispatch(fetchCategory());
+store.dispatch(fetchCategory(0, 8));
 
 ReactDOM.render(
     <Provider store={store}>

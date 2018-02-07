@@ -22,8 +22,10 @@ export default function Card(state = initial, action) {
           club_id: data.club_id,
           club_photo: data.club_photo,
           club_name: data.club_name,
-          club_ex: data.club_ex,
+          club_copyright: data.club_copyright,
           club_rating: data.club_rating,
+          cate_id: data.cate_id,
+          tag_id: data.tag_id,
         }];
       });
       return {

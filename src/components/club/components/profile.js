@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isNull } from 'helper/common';
+
 class Profile extends React.Component {
   constructor(props){
     super(props);
@@ -14,7 +16,7 @@ class Profile extends React.Component {
         cate_id: this.props.cate_id,
         countOfMember: '',
         tag_id: this.props.tag_id,
-        club_ex: this.props.club_ex,
+        club_ex: isNull(this.props.club_ex) ? '' : this.props.club_ex,
         sns: {
           naver: '',
           facebook: '',
