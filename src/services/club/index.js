@@ -4,8 +4,6 @@ import { apiAddres } from 'helper/variables';
 const urlClub = `${apiAddres}/club`;
 
 export function getClubById(club_id, cate_id, tag_id){
-  console.log('hi');
-  console.log(cate_id, tag_id);
   return axios({
     method: 'get',
     timeout: 20000,
@@ -58,6 +56,22 @@ export function createClub(data) {
     headers: {
       'Content-Type': 'application/json',
     },
+    data: data,
+  })
+}
+
+export function updateClubProfile(club_id, file) {
+  return axios({
+    method: 'put',
+    url: `${urlClub}/profile/${club_id}`,
+    data: file,
+  })
+}
+
+export function updateClub(club_id, data) {
+  return axios({
+    method: 'put',
+    url: `${urlClub}/${club_id}`,
     data: data,
   })
 }

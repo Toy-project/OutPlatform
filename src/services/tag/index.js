@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { apiAddres } from 'helper/variables';
 
-const urlGetAllClubLists = `${apiAddres}/club/`;
+const urlTag = `${apiAddres}/tag`;
 
-export function getClubLists(start, count){
+export function getAllTag(start, end){
   return axios({
     method: 'get',
     timeout: 20000,
-    url: `${urlGetAllClubLists}/${start}/${count}`,
+    url: `${urlTag}?start=${start}&end=${end}`,
     responseType: 'json'
   });
 }

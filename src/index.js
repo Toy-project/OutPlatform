@@ -11,11 +11,13 @@ import configureStore from 'store/';
 
 import { fetchCards } from 'actions/card';
 import { fetchCategory } from 'actions/category';
+import { fetchTag } from 'actions/tag';
 
 const store = configureStore();
 
 store.dispatch(fetchCards(0, 6));
 store.dispatch(fetchCategory(0, 8));
+store.dispatch(fetchTag(0, 10));
 
 ReactDOM.render(
     <Provider store={store}>

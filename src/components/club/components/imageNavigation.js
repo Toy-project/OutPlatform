@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { isNull } from 'helper/common';
 
+import { updateClubProfile } from 'services/club';
+
 class ImageNavigation extends React.Component {
 
   constructor(props) {
@@ -53,15 +55,14 @@ class ImageNavigation extends React.Component {
           isUploadButton_slide: true,
         });
       }
-      console.log(isProfile);
 
       //프로필 업로드일 경우
       if(isProfile) {
 
         this.setState({
           ...this.state,
-          club_profile_photo: [...this.state.club_profile_photo, reader.result],
-          club_photo_updated_profile: reader.result,
+          club_profile_photo: img,
+          club_photo_updated_profile: img,
           club_photo_upload_profile: true,
           isUploadButton_profile: true,
         });
@@ -74,16 +75,25 @@ class ImageNavigation extends React.Component {
   }
 
   onUpload(){
-    //단체 프로필 업로드
-
-    //업데이트 한 사진이 있을 때 API CALL
+    //업로드 API
     if(this.state.isUploadButton_slide){
       //Upload Slide Image
       console.log('Upload Slide Image');
     }
 
     if(this.state.isUploadButton_profile){
-      console.log('Upload Profile');
+      const form = new FormData();
+
+      form.append('club_profile_photo', this.state.club_profile_photo);
+      console.log(this.state.club_profile_photo);
+      updateClubProfile(this.props.club_id, form)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //console.log(this.state.club_profile_photo);
     }
   }
 

@@ -2,11 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import  { withRouter } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 import './scss/index.scss';
 
 import { fetchClub } from 'actions/club';
 import { fetchPortfolio } from 'actions/portfolio';
+
+import { getClubUserId } from 'services/club';
 
 import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
 
@@ -26,17 +29,39 @@ class Club extends React.Component {
     this.state = {
       myPage: this.props.myPage,
     }
+  }
 
+  componentDidMount() {
     const param = new URLSearchParams(this.props.location.search);
     const cate_id = param.get('cate_id');
     const tag_id = param.get('tag_id');
+    const club_id = this.props.match.params.club_id;
 
-    console.log(cate_id, tag_id);
+    const token = localStorage.getItem('club_user');
 
-    //Fetch club data
-    this.props.fetchClub(this.props.club_id, cate_id, tag_id);
-    //Fetch portfolio data
-    this.props.fetchPortfolio(this.props.club_id);
+    if(!this.state.myPage) {
+      //Fetch club data
+      this.props.fetchClub(club_id, cate_id, tag_id);
+      //Fetch portfolio data
+      this.props.fetchPortfolio(this.props.club_id);
+    } else {
+      if(token){
+        const { club_userid } = jwtDecode(token);
+
+        getClubUserId(club_userid)
+          .then((response) => {
+            //Fetch club data
+            this.props.fetchClub(club_id, cate_id, tag_id);
+            //Fetch portfolio data
+            this.props.fetchPortfolio(this.props.club_id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert('잘못왔엉');
+      }
+    }
   }
 
   render() {
@@ -71,21 +96,26 @@ class Club extends React.Component {
             <ImageNavigation
               myPage={this.state.myPage}
 
+              club_id={club.club_id}
               club_photo={club.club_photo}
               club_profile_photo={club.club_profile_photo}
             />
             <Snippet
               myPage={this.state.myPage}
 
+              club_id={club.club_id}
               club_name={club.club_name}
               club_copyright={club.club_copyright}
             />
             <Profile
               myPage={this.state.myPage}
 
+              club_id={club.club_id}
               club_college={club.club_college}
               cate_id={club.cate_id}
               tag_id={club.tag_id}
+              cate_name={club.category.cate_name}
+              tag_name={club.tag.tag_name}
               club_ex={club.club_ex}
 
               //SNS

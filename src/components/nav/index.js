@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
 import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
@@ -39,10 +40,10 @@ class Nav extends React.Component {
   }
 
   goToMyPageClub() {
-    const type = 1;
-    console.log(localStorage.getItem('club_user'));
-    // this.props.history.push(`/myPage/`);
-    // window.location.reload();
+    const { club_id, cate_id, tag_id } =  jwtDecode(localStorage.getItem('club_user'));
+    console.log(club_id);
+
+    this.props.history.push(`/myPage/${club_id}?cate_id=${cate_id}&tag_id=${tag_id}`);
   }
 
   goToMain(){

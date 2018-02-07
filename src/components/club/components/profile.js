@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { isNull } from 'helper/common';
+import { updateClub } from 'services/club';
+
+import { subStringLimitStringLength, isNull } from 'helper/common';
 
 class Profile extends React.Component {
   constructor(props){
@@ -11,22 +14,18 @@ class Profile extends React.Component {
       myPage: this.props.myPage,
       isEditToggle: false,
       isSubmited: false,
-      data: {
-        club_college: this.props.club_college,
-        cate_id: this.props.cate_id,
-        countOfMember: '',
-        tag_id: this.props.tag_id,
-        club_ex: isNull(this.props.club_ex) ? '' : this.props.club_ex,
-        sns: {
-          naver: '',
-          facebook: '',
-          insta: '',
-        }
-      }
-    }
 
+      club_college: this.props.club_college,
+      cate_id: this.props.cate_id,
+      tag_id: this.props.tag_id,
+      cate_name: this.props.cate_name,
+      tag_name: this.props.tag_name,
+      club_ex: isNull(this.props.club_ex) ? '' : this.props.club_ex,
+      //sns:
+    }
     this.editToggle = this.editToggle.bind(this);
     this.editSubmit = this.editSubmit.bind(this);
+
     this.snippetLimitStringLength = this.snippetLimitStringLength.bind(this);
   }
 
@@ -37,129 +36,100 @@ class Profile extends React.Component {
     });
   }
 
+  snippetLimitStringLength(e) {
+    const target = e.target.id;
+    const error = document.getElementById(`${target}_error`);
+    const isValid = subStringLimitStringLength(target, 200);
+
+    if(!isValid){
+      // 허용되는 바이트까지 자르기
+      error.innerHTML = '200자가 넘었습니다!';
+      error.className = 'warning-color';
+
+    } else {
+      error.innerHTML = '등록가능합니다.';
+      error.className = 'recommend-color';
+    }
+  }
+
   editSubmit() {
     this.setState({
       isEditToggle: !this.state.isEditToggle,
       isSubmited: true,
-      data: {
-        ...this.state,
-        college: this.refs.college.value,
-        type: this.refs.type.value,
-        countOfMember: this.refs.countOfMember.value,
-        tag: this.refs.tag.value,
-        snippet: this.refs.snippet.value,
-        sns: {
-          ...this.state.sns,
-          naver: this.refs.naver.value,
-          facebook: this.refs.facebook.value,
-          insta: this.refs.insta.value,
-        }
-      }
+      club_college: this.refs.club_college.value,
+      cate_id: this.refs.cate_id.value,
+      tag_id: this.refs.tag_id.value,
+      cate_name: this.props.category.data.map((item, key) => {
+        if(this.refs.cate_id === item.cate_id) return item.cate_name;
+        return '';
+      }),
+      tag_name: this.props.tag.data.map((item, key) => {
+        if(this.refs.tag_id === item.tag_id) return item.tag_name;
+        return '';
+      }),
+      club_ex: this.refs.club_ex.value,
     });
   }
 
   componentDidUpdate() {
     if(this.state.isSubmited){
+        const data = {
+          club_college: this.state.club_college,
+          cate_id: this.state.cate_id,
+          tag_id: this.state.tag_id,
+          club_ex: this.state.club_ex,
+        }
         // POST API
+        updateClub(this.props.club_id, data)
+          .then((response) => {
+            console.log(response.data);
+            //Todo
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
-  }
-
-  snippetLimitStringLength(e) {
-    const target = e.target.id;
-    const element = document.getElementById(target);
-    const error = document.getElementById('snippet_error');
-    const limitation = document.getElementById('snippet_limitation');
-
-    const length = element.value.length;
-    const maxByte = 200;
-    let allowedByte = 0;
-    let allowedValue = null;
-    let totalByte = 0;
-
-    for(let i = 0; i < length; i++){
-      let oneChar = element.value.charAt(i);
-      if(escape(oneChar).length > 4){
-        totalByte += 2;
-      } else {
-        totalByte++;
-      }
-
-      if(totalByte <= maxByte){
-        allowedByte = i + 1;
-      }
-    }
-
-    if(totalByte > maxByte){
-      // 허용되는 바이트까지 자르기
-      allowedValue = element.value.substr(0, allowedByte);
-      element.value = allowedValue;
-      error.innerHTML = '200자가 넘었습니다!';
-      error.className = 'warning-color';
-      element.className = 'error';
-    } else {
-      error.innerHTML = '등록가능합니다.';
-      error.className = 'recommend-color';
-      element.className = '';
-    }
-
-    limitation.innerHTML = `${allowedByte}/200`;
   }
 
   render() {
     let editButton;
-    let viewContents = this.state.data.club_ex.split('\n').map((line, key) => {
+    let viewContents = this.state.club_ex.split('\n').map((line, key) => {
       return (<span key={key}>{line}<br /></span>);
     });
     let viewSNS;
     let editInputText = (id, placeholder) => {
       switch(id){
-        case 'college':
-          console.log(this.state.data.club_college);
+        case 'club_college':
           return (
-            <select defaultValue={this.state.data.club_college} ref={id}>
+            <select defaultValue={this.state.club_college} ref={id}>
               <option value="서울대학교">서울대학교</option>
               <option value="우리대학교">우리대학교</option>
               <option value="하나대학교">하나대학교</option>
               <option value="test">신나대학교</option>
             </select>
           );
-        case 'type':
+        case 'cate_id':
           return (
-            <select defaultValue={this.state.data.cate_id} ref={id}>
-              <option value="1">Type1</option>
-              <option value="2">Type2</option>
-              <option value="3">Type3</option>
-              <option value="4">Type4</option>
+            <select defaultValue={this.state.cate_id} ref={id}>
+              {this.props.category.data.map((item, key) => {
+                return (<option value={item.cate_id} key={key}>{item.cate_name}</option>);
+              })}
             </select>
           );
-        case 'countOfMember':
+        case 'tag_id':
           return (
-            <span>
-              <input type='text' ref={id} placeholder={placeholder} defaultValue={this.state.data.countOfMember} /> 명
-            </span>
-          );
-        case 'tag':
-          return (
-            <select defaultValue={this.state.data.tag_id} ref={id}>
-              <option value="1">#성실한</option>
-              <option value="2">#개성있는</option>
-              <option value="3">#잘하는</option>
+            <select defaultValue={this.state.tag_id} ref={id}>
+              {this.props.tag.data.map((item, key) => {
+                return (<option value={item.tag_id} key={key}>#{item.tag_name}</option>);
+              })}
             </select>
           );
-        case 'snippet':
+        case 'club_ex':
           return (
             <span>
-              <span id='snippet_limitation' className='snippet-limitation'>0/200</span>
-              <textarea ref={id} id='snippet' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.data.club_ex}></textarea>
-              <a id='snippet_error'>최대 200글자까지 허용됩니다.</a>
-            </span>
-          )
-        case 'sns':
-          return (
-            <span>
-              <span className='sns'><input type='text' ref='facebook' placeholder={placeholder} /></span>
-              <span className='sns'><input type='text' ref='naver' placeholder={placeholder} /></span>
-              <span className='sns'><input type='text' ref='insta' placeholder={placeholder} /></span>
+              <span id='club_ex_limitation' className='snippet-limitation'>0/200</span>
+              <textarea ref={id} id='club_ex' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.club_ex}></textarea>
+              <a id='club_ex_error'>최대 200글자까지 허용됩니다.</a>
             </span>
           )
         default:
@@ -205,25 +175,25 @@ class Profile extends React.Component {
             <div className='profile-content-left hide-on-med-and-down'>
               <div className='contents'>
                 <h5>소속학교</h5>
-                <p>{this.state.isEditToggle ? editInputText('college') : this.state.data.club_college}</p>
+              <p>{this.state.isEditToggle ? editInputText('club_college') : this.state.club_college}</p>
               </div>
               <div className='contents'>
                 <h5>단체종류</h5>
-                <p>{this.state.isEditToggle ? editInputText('type') : this.state.data.cate_id}</p>
+                <p>{this.state.isEditToggle ? editInputText('cate_id') : this.state.cate_name}</p>
               </div>
               <div className='contents'>
                 <h5>활동인원</h5>
-                <p>{this.state.isEditToggle ? editInputText('countOfMember', '인원 수를 입력해주세요.') : this.state.data.countOfMember}</p>
+                <p>{this.state.isEditToggle ? editInputText('countOfMember', '인원 수를 입력해주세요.') : this.state.countOfMember}</p>
               </div>
               <div className='contents'>
                 <h5>태그</h5>
-                <p>{this.state.isEditToggle ? editInputText('tag') : this.state.data.tag_id}</p>
+              <p>{this.state.isEditToggle ? editInputText('tag_id') : `#${this.state.tag_name}`}</p>
               </div>
             </div>
             <div className='profile-content-right hide-on-med-and-down'>
               <div className='contents-area'>
                 <h5>단체소개</h5>
-                <p>{this.state.isEditToggle ? editInputText('snippet', '우리 단체에 대한 소개를 올려주세요!') : viewContents}</p>
+              <p>{this.state.isEditToggle ? editInputText('club_ex', '우리 단체에 대한 소개를 올려주세요!') : viewContents}</p>
               </div>
               <div className='contents'>
                 <h5>SNS</h5>
@@ -237,8 +207,20 @@ class Profile extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    category: state.category,
+    tag: state.tag,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
 Profile.propTypes = {
   myPage: PropTypes.bool,
 };
 
-export default Profile;
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

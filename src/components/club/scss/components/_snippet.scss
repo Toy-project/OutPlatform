@@ -6,37 +6,61 @@
       max-width: 880px;
       margin-left: auto;
       margin-right: auto;
-      padding: 60px 0;
+      padding: 60px 0 40px 0;
       color: $gray-7;
 
       @include center;
 
-      .title {
+      > .title {
         font-size: $font-size-24;
         color: inherit;
+
+        > input[type=text] {
+          width: 100%;
+          font-size: inherit;
+          outline: none;
+          border: none;
+          @include center;
+        }
       }
 
-      p {
+      > p {
         width: 76%;
-        min-height: 58px;
+        min-height: 80px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 30px;
 
         font-size: $font-size-20;
         color: inherit;
+
+        > textarea {
+          width: 100%;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          border: none;
+          outline: none;
+          resize: none;
+
+          font-size: inherit;
+          @include center;
+        }
       }
 
-      textarea {
-        width: 76%;
-        height: 70px;
-        padding: 5px 0 0 5px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        outline: none;
-        resize: none;
+      > .popup {
+        display: none;
+        width: 23%;
+        font-size: $font-size-14;
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
 
-        font-size: $font-size-20;
+        &.show {
+          display: block;
+        }
       }
     }
   }
