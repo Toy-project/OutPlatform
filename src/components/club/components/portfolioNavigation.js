@@ -10,7 +10,6 @@ import { isNull } from 'helper/common';
 class PortfolioNavigation extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       data: isNull(this.props.data) ? [] : this.props.data, //포트폴리오 아이템
       length: isNull(this.props.data) ? 0 : this.props.data.length, //data 길이
@@ -97,14 +96,6 @@ class PortfolioNavigation extends React.Component {
           element.classList.add('moveToLeft');
       }
 
-      //ADD 포트폴리오 아이템
-      this.setState({
-        ...this.state,
-        data: [...this.state.data, data],
-        length: this.state.length + 1,
-        popupToggle: !this.state.popupToggle,
-      });
-
       //현재 슬라이더를 최신으로 유지
       if(this.slider){
         this.slider.slickGoTo(this.state.length - 2);
@@ -115,12 +106,6 @@ class PortfolioNavigation extends React.Component {
   handleUpdate(data) {
     this.setState({
       ...this.state,
-      data: this.state.data.map((item) => {
-        if(item.career_id === data.career_id){
-          return data;
-        }
-        return item;
-      }),
       editData: data,
       popupToggle: !this.state.popupToggle,
       type: 1,
@@ -152,8 +137,10 @@ class PortfolioNavigation extends React.Component {
                                                     handleAdd={this.handleAdd}
                                                     handleUpdate={this.handleUpdate}
                                                     data={this.state.editData}
-                                                    type={this.state.type} /> :
+                                                    type={this.state.type}
+                                                    club_id={this.props.club_id} /> :
                                                     <PortfolioPopup
+                                                      club_id={this.props.club_id}
                                                       close={this.isPopupToggle}
                                                       data={this.state.editData}
                                                       type={this.state.type}
@@ -177,7 +164,6 @@ class PortfolioNavigation extends React.Component {
       slidesToScroll: 1,
       arrows: false,
     };
-
     isArrows = (
       <div>
         <div className={this.state.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.previous}></div>
@@ -230,6 +216,7 @@ class PortfolioNavigation extends React.Component {
       processing = (
           <div>
             {slider}
+            {isArrows}
           </div>
       );
     }

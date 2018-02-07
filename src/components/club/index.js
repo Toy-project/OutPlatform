@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode';
 import './scss/index.scss';
 
 import { fetchClub } from 'actions/club';
-import { fetchPortfolio } from 'actions/portfolio';
+import { fetchCareer } from 'actions/portfolio';
 
 import { getClubUserId } from 'services/club';
 
@@ -43,7 +43,7 @@ class Club extends React.Component {
       //Fetch club data
       this.props.fetchClub(club_id, cate_id, tag_id);
       //Fetch portfolio data
-      this.props.fetchPortfolio(this.props.club_id);
+      this.props.fetchCareer(this.props.match.params.club_id, 0, 6);
     } else {
       if(token){
         const { club_userid } = jwtDecode(token);
@@ -53,7 +53,7 @@ class Club extends React.Component {
             //Fetch club data
             this.props.fetchClub(club_id, cate_id, tag_id);
             //Fetch portfolio data
-            this.props.fetchPortfolio(this.props.club_id);
+            this.props.fetchCareer(this.props.match.params.club_id, 0, 6);
           })
           .catch((err) => {
             console.log(err);
@@ -65,14 +65,14 @@ class Club extends React.Component {
   }
 
   render() {
-    const portfolio = () => {
+    const portfolio = (club_id) => {
       const results = checkStatusComponent(this.props.portfolio);
 
       if(results) {
         const portfolio = this.props.portfolio.data;
-
         return (
           <PortfolioNavigation
+            club_id={club_id}
             myPage={this.state.myPage}
             data={portfolio}
           />
@@ -120,10 +120,10 @@ class Club extends React.Component {
 
               //SNS
              />
-            {portfolio()}
+           {portfolio(club.club_id)}
             {/* comment */}
             {this.state.myPage ? '' : <Comment
-              club_id={this.props.club_id}
+              club_id={club.club_id}
               club_rating={club.club_rating}
               start={1}
               end={3}
@@ -172,8 +172,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchClub: (club_id, cate_id, tag_id) => {
       dispatch(fetchClub(club_id, cate_id, tag_id));
     },
-    fetchPortfolio: (club_id) => {
-      dispatch(fetchPortfolio(club_id));
+    fetchCareer: (club_id, start, end) => {
+      dispatch(fetchCareer(club_id, start, end));
     }
   }
 }

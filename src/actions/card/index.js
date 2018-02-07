@@ -19,6 +19,13 @@ function receiveError(json) {
 	}
 };
 
+function sortCardsByCateId(cate_id) {
+	return {
+		type: types.CARD_SORT_DATA,
+		cate_id : cate_id,
+	}
+}
+
 export function fetchCards(start, end) {
   return function(dispatch) {
     dispatch(requestData());
@@ -30,4 +37,10 @@ export function fetchCards(start, end) {
             dispatch(receiveError(err.data));
           });
   }
+}
+
+export function fetchSortCardsByCateId(cate_id) {
+	return function(dispatch) {
+		return dispatch(sortCardsByCateId(cate_id));
+	}
 }

@@ -35,6 +35,9 @@ export default function Card(state = initial, action) {
           count: action.data.count,
           data: datas
       };
+    case types.CARD_SORT_DATA :
+      console.log('sort');
+      break;
     case types.CARD_RECV_ERROR :
         return {
           ...state,

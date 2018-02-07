@@ -6,6 +6,13 @@ export function isNull(data) {
   return false;
 }
 
+export function isEmpty(data){
+  if(data === ''){
+    return true;
+  }
+  return false;
+}
+
 export function subStringLimitStringLength(target, max) {
   const element = document.getElementById(target);
   const limitation = document.getElementById(`${target}_limitation`);

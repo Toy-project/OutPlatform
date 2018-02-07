@@ -1,4 +1,5 @@
 import React from 'react';
+import dateFormat from 'dateformat';
 
 class Portfolio extends React.Component {
   constructor(props){
@@ -41,8 +42,7 @@ class Portfolio extends React.Component {
           <section>
             <h4>{this.props.data.career_name}</h4>
             <h5>
-              {this.props.data.career_due_start} -
-              {this.props.data.career_due_end}
+              {dateFormat(this.props.data.career_due_start,'yyyy.mm.dd')} - {dateFormat(this.props.data.career_due_end,'yyyy.mm.dd')}
             </h5>
           </section>
           <p>

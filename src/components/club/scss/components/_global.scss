@@ -67,8 +67,9 @@
 .left-arrow,
 .right-arrow {
   cursor: pointer;
-  
+
   &.disabled {
+    display: none;
     cursor: default;
     opacity: 0.5;
   }

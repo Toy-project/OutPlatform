@@ -19,8 +19,29 @@ export default function Portfolio(state = initial, action) {
         ...state,
         isLoading: false,
         error: false,
-        data: action.data,
+        data: action.data.rows,
       }
+    case types.PORTFOLIO_POST_DATA :
+        return {
+          ...state,
+          isLoading: false,
+          error: false,
+          data: [...state.data, action.data],
+        }
+    case types.PORTFOLIO_PUT_DATA :
+        console.log(action.data);
+        const renewing = state.data.map((data) => {
+          if(data.career_id === action.data.career_id){
+            return action.data;
+          }
+          return data;
+        });
+        return {
+          ...state,
+          isLoading: false,
+          error: false,
+          data: renewing,
+        }
     case types.PORTFOLIO_RECV_ERROR :
       return {
         ...state,

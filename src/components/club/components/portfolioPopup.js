@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import dateFormat from 'dateformat';
 
-import { isNull } from 'helper/common';
+import { fetchCreateCareer, fetchUpdateCareer } from 'actions/portfolio';
+
+import { isNull, isEmpty } from 'helper/common';
 
 class PortfolioPopup extends React.Component{
   constructor(props) {
@@ -13,15 +17,18 @@ class PortfolioPopup extends React.Component{
       career_photo: isNull(this.props.data.career_photo) ? [] : this.props.data.career_photo,
       career_due_start: this.props.data.career_due_start,
       career_due_end: this.props.data.career_due_end,
-      //career_peple: this.props.data.career_peple,
-      //career_co: this.props.data.career_co,
+      career_people: 0,
+      career_co: '기본값',
     }
 
     //닫기 함수
     this.closePopup = this.closePopup.bind(this);
     this.clickOutsideListner = this.clickOutsideListner.bind(this);
 
+    //Submit
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
     //추가 버튼
     this.handleAdd = this.handleAdd.bind(this);
     //업데이트 버튼
@@ -32,8 +39,6 @@ class PortfolioPopup extends React.Component{
 
     //동영상 삽입
     this.addVideoLink = this.addVideoLink.bind(this);
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -59,18 +64,19 @@ class PortfolioPopup extends React.Component{
   //Create
   handleAdd() {
     const data = {
-      'career_name': '생성된 데이터',
-      'career_ex': '생성된 데이터입니다',
-      'career_photo': 'test',
-      'career_due_start': '2017-08-01',
-      'career_due_end': '2017-09-01',
-      'career_peple': '15',
-      'career_co': 'test',
+      'career_name': this.state.career_name,
+      'career_ex': this.state.career_ex,
+      'career_due_start': this.state.career_due_start,
+      'career_due_end': this.state.career_due_end,
+      'club_id': this.props.club_id,
+      // 'career_photo': this.state.career_photo,
+      'career_people': this.state.career_people,
+      'career_co': this.state.career_co,
     }
 
-    //POST API
-
-    this.props.handleAdd(true, data);
+    this.props.fetchCreateCareer(data);
+    this.props.handleAdd(true);
+    this.closePopup();
   }
 
   handleChange(e){
@@ -81,6 +87,7 @@ class PortfolioPopup extends React.Component{
     if(e.target.id === 'career_due_end'){
       value = `${this.refs.to_year.value}-${this.refs.to_month.value}-${this.refs.to_day.value}`;
     }
+
     this.setState({
       [e.target.id] : value,
     });
@@ -88,11 +95,21 @@ class PortfolioPopup extends React.Component{
 
   //Update
   handleUpdate() {
+    const data = {
+      'career_id' : this.state.career_id,
+      'career_name': this.state.career_name,
+      'career_ex': this.state.career_ex,
+      'career_due_start': this.state.career_due_start,
+      'career_due_end': this.state.career_due_end,
+      'club_id': this.props.club_id,
+      // 'career_photo': this.state.career_photo,
+      'career_people': this.state.career_people,
+      'career_co': this.state.career_co,
+    }
 
-    //Put API
-
-    //Update
-    this.props.handleUpdate(this.state);
+    //PUT API
+    this.props.fetchUpdateCareer(data);
+    this.closePopup();
   }
 
   //Add video Link
@@ -117,6 +134,39 @@ class PortfolioPopup extends React.Component{
   }
 
   handleSubmit(){
+    if(isEmpty(this.refs.career_name.value)) {
+      this.refs.career_name.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.from_year.value)) {
+      this.refs.from_year.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.from_month.value)) {
+      this.refs.from_month.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.from_day.value)) {
+      this.refs.from_day.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.to_year.value)) {
+      this.refs.to_year.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.to_month.value)) {
+      this.refs.to_month.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.to_day.value)) {
+      this.refs.to_day.focus();
+      return false;
+    }
+    if(isEmpty(this.refs.career_ex.value)) {
+      this.refs.career_ex.focus();
+      return false;
+    }
+
     if(this.props.type === 0){
       this.handleAdd();
     } else {
@@ -135,9 +185,8 @@ class PortfolioPopup extends React.Component{
       '25', '26', '27', '28', '29', '30', '31'
     ];
     const defaultFromAndTo = '0-0-0';
-
-    const from = this.state.career_due_start ? this.state.career_due_start.split('-') : defaultFromAndTo.split('-');
-    const to = this.state.career_due_end ? this.state.career_due_end.split('-') : defaultFromAndTo.split('-');
+    const from = this.state.career_due_start ? dateFormat(this.state.career_due_start, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
+    const to = this.state.career_due_end ? dateFormat(this.state.career_due_end, 'yyyy-mm-dd').split('-') : defaultFromAndTo.split('-');
 
     let setYear = [];
 
@@ -161,7 +210,7 @@ class PortfolioPopup extends React.Component{
           <div className='icons'>
             <div className='add-image-icon'>
               <label htmlFor="onDrop" className='image-icon'></label>
-              <input type='file' id='onDrop' onChange={this.onDrop} accept="image/*"/>
+              <input type='file' ref='career_photo' id='onDrop' onChange={this.onDrop} accept="image/*"/>
               <h5>사진 업로드</h5>
             </div>
             <div className='add-video-icon'>
@@ -182,19 +231,19 @@ class PortfolioPopup extends React.Component{
             <label htmlFor='portfolio-name'>프로젝트 기간</label>
             <span className='from'>
               <select ref='from_year' className='year' defaultValue={from[0]} onChange={this.handleChange} id='career_due_start'>
-                <option value='0'>년도</option>
+                <option value=''>년도</option>
                 {setYear.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
               </select>
               <select ref='from_month' className='month' defaultValue={from[1]} onChange={this.handleChange} id='career_due_start'>
-                <option value='0'>월</option>
+                <option value=''>월</option>
                 {setMonth.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
               </select>
               <select ref='from_day' className='day' defaultValue={from[2]} onChange={this.handleChange} id='career_due_start'>
-                <option value='0'>일</option>
+                <option value=''>일</option>
                 {setDay.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
@@ -204,19 +253,19 @@ class PortfolioPopup extends React.Component{
 
             <span className='to'>
               <select ref='to_year' className='year' defaultValue={to[0]} onChange={this.handleChange} id='career_due_end'>
-                <option value='0'>년도</option>
+                <option value=''>년도</option>
                 {setYear.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
               </select>
               <select ref='to_month' className='month' defaultValue={to[1]} onChange={this.handleChange} id='career_due_end'>
-                <option value='0'>월</option>
+                <option value=''>월</option>
                 {setMonth.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
               </select>
               <select ref='to_day' className='day' defaultValue={to[2]} onChange={this.handleChange} id='career_due_end'>
-                <option value='0'>일</option>
+                <option value=''>일</option>
                 {setDay.map((val, key) => {
                   return <option key={key} value={val}>{val}</option>
                 })}
@@ -249,4 +298,20 @@ class PortfolioPopup extends React.Component{
 PortfolioPopup.propTypes = {
 };
 
-export default PortfolioPopup;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCreateCareer: (data) => {
+      dispatch(fetchCreateCareer(data));
+    },
+    fetchUpdateCareer: (data) => {
+      dispatch(fetchUpdateCareer(data));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PortfolioPopup);

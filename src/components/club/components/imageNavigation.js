@@ -103,7 +103,7 @@ class ImageNavigation extends React.Component {
 
     //저장된 단체 이미지, 단체 프로필 이미지
     const club_photo = this.state.club_photo;
-    const club_profile_photo = this.state.club_profile_photo;
+    // const club_profile_photo = this.state.club_profile_photo;
 
     const showImages = () => {
       return club_photo
