@@ -40,10 +40,9 @@ class Nav extends React.Component {
   }
 
   goToMyPageClub() {
-    const { club_id, cate_id, tag_id } =  jwtDecode(localStorage.getItem('club_user'));
-    console.log(club_id);
+    const { club_id } = jwtDecode(localStorage.getItem('club_user'));
 
-    this.props.history.push(`/myPage/${club_id}?cate_id=${cate_id}&tag_id=${tag_id}`);
+    this.props.history.push(`/myPage/${club_id}`);
   }
 
   goToMain(){

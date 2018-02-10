@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import '../scss/index.scss';
 
@@ -12,57 +13,19 @@ import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
 import { Card } from 'components/';
 
 let paginationStart = 0;
-const paginationCount = 6;
+const paginationCount = 12;
 
 class CardsList extends React.Component {
   constructor(props){
     super(props);
 
     //SetState binding
-    this.handleOnScroll = this.handleOnScroll.bind(this);
+    this.loadingData = this.loadingData.bind(this);
   }
 
-  componentDidMount() {
-    //Add scroll Event
-    window.addEventListener('scroll', this.handleOnScroll);
-  }
-
-  componentWillUnmount() {
-    //Remove scroll event
-    window.removeEventListener('scroll', this.handleOnScroll);
-  }
-
-  loadingData(end) {
-    this.props.fetchCards(paginationStart, end);
-  }
-
-  handleOnScroll() {
-    //get windowHeight without toolbar and status bar
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-
-    //get offsetTop and offSetHeight of CardsList
-    const offSetTopOfCardsList = document.getElementById("cardsList").offsetTop;
-    const offSetheightOfCardsList = document.getElementById("cardsList").offsetHeight;
-
-    const windowBottom = windowHeight + window.pageYOffset;
-    const cardsListBottom = offSetTopOfCardsList + offSetheightOfCardsList;
-
-    //스크롤이 리스트의 끝을 지날 때 데이터 로딩
-    if(windowBottom >= cardsListBottom){
-      paginationStart += 6; //페이징 시작 점을 증가
-      let currentCount = paginationStart; // 현재 카운트 한 수
-
-      //총 카운트 > 현재 카운트
-      if(this.props.cards.count > currentCount){
-        let nextCount = (currentCount + paginationCount);
-        //총 카운트 < 이 다음의 카운트 보다 작을 때
-        if(this.props.cards.count < nextCount){
-          this.loadingData(this.props.cards.count - currentCount);
-        } else {
-          this.loadingData(paginationCount);
-        }
-      }
-    }
+  loadingData() {
+    paginationStart += 12;
+    this.props.fetchCards(paginationStart, paginationCount);
   }
 
   render() {
@@ -90,7 +53,17 @@ class CardsList extends React.Component {
     return (
       <div>
         <ul id="cardsList" className="center">
-          {card()}
+          <InfiniteScroll
+            next={this.loadingData}
+            hasMore={this.props.cards.hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{textAlign: 'center'}}>
+                <b>Yay!   You have seen it all</b>
+              </p>
+            }>
+            {card()}
+          </InfiniteScroll>
         </ul>
       </div>
     );

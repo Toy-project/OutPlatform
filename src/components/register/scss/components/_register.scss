@@ -107,9 +107,6 @@
           &#club_phone_auth {
             width: 339px;
           }
-          &#club_name {
-            width: 339px;
-          }
         }
 
         input[type=button] {
@@ -135,6 +132,7 @@
         a {
           font-size: 12px;
           display: block;
+          margin-top: 5px;
           margin-bottom: 15px;
 
           @include right-align;

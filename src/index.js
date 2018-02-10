@@ -15,7 +15,7 @@ import { fetchTag } from 'actions/tag';
 
 const store = configureStore();
 
-store.dispatch(fetchCards(0, 6));
+store.dispatch(fetchCards(0, 12));
 store.dispatch(fetchCategory(0, 8));
 store.dispatch(fetchTag(0, 10));
 

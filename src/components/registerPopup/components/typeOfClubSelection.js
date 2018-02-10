@@ -59,18 +59,20 @@ class TypeOfClubSelection extends React.Component {
   render() {
 
     return (
-      <div className='type-of-Club-Selection-inner'>
-        <h3>단체회원가입</h3>
-        <p id="option_context">
-          어떤 단체이신가요?
-        </p>
-        <ul>
-          <li><span id="option1" onClick={this.handleChange} className="circle">동아리</span></li>
-          <li><span id="option2" onClick={this.handleChange} className="circle">학회</span></li>
-          <li><span id="option3" onClick={this.handleChange} className="circle">소모임</span></li>
-        </ul>
-        <button onClick={this.props.toggleToBack} className="gray-btn left">이전</button>
-        <button onClick={this.handleSubmit} className="emerald-btn">확인</button>
+      <div className='type-of-Club-Selection-container'>
+        <div className='type-of-Club-Selection-inner'>
+          <h3>단체회원가입</h3>
+          <p id="option_context">
+            어떤 단체이신가요?
+          </p>
+          <ul>
+            <li><span id="option1" onClick={this.handleChange} className="circle">동아리</span></li>
+            <li><span id="option2" onClick={this.handleChange} className="circle">학회</span></li>
+            <li><span id="option3" onClick={this.handleChange} className="circle">소모임</span></li>
+          </ul>
+          <button onClick={this.props.toggleToBack} className="gray-btn left">이전</button>
+          <button onClick={this.handleSubmit} className="emerald-btn">확인</button>
+        </div>
       </div>
     );
   }

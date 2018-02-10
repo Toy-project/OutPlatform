@@ -1,28 +1,29 @@
-.register-selection-inner {
-  @include popup-reset-options(330px, 257px);
-  left: 37%;
-  right: 37%;
+.register-selection-container {
+  @include popup-reset-options(330px, 21%);
   top: 13.4%;
-  bottom: 25.9%;
   z-index:2;
 
-  @include center;
+  > .register-selection-inner {
+    float: left;
+    width: 100%;
+    @include center;
 
-  p {
-    span {
-      color: $emerald-1;
+    p {
+      span {
+        color: $emerald-1;
+      }
     }
-  }
 
 
-  .emerald-btn  {
-    @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
-    @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
-    margin: 15px 0 6px 0;
-  }
+    > .emerald-btn  {
+      @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
+      @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
+      margin: 15px 0 6px 0;
+    }
 
-  .blue-btn  {
-    @include btn-reset-shape($btn-width-1, $btn-height-0, $blue-0);
-    @include btn-reset-font($font-size-14, $white, $btn-height-0);
+    > .blue-btn  {
+      @include btn-reset-shape($btn-width-1, $btn-height-0, $blue-0);
+      @include btn-reset-font($font-size-14, $white, $btn-height-0);
+    }
   }
 }

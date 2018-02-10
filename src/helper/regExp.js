@@ -19,9 +19,9 @@ export function isUsernameGood(val) {
 }
 
 export function isNameGood(val) {
-  return /^[가-힣a-zA-Z\s]{2,10}$/.test(val);
+  return /^[가-힣a-zA-Z\s]{5,}$/.test(val);
 }
 
-export function isProfileGood(val) {
+export function isCopyrightGood(val) {
   return /^[가-힣\w\W\s]{2,30}$/.test(val);
 }

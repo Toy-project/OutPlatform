@@ -1,191 +1,193 @@
 .portfolio-popup-wrapper {
-  @include popup-reset-options(628px, 90%);
-  left: 26%;
-  right: 26%;
+  @include popup-reset-options(628px, 63%);
+  padding: 0;
   top: 4.6%;
+  margin-bottom: 2.3%;
   z-index: 2;
   overflow: hidden;
 
-  @include center;
-
-  .portfolio-popup-header,
-  .portfolio-popup-footer {
+  .portfolio-popup-inner {
+    float: left;
     width: 100%;
-  }
 
-  .portfolio-popup-header {
-    position:relative;
-    height: 55%;
-    background-color: #e6e6e6;
+    @include center;
 
-    .preview {
+    .portfolio-popup-header,
+    .portfolio-popup-footer {
+      clear: both;
       width: 100%;
-      height: 100%;
-      overflow: hidden;
+    }
 
-      & > img {
+    .portfolio-popup-header {
+      position: relative;
+      background-color: #e6e6e6;
+      height: 400px;
+
+      .preview {
         width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        & > img {
+          width: 100%;
+        }
       }
-    }
 
-    .close-btn,
-    .close-btn:after,
-    .close-btn:before,
-    .ok-btn,
-    .icons {
-      position: absolute;
-    }
+      .close-btn,
+      .close-btn:after,
+      .close-btn:before,
+      .ok-btn,
+      .icons {
+        position: absolute;
+      }
 
-    .close-btn,
-    .ok-btn {
-      top: 28px;
-    }
+      .close-btn,
+      .ok-btn {
+        top: 28px;
+      }
 
-    .close-btn {
-      left: 26px;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
+      .close-btn {
+        left: 26px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
 
-    .close-btn:after,
-    .close-btn:before {
-      left: 0;
-      top: 0;
-      content: '';
-      height: 20px;
-      border-left: 3px solid #797979;
-    }
+      .close-btn:after,
+      .close-btn:before {
+        left: 0;
+        top: 0;
+        content: '';
+        height: 20px;
+        border-left: 3px solid #797979;
+      }
 
-    .close-btn:after {
-      transform: rotate(45deg);
-    }
-    .close-btn:before {
-      transform: rotate(-45deg);
-    }
+      .close-btn:after {
+        transform: rotate(45deg);
+      }
+      .close-btn:before {
+        transform: rotate(-45deg);
+      }
 
-    .ok-btn  {
-      right: 26px;
-      @include btn-reset-shape(60px, 40px, $emerald-1);
-      @include btn-reset-font($font-size-18, $white, 40px);
-    }
+      .ok-btn  {
+        right: 26px;
+        @include btn-reset-shape(60px, 40px, $emerald-1);
+        @include btn-reset-font($font-size-18, $white, 40px);
+      }
 
-    .icons {
-      width: 100%;
-      top: 35%;
-      left: 0;
+      .icons {
+        width: 100%;
+        top: 33%;
+        left: 0;
 
-      .add-image-icon,
-      .add-video-icon {
-        display: inline-block;
-        margin: 0 30px;
-        .image-icon,
-        .video-icon {
+        .add-image-icon,
+        .add-video-icon {
           display: inline-block;
-          width: 100px;
-          height: 100px;
-          border-radius: 100px;
-          background-color: #b3b3b3;
-          cursor: pointer;
-        }
+          margin: 0 30px;
+          .image-icon,
+          .video-icon {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            background-color: #b3b3b3;
+            cursor: pointer;
+          }
 
-        .image-icon {
-          background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
-          background-repeat: no-repeat;
-          background-position: center center;
-        }
+          .image-icon {
+            background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
 
-        .video-icon {
-          background-image: url("#{$get-path-from-components-to-images}/icons/ic-video.png");
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-size: 50%;
-        }
+          .video-icon {
+            background-image: url("#{$get-path-from-components-to-images}/icons/ic-video.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%;
+          }
 
-        & > h5 {
-          font-size: $font-size-14;
-          color: inherit;
-        }
+          & > h5 {
+            font-size: $font-size-14;
+            color: inherit;
+          }
 
-        & > input[type='file'] {
-          position: absolute;
-          left: -9999px;
+          & > input[type='file'] {
+            position: absolute;
+            left: -9999px;
+          }
         }
       }
     }
-  }
 
-  .portfolio-popup-footer {
-    padding: 5% 26px;
-    @include left-align;
+    .portfolio-popup-footer {
+      padding: 5% 26px;
+      @include left-align;
 
-    .portfolio-popup-footer-inner {
-      height: auto;
-    }
+      .portfolio-popup-input {
+        margin-bottom : 16px;
 
-    .portfolio-popup-input {
-      margin-bottom : 16px;
+        label {
+          font-size: $font-size-16;
+          display: block;
+          color: #797979;
+          margin-bottom: 8px;
 
-      > label {
-        font-size: $font-size-16;
-        display: block;
-        color: #797979;
-        margin-bottom: 8px;
+          @include thick;
+        }
 
-        @include thick;
-      }
-
-      > input[type='text'] {
-        border: solid 0.5px #b3b3b3;
-        font-size: $font-size-14;
-      }
-
-      > input[type='text'] {
-        width: 220px;
-        height: 30px;
-        border: solid 0.5px #b3b3b3;
-        padding-left: 5px;
-        font-size: $font-size-14;
-      }
-
-      > .from {
-        margin-right: 50px;
-      }
-
-      > .from,
-      > .to {
-        > .year,
-        > .month,
-        > .day {
+        input[type='text'] {
           border: solid 0.5px #b3b3b3;
           font-size: $font-size-14;
-          margin-right: 8px;
         }
 
-        > .year,
-        > .month,
-        > .day {
-          border-radius: 2px;
-        }
-
-        > .year {
-          width: 82px;
+        input[type='text'] {
+          width: 220px;
           height: 30px;
+          border: solid 0.5px #b3b3b3;
+          padding-left: 5px;
+          font-size: $font-size-14;
         }
 
-        > .month,
-        > .day {
-          width: 62px;
-          height: 30px;
+        > .from {
+          margin-right: 50px;
         }
-      }
 
-      > textarea {
-        width: 570px;
-        height: 100px;
-        resize: none;
-        font-size: $font-size-14;
-        padding: 5px;
+        > .from,
+        > .to {
+          > .year,
+          > .month,
+          > .day {
+            border: solid 0.5px #b3b3b3;
+            font-size: $font-size-14;
+            margin-right: 8px;
+          }
+
+          > .year,
+          > .month,
+          > .day {
+            border-radius: 2px;
+          }
+
+          > .year {
+            width: 82px;
+            height: 30px;
+          }
+
+          > .month,
+          > .day {
+            width: 62px;
+            height: 30px;
+          }
+        }
+
+        > textarea {
+          width: 570px;
+          height: 100px;
+          resize: none;
+          font-size: $font-size-14;
+          padding: 5px;
+        }
       }
     }
   }

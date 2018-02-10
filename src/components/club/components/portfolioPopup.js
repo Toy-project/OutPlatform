@@ -222,7 +222,7 @@ class PortfolioPopup extends React.Component{
       );
 
       footer = (
-        <div className='portfolio-popup-footer-inner'>
+        <div>
           <div className='portfolio-popup-input'>
             <label htmlFor='portfolio-name'>프로젝트 명</label>
             <input type='text' ref='career_name' id='career_name' placeholder='20자 이내' onChange={this.handleChange} defaultValue={this.state.career_name} />
@@ -283,12 +283,14 @@ class PortfolioPopup extends React.Component{
     return (
       <div id='popup_container' className='popup_container'>
         <div className='portfolio-popup-wrapper'>
-          <header className='portfolio-popup-header'>
-            {header}
-          </header>
-          <footer className='portfolio-popup-footer'>
-            {footer}
-          </footer>
+          <div className='portfolio-popup-inner'>
+            <div className='portfolio-popup-header'>
+              {header}
+            </div>
+            <div className='portfolio-popup-footer'>
+              {footer}
+            </div>
+          </div>
         </div>
       </div>
     );
