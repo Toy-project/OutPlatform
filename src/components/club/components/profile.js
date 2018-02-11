@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { updateClub } from 'services/club';
+import { fetchUpdateClub } from 'actions/club';
 
 import { subStringLimitStringLength, isNull } from 'helper/common';
 
@@ -53,20 +53,31 @@ class Profile extends React.Component {
   }
 
   editSubmit() {
+    let tag_name;
+    let cate_name;
+
+    this.props.tag.data.map((item) => {
+      if(parseInt(this.refs.tag_id.value, 10) === item.tag_id) {
+        tag_name = item.tag_name;
+      }
+      return false;
+    });
+
+    this.props.category.data.map((item) => {
+      if(parseInt(this.refs.cate_id.value,10) === item.cate_id) {
+        cate_name = item.cate_name;
+      }
+      return false;
+    });
+
     this.setState({
       isEditToggle: !this.state.isEditToggle,
       isSubmited: true,
       club_college: this.refs.club_college.value,
       cate_id: this.refs.cate_id.value,
       tag_id: this.refs.tag_id.value,
-      cate_name: this.props.category.data.map((item, key) => {
-        if(this.refs.cate_id === item.cate_id) return item.cate_name;
-        return '';
-      }),
-      tag_name: this.props.tag.data.map((item, key) => {
-        if(this.refs.tag_id === item.tag_id) return item.tag_name;
-        return '';
-      }),
+      cate_name: cate_name,
+      tag_name: tag_name,
       club_ex: this.refs.club_ex.value,
     });
   }
@@ -79,15 +90,8 @@ class Profile extends React.Component {
           tag_id: this.state.tag_id,
           club_ex: this.state.club_ex,
         }
-        // POST API
-        updateClub(this.props.club_id, data)
-          .then((response) => {
-            console.log(response.data);
-            //Todo
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+        this.props.fetchUpdateClub(this.props.club_id, data);
     }
   }
 
@@ -181,13 +185,13 @@ class Profile extends React.Component {
                 <h5>단체종류</h5>
                 <p>{this.state.isEditToggle ? editInputText('cate_id') : this.state.cate_name}</p>
               </div>
-              <div className='contents'>
+              {/* <div className='contents'>
                 <h5>활동인원</h5>
                 <p>{this.state.isEditToggle ? editInputText('countOfMember', '인원 수를 입력해주세요.') : this.state.countOfMember}</p>
-              </div>
+              </div> */}
               <div className='contents'>
                 <h5>태그</h5>
-              <p>{this.state.isEditToggle ? editInputText('tag_id') : `#${this.state.tag_name}`}</p>
+                <p>{this.state.isEditToggle ? editInputText('tag_id') : `#${this.state.tag_name}`}</p>
               </div>
             </div>
             <div className='profile-content-right hide-on-med-and-down'>
@@ -216,6 +220,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchUpdateClub : (club_id, data) => {
+      dispatch(fetchUpdateClub(club_id, data));
+    }
   }
 }
 

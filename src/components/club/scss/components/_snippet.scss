@@ -15,11 +15,15 @@
         font-size: $font-size-24;
         color: inherit;
 
+        margin-left: auto;
+        margin-right: auto;
+        width: 76%;
+
         > input[type=text] {
           width: 100%;
           font-size: inherit;
+          border: solid 1px $gray-3;
           outline: none;
-          border: none;
           @include center;
         }
       }
@@ -38,7 +42,7 @@
           width: 100%;
           overflow-x: hidden;
           overflow-y: hidden;
-          border: none;
+          border: solid 1px $gray-3;
           outline: none;
           resize: none;
 

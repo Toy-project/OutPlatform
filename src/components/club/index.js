@@ -169,8 +169,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchClub: (club_id, cate_id, tag_id) => {
-      dispatch(fetchClub(club_id, cate_id, tag_id));
+    fetchClub: (club_id) => {
+      dispatch(fetchClub(club_id));
     },
     fetchCareer: (club_id, start, end) => {
       dispatch(fetchCareer(club_id, start, end));

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
 import { BrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
@@ -13,7 +14,13 @@ import { fetchCards } from 'actions/card';
 import { fetchCategory } from 'actions/category';
 import { fetchTag } from 'actions/tag';
 
+import { handleExpire } from 'helper/loginHelper';
+
 const store = configureStore();
+
+//Check token expire date
+handleExpire('club_user');
+handleExpire('mem_user');
 
 store.dispatch(fetchCards(0, 12));
 store.dispatch(fetchCategory(0, 8));

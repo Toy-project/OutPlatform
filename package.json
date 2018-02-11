@@ -56,7 +56,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-enter": "^0.2.1",
     "react-scroll-to-element": "^0.2.0",
-    "react-slick": "^0.16.0",
+    "react-slick": "^0.18.0",
     "redux": "^3.7.2",
     "redux-react-router": "^1.0.0-beta3",
     "redux-thunk": "^2.2.0",

@@ -3,11 +3,11 @@ import { apiAddres } from 'helper/variables';
 
 const urlClub = `${apiAddres}/club`;
 
-export function getClubById(club_id, cate_id, tag_id){
+export function getClubById(club_id){
   return axios({
     method: 'get',
     timeout: 20000,
-    url: `${urlClub}/${club_id}?cate_id=${cate_id}&tag_id=${tag_id}`,
+    url: `${urlClub}/${club_id}`,
     responseType: 'json'
   });
 }

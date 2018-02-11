@@ -15,11 +15,13 @@ export default function Club(state = initial, action) {
         error: false,
       };
     case types.CLUB_RECV_DATA :
+    console.log(Object.assign(state.data, action.data));
+    console.log(action.data);
       return {
         ...state,
         isLoading: false,
         error: false,
-        data: action.data,
+        data: action.data
       };
     case types.CLUB_RECV_ERROR :
       return {

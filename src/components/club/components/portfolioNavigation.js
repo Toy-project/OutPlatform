@@ -95,11 +95,6 @@ class PortfolioNavigation extends React.Component {
         if(!element.classList.contains('moveToLeft'))
           element.classList.add('moveToLeft');
       }
-
-      //현재 슬라이더를 최신으로 유지
-      if(this.slider){
-        this.slider.slickGoTo(this.state.length - 2);
-      }
     }
   }
 

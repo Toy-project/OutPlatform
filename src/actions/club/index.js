@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { getClubById } from 'services/club/';
+import * as Club from 'services/club/';
 
 
 function requestData() {
@@ -20,12 +20,29 @@ function receiveError(json) {
 	}
 };
 
-export function fetchClub(club_id, cate_id, tag_id) {
+export function fetchClub(club_id) {
   return function(dispatch){
     dispatch(requestData());
-    return getClubById(club_id, cate_id, tag_id)
+    return Club
+          .getClubById(club_id)
           .then((response) => {
             return dispatch(receiveData(response.data));
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
+  }
+}
+
+export function fetchUpdateClub(club_id, data) {
+  return function(dispatch){
+    dispatch(requestData());
+    return Club
+          .updateClub(club_id, data)
+          .then((response) => {
+            if(response.data) {
+              return dispatch(fetchClub(club_id));
+            }
           })
           .catch((err) => {
             dispatch(receiveError(err.data));
