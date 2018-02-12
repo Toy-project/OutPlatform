@@ -3,8 +3,8 @@ import jwtDecode from 'jwt-decode';
 function checkTokenIsAvailable(token) {
   const decoded = jwtDecode(token);
   const current = Date.now();
-  console.log(current.valueOf() / 1000);
-  if(decoded < (current.valueOf() / 1000)) {
+
+  if(decoded.exp < (current.valueOf() / 1000)) {
     return false;
   }
 

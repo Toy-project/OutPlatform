@@ -15,6 +15,7 @@ import { fetchCategory } from 'actions/category';
 import { fetchTag } from 'actions/tag';
 
 import { handleExpire } from 'helper/loginHelper';
+import { cardListEnd } from 'helper/variables';
 
 const store = configureStore();
 
@@ -22,7 +23,7 @@ const store = configureStore();
 handleExpire('club_user');
 handleExpire('mem_user');
 
-store.dispatch(fetchCards(0, 12));
+store.dispatch(fetchCards(0, cardListEnd));
 store.dispatch(fetchCategory(0, 8));
 store.dispatch(fetchTag(0, 10));
 

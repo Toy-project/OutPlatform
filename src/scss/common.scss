@@ -1,14 +1,10 @@
 @charset "UTF-8";
 
-//font;
-// @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
-// @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+// Variables;
+@import "components/variables";
 
 // Color;
 @import "components/color";
-
-// Variables;
-@import "components/variables";
 
 // Reset
 @import "components/normalize";

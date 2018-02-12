@@ -78,7 +78,9 @@ class ImageNavigation extends React.Component {
     //업로드 API
     if(this.state.isUploadButton_slide){
       //Upload Slide Image
-      console.log('Upload Slide Image');
+      this.setState({
+        isUploadButton_slide: !this.state.isUploadButton_slide,
+      });
     }
 
     if(this.state.isUploadButton_profile){
@@ -133,21 +135,6 @@ class ImageNavigation extends React.Component {
       }
     }
 
-    const imageAddToggleForProfile = () => {
-      if(this.state.isUploadButton_profile) {
-        return (
-          <button onClick={this.onUpload} className='upload-btn-slide afterUpload'></button>
-        );
-      } else {
-        return (
-          <div>
-            <label htmlFor="onDropProfile" className='upload-btn-profile beforeUpload'></label>
-            <input type='file' id='onDropProfile' onChange={this.onDrop} accept="image/*"/>
-          </div>
-        );
-      }
-    }
-
     let isArrows = (
       <div>
         <div className={this.state.club_photo.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
@@ -181,7 +168,7 @@ class ImageNavigation extends React.Component {
             {imageAddToggleForSlide()}
           </div>
           <div className='add-profile'>
-            {imageAddToggleForProfile()}
+            <span className='profile'>회원관리에서 <br /> 등록해주세요.</span>
           </div>
         </div>
       );
@@ -201,7 +188,7 @@ class ImageNavigation extends React.Component {
       //Floating Button
       isFloatingCircle = (
         <div className='add-profile'>
-          <span className='upload-btn-profile'></span>
+          <span className='profile'></span>
         </div>
       );
     }

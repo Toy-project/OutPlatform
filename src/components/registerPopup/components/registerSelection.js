@@ -17,6 +17,10 @@ class RegisterSelection extends React.Component {
     return (
       <div className='register-selection-container'>
         <div className='register-selection-inner'>
+          <div className='close-btn' onClick={this.props.close}>
+            <span className='x-icon'></span>
+          </div>
+          <div className='close-btn' onClick={this.props.close}></div>
           <h3>회원가입</h3>
           <p>
             단체회원가입과 일반회원가입 중 <br />원하시는 가입 유형을 선택해주세요!

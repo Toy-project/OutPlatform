@@ -129,6 +129,9 @@ class Login extends React.Component {
       <div id='popup_container' className='popup_container'>
         <div className='login-container'>
           <div className='login-inner'>
+            <div className='close-btn' onClick={this.props.close}>
+              <span className='x-icon'></span>
+            </div>
             <h3>로그인</h3>
             <p className='p'>
               {this.state.err_msg}

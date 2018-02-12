@@ -49,7 +49,7 @@ $gutter-width: 1.5rem !default;
 // 4. Color
 // ==========================================================================
 $white: #ffffff !default;
-$white-0: #fafafa !default;
+$white-0 : #fafafa !default;
 
 $gray-0: #676767 !default;
 $gray-1: #7f7f7f !default;
@@ -63,7 +63,7 @@ $gray-8: #e6e6e6 !default;
 $gray-9: #dfdfdf !default;
 $gray-10: #f6f6f6 !default;
 
-$red : red !default;
+$red : #ff5959 !default;
 
 $blue-0: #3a5a96 !default;
 
@@ -71,6 +71,9 @@ $black-0: #555555 !default;
 
 $emerald-0: #d3f2ea !default;
 $emerald-1: #68ccb0 !default;
+
+$club-page-bg-0: $gray-10;
+$club-page-bg-1: #fdfdfd !default;
 
 $popup-bg: rgba(0,0,0, 0.5) !default;
 

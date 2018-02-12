@@ -33,9 +33,6 @@
         }
       }
 
-      .close-btn,
-      .close-btn:after,
-      .close-btn:before,
       .ok-btn,
       .icons {
         position: absolute;
@@ -44,29 +41,6 @@
       .close-btn,
       .ok-btn {
         top: 28px;
-      }
-
-      .close-btn {
-        left: 26px;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-      }
-
-      .close-btn:after,
-      .close-btn:before {
-        left: 0;
-        top: 0;
-        content: '';
-        height: 20px;
-        border-left: 3px solid #797979;
-      }
-
-      .close-btn:after {
-        transform: rotate(45deg);
-      }
-      .close-btn:before {
-        transform: rotate(-45deg);
       }
 
       .ok-btn  {

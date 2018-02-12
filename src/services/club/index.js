@@ -75,3 +75,12 @@ export function updateClub(club_id, data) {
     data: data,
   })
 }
+
+export function getClubCategory(cate_id, start, end){
+  return axios({
+    method: 'get',
+    timeout: 20000,
+    url: `${urlClub}/category/${cate_id}?start=${start}&end=${end}`,
+    responseType: 'json'
+  });
+}

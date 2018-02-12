@@ -1,5 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
+
+import { fetchDeleteCareer } from 'actions/portfolio';
 
 class Portfolio extends React.Component {
   constructor(props){
@@ -7,6 +11,8 @@ class Portfolio extends React.Component {
 
     this.handleEdit = this.handleEdit.bind(this);
     this.handleView = this.handleView.bind(this);
+
+    this.removeItem = this.removeItem.bind(this);
   }
 
   handleEdit() {
@@ -15,6 +21,10 @@ class Portfolio extends React.Component {
 
   handleView() {
     this.props.handleView(this.props.data);
+  }
+
+  removeItem() {
+    this.props.fetchDeleteCareer(this.props.data.club_id, this.props.data.career_id);
   }
 
   render() {
@@ -35,6 +45,9 @@ class Portfolio extends React.Component {
     }
     return (
       <div className='portfolio-card'>
+        <div className='remove-btn' onClick={this.removeItem}>
+          <span className='x-icon'></span>
+        </div>
         <div className='card-image'>
           <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' />
         </div>
@@ -56,6 +69,30 @@ class Portfolio extends React.Component {
 }
 
 Portfolio.propTypes = {
+  data : PropTypes.shape({
+    career_id: PropTypes.number,
+    career_name: PropTypes.string,
+    career_ex: PropTypes.string,
+    career_photo: PropTypes.string,
+    career_due_start: PropTypes.date,
+    career_due_end: PropTypes.date,
+    career_people: PropTypes.number,
+    club_id: PropTypes.number,
+  })
 };
 
-export default Portfolio;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchDeleteCareer : (club_id, career_id) => {
+      return dispatch(fetchDeleteCareer(club_id, career_id));
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

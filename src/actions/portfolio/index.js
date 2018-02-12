@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { getAllClubByCareerId, createCareer, updateCareer } from 'services/portfolio/';
+import * as Career from 'services/portfolio/';
 
 function requestData() {
   return {type: types.PORTFOLIO_REQ_DATA}
@@ -12,20 +12,6 @@ function receiveData(json){
 	}
 };
 
-function createData(json){
-  return {
-    type: types.PORTFOLIO_POST_DATA,
-    data: json,
-  }
-}
-
-function updateData(json){
-  return {
-    type: types.PORTFOLIO_PUT_DATA,
-    data: json,
-  }
-}
-
 function receiveError(json) {
 	return {
 		type: types.PORTFOLIO_RECV_ERROR,
@@ -33,10 +19,11 @@ function receiveError(json) {
 	}
 };
 
-export function fetchCareer(club_id, start, end) {
+export function fetchCareer(club_id) {
   return function(dispatch){
     dispatch(requestData());
-    return getAllClubByCareerId(club_id, start, end)
+    return Career
+          .getAllClubByCareerId(club_id)
           .then((response) => {
             return dispatch(receiveData(response.data));
           })
@@ -49,9 +36,10 @@ export function fetchCareer(club_id, start, end) {
 export function fetchCreateCareer(data) {
   return function(dispatch){
     dispatch(requestData());
-    return createCareer(data)
+    return Career
+          .createCareer(data)
           .then((response) => {
-            return dispatch(createData(response.data));
+            return dispatch(fetchCareer(data.club_id));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));
@@ -62,9 +50,25 @@ export function fetchCreateCareer(data) {
 export function fetchUpdateCareer(data) {
   return function(dispatch){
     dispatch(requestData());
-    return updateCareer(data)
+    return Career
+          .updateCareer(data)
           .then((response) => {
-            return dispatch(updateData(data));
+            return dispatch(fetchCareer(data.club_id));
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
+  }
+}
+
+export function fetchDeleteCareer(club_id, career_id) {
+  return function(dispatch){
+    dispatch(requestData());
+    return Career
+          .deleteCareer(career_id)
+          .then((response) => {
+            console.log(response);
+            return dispatch(fetchCareer(club_id));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));

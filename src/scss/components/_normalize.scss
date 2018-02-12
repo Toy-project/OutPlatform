@@ -259,6 +259,16 @@ textarea {
 }
 
 /**
+ * Select
+ */
+select {
+  -webkit-appearance: none; /* 화살표 없애기 for chrome*/
+  -moz-appearance: none;    /* 화살표 없애기 for firefox*/
+  -o-appearance:none;       /* 사파리 */
+  appearance: none;         /* 화살표 없애기 공통*/
+}
+
+/**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
 

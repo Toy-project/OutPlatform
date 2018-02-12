@@ -62,16 +62,7 @@
         margin-bottom: 10px;
         width: 100%;
 
-        input, select {
-          box-sizing: border-box;
-        }
-
         select {
-          -webkit-appearance: none; /* 화살표 없애기 for chrome*/
-          -moz-appearance: none;    /* 화살표 없애기 for firefox*/
-          -o-appearance:none;       /* 사파리 */
-          appearance: none;         /* 화살표 없애기 공통*/
-
           background-image: url("#{$get-path-from-components-to-images}/icons/ic-select-down-arrow.png");
           background-repeat: no-repeat;
           background-position: 96%;
@@ -93,19 +84,12 @@
           padding-left: 121px;
           font-size: $font-size-14;
 
-          &:focus {
-            outline: none;
-          }
-
           &.error {
             border: solid 1px red;
           }
 
-          &#club_phone {
-            width: 310px;
-          }
           &#club_phone_auth {
-            width: 339px;
+            width: 310px;
           }
         }
 
@@ -152,7 +136,6 @@
             height: 18px;
             line-height: 18px;
 
-            box-sizing: border-box;
             display: inline-block;
             border-radius: 2px;
             background-color: #ffffff;

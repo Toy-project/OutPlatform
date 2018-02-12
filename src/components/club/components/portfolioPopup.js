@@ -205,7 +205,9 @@ class PortfolioPopup extends React.Component{
           {/* <div className='preview'>
             <img src={this.state.career_photo} alt="" className='default-image' />
           </div> */}
-          <div className='close-btn' onClick={this.closePopup}></div>
+          <div className='close-btn' onClick={this.props.close}>
+            <span className='x-icon'></span>
+          </div>
           <button className='ok-btn' onClick={this.handleSubmit}>확인</button>
           <div className='icons'>
             <div className='add-image-icon'>

@@ -20,25 +20,7 @@ class RegisterPopup extends React.Component {
 
     this.registerToMemberToggle = this.registerToMemberToggle.bind(this);
     this.registerToClubToggle = this.registerToClubToggle.bind(this);
-    this.closePopup = this.closePopup.bind(this);
   }
-
-  componentDidMount() {
-    //Click outside of inner div
-    window.addEventListener('click', this.closePopup);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('click', this.closePopup);
-  }
-
-  //팝업을 종료하는 함수
-  closePopup = (e) => {
-    if (e.target.id === 'popup_container'){
-      this.props.close();
-    }
-  }
-
 
   registerToClubToggle() {
     this.setState({
@@ -58,15 +40,15 @@ class RegisterPopup extends React.Component {
     let showRegisterStep;
 
     if(this.state.registerSelectionToggle){
-      showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerToMemberToggle} />;
+      showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerToMemberToggle} close={this.props.close} />;
     } else if(this.state.typeOfClubSelectionToggle) {
-      showRegisterStep = <TypeOfClubSelection toggleToBack={this.registerToClubToggle} />;
+      showRegisterStep = <TypeOfClubSelection toggleToBack={this.registerToClubToggle} close={this.props.close} />;
     } else {
-      showRegisterStep = <RegisterMember />;
+      showRegisterStep = <RegisterMember close={this.props.close} />;
     }
 
     return (
-      <div id='popup_container' className='popup_container'>
+      <div className='popup_container'>
         {showRegisterStep}
       </div>
     );

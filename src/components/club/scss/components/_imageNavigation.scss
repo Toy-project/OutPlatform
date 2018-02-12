@@ -73,39 +73,39 @@
         top: 25px;
       }
 
-      .upload-btn-profile,
-      .upload-btn-slide {
+      .upload-btn-slide,
+      .profile {
         display: block;
         border-radius: 100px;
         border: 0;
+        background-color: rgba(179, 179, 179, 0.7);
+
+        @include center;
+      }
+
+      .profile {
         width: 104px;
         height: 104px;
-        line-height: 104px;
-        background-color: $gray-3;
+        font-size: 14px;
+        color: $white;
+        padding-top: 30px;
+      }
+
+      .upload-btn-slide {
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
         cursor: pointer;
         z-index: 2;
 
-        @include z-depth-1;
-        @include center;
         @include thick;
 
-        &.beforeUpload:before {
-          content: '프로필 사진';
-        }
-
         &.afterUpload:before {
-          content: '등록';
+          content: '확인';
         }
-
-        &.afterUpload,
-        &.beforeUpload {
-          background-color: $white;
-        }
-
-        &.afterUpload:before,
-        &.beforeUpload:before {
+        &.afterUpload {
           font-size: $font-size-20;
-          color: $emerald-1;
+          color: $white;
         }
       }
 

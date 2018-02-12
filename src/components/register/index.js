@@ -5,7 +5,7 @@ import  { withRouter } from 'react-router-dom';
 import './scss/index.scss';
 
 import * as Helper from 'helper/registerHelper';
-import { isEmpty } from 'helper/common';
+import * as Common from 'helper/common';
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
 
 class Register extends React.Component {
@@ -15,78 +15,77 @@ class Register extends React.Component {
     this.state = {
       club_userid : {
         value: '',
-        err_msg: '',
-        err: true,
+        err_msg: '5자 이상 12자 이내로 지어주세요.',
+        err: null,
       },
 
       club_pw : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_pw_confirm : {
         value: '',
-        err_msg: '',
-        err: true,
+        err_msg: '영문,숫자,특수문자 포함 12자이내.',
+        err: null,
       },
 
       club_email : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_username : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_phone : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_phone_auth : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_name : {
         value: '',
-        err_msg: '',
-        err: true,
+        err_msg: '동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!',
+        err: null,
       },
 
       cate_id : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_college : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       union_enabled : {
         value: '',
         err_msg: '',
-        err: true,
+        err: null,
       },
 
       club_copyright : {
         value: '',
-        err_msg: '',
-        err: true,
+        err_msg: '동아리의 매력을 한 줄로 설명해주세요!(30자 이내)',
+        err: null,
       },
 
-      "club_phone_btn" : true,
-      "club_phone_auth_btn" : true,
+      "club_phone_auth_btn" : null,
     }
 
     //Input 처리
@@ -97,7 +96,6 @@ class Register extends React.Component {
     this.handleEmptyValue = this.handleEmptyValue.bind(this);
 
     //연락처 인증
-    this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
     this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
 
     //Submit
@@ -111,41 +109,69 @@ class Register extends React.Component {
     let err = false;
 
     if(target.id === 'club_userid') {
-      if(!Helper.isUserIdAvailable(value)) {
-        err_msg = '5자 이상 12자 이내로 지어주세요.';
-        err = true;
-      };
+      err_msg = '5자 이상 12자 이내로 지어주세요.';
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isUserIdAvailable(value)) {
+          err = true;
+        } else {
+          err_msg = '이용 가능한 아이디입니다.';
+        };
+      }
     }
     if(target.id === 'club_pw' || target.id === 'club_pw_confirm') {
-      if(!Helper.isPasswordAvailable(value)) {
-        err_msg = '영문,숫자,특수문자 포함 12자이내';
-        err = true;
+      if(target.id === 'club_pw_confirm') err_msg = '영문,숫자,특수문자 포함 12자이내';
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isPasswordAvailable(value)) {
+          err_msg = '영문,숫자,특수문자 포함 12자이내';
+          err = true;
+        }
       }
     }
     if(target.id === 'club_email') {
-      if(!Helper.isEmailAvailable(value)) {
-        err_msg = '올바르지 않는 형식입니다.';
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isEmailAvailable(value)) {
+          err_msg = '올바르지 않는 형식입니다.';
+          err = true;
+        }
+      }
+    }
+    if(target.id === 'club_username') {
+      if(Common.isEmpty(target.value)) {
+        err_msg = '이름을 입력해주세요.';
         err = true;
       }
     }
     if(target.id === 'club_phone') {
+
       value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
       target.value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-      if(!Helper.isPhoneAvailable(value)) {
-        err_msg = '올바르지 않는 전화번호입니다.';
-        err = true;
+
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isPhoneAvailable(value)) {
+          err_msg = '올바르지 않는 전화번호입니다.';
+          err = true;
+        }
       }
     }
     if(target.id === 'club_name') {
-      if(!Helper.isNameAvailable(value)) {
-        err_msg = '동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!';
-        err = true;
+      err_msg = '동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!';
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isNameAvailable(value)) {
+          err = true;
+        } else {
+          err_msg = '이용 가능한 동아리 이름입니다.';
+        }
       }
     }
     if(target.id === 'club_copyright') {
-      if(!Helper.isCopyrightAvailable(value)) {
-        err_msg = '5자 이상 30자 이내만 가능합니다!';
-        err = true;
+      err_msg = '5자 이상 30자 이내만 가능합니다!';
+      if(!Common.isEmpty(value)) {
+        if(!Helper.isCopyrightAvailable(value)) {
+          err = true;
+        } else {
+          err_msg = '이용 가능합니다.';
+          err = false;
+        }
       }
     }
 
@@ -154,15 +180,18 @@ class Register extends React.Component {
         ...[target.id],
         value: value,
         err_msg: err_msg,
-        err : err,
+        err : Common.isEmpty(value) ? null : err,
       },
     });
   }
 
   handleBlur(e) {
     const target = e.target;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
     let err_msg = '';
     let err = false;
+
+    if(Common.isEmpty(value)) return false;
 
     if(target.id === 'club_userid') {
       if(!Helper.isUserIdAvailable(target.value)) {
@@ -240,13 +269,6 @@ class Register extends React.Component {
       }
     }
 
-    if(target.id === 'club_username') {
-      if(isEmpty(target.value)) {
-        err_msg = '이름을 입력해주세요.';
-        err = true;
-      }
-    }
-
     if(target.id === 'club_name') {
       if(!Helper.isNameAvailable(target.value)) {
         err_msg = '동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!';
@@ -285,103 +307,28 @@ class Register extends React.Component {
     });
   }
 
-  requestPhoneAuth(e) {
-    const club_phone = this.state.club_phone.value;
-
-    if(!Helper.isPhoneAvailable(club_phone)) {
-      this.setState({
-        club_phone : {
-          ...this.state.club_phone,
-          err_msg: '연락처를 입력해주세요.',
-          err : true,
-        },
-      });
-      return false;
-    }
-
-    if(!Helper.requestAuth(club_phone)) {
-      //인증요청 실패
-      this.setState({
-        club_phone_auth : {
-          ...this.state.club_phone_auth,
-          err_msg: '인증요청에 실패하였습니다.',
-          err : true,
-        },
-        club_phone : {
-          ...this.state.club_phone,
-          err : true,
-        },
-        club_phone_btn : true,
-        club_phone_auth_btn : true,
-      });
-    } else {
-      //인증요청완료
-      this.setState({
-        club_phone_auth : {
-          ...this.state.club_phone_auth,
-          err_msg: '인증요청을 성공하였습니다. 잠시만 기달려주세요.',
-          err : false,
-        },
-        club_phone : {
-          ...this.state.club_phone,
-          err : false,
-        },
-        club_phone_btn : false,
-        club_phone_auth_btn : true,
-      });
-    }
-  }
-
   responsePhoneAuth(e) {
-    const club_phone_auth = this.state.club_phone_auth.value;
-    const club_phone_btn = this.state.club_phone_btn;
-
-    if(club_phone_btn) {
-      this.setState({
-        club_phone_auth : {
-          ...this.state.club_phone_auth,
-          err_msg: '인증번호 발송버튼을 눌러주세요.',
-          err : true,
-        }
-      });
-
-      return false;
-    }
-
-    if(!Helper.responseAuth(club_phone_auth)) {
-      //인증 실패
-      this.setState({
-        club_phone_auth : {
-          ...this.state.club_phone_auth,
-          err_msg: '인증에 실패하였습니다.',
-          err : true,
-        },
-        club_phone_auth_btn : true,
-      });
-    } else {
-      //인증완료
-      this.setState({
-        club_phone_auth : {
-          ...this.state.club_phone_auth,
-          err_msg: '인증에 성공하였습니다.',
-          err : false,
-        },
-        club_phone_auth_btn : false,
-      })
-    }
+    this.setState({
+      club_phone_auth : {
+        ...this.state.club_phone_auth,
+        err_msg: '인증에 성공하였습니다.',
+        err : false,
+      },
+      club_phone_auth_btn : false,
+    })
   }
 
   handleEmptyValue() {
-    if(isEmpty(this.state.club_userid.value)) this.refs.club_userid.focus();
-    else if(isEmpty(this.state.club_pw.value)) this.refs.club_pw.focus();
-    else if(isEmpty(this.state.club_pw_confirm.value)) this.refs.club_pw_confirm.focus();
-    else if(isEmpty(this.state.club_email.value)) this.refs.club_email.focus();
-    else if(isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
-    else if(isEmpty(this.state.club_phone.value)) this.refs.club_phone.focus();
-    else if(isEmpty(this.state.club_phone_auth.value)) this.refs.club_phone_auth.focus();
-    else if(isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
-    else if(isEmpty(this.state.cate_id.value)) this.setState({cate_id: { ...this.state.cate_id, err_msg: '카테고리를 선택해주세요.', err: true}})
-    else if(isEmpty(this.state.club_copyright.value)) this.refs.club_copyright.focus();
+    if(Common.isEmpty(this.state.club_userid.value)) this.refs.club_userid.focus();
+    else if(Common.isEmpty(this.state.club_pw.value)) this.refs.club_pw.focus();
+    else if(Common.isEmpty(this.state.club_pw_confirm.value)) this.refs.club_pw_confirm.focus();
+    else if(Common.isEmpty(this.state.club_email.value)) this.refs.club_email.focus();
+    else if(Common.isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
+    else if(Common.isEmpty(this.state.club_phone.value)) this.refs.club_phone.focus();
+    else if(Common.isEmpty(this.state.club_phone_auth.value)) this.refs.club_phone_auth.focus();
+    else if(Common.isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
+    else if(Common.isEmpty(this.state.cate_id.value)) this.refs.cate_id.focus();
+    else if(Common.isEmpty(this.state.club_copyright.value)) this.refs.club_copyright.focus();
     else {
       return true;
     }
@@ -450,6 +397,15 @@ class Register extends React.Component {
   }
 
   render() {
+    const errorClassName = (identifier) => {
+      if(identifier.err == null) {
+        return '';
+      } else if(identifier.err === false) {
+        return 'recommend-color';
+      } else {
+        return 'warning-color';
+      }
+    }
     return(
       <div className="register-container">
         <div className="container">
@@ -463,41 +419,40 @@ class Register extends React.Component {
               <div className='input-register'>
                 <label htmlFor='club_userid' className='input-title'>아이디</label>
                 <input type="text" id='club_userid' ref='club_userid' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_userid.err ? 'warning-color' : 'recommend-color'}>
+                <a className={errorClassName(this.state.club_userid)}>
                   {this.state.club_userid.err_msg}
                 </a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_pw' className='input-title'>비밀번호</label>
                 <input type="password" id='club_pw' ref='club_pw' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_pw.err ? 'warning-color' : 'recommend-color'}>{this.state.club_pw.err_msg}</a>
+                <a className={errorClassName(this.state.club_pw)}>{this.state.club_pw.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_pw_confirm' className='input-title'>비밀번호 확인</label>
                 <input type="password" id='club_pw_confirm' ref='club_pw_confirm' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_pw_confirm.err ? 'warning-color' : 'recommend-color'}>{this.state.club_pw_confirm.err_msg}</a>
+                <a className={errorClassName(this.state.club_pw_confirm)}>{this.state.club_pw_confirm.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_email' className='input-title'>이메일 주소</label>
                 <input type="text" id='club_email' ref='club_email' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_email.err ? 'warning-color' : 'recommend-color'}>{this.state.club_email.err_msg}</a>
+                <a className={errorClassName(this.state.club_email)}>{this.state.club_email.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_username' className='input-title'>이름</label>
                 <input type="text" id='club_username' ref='club_username' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_username.err ? 'warning-color' : 'recommend-color'}>{this.state.club_username.err_msg}</a>
+                <a className={errorClassName(this.state.club_username)}>{this.state.club_username.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_phone' className='input-title'>대표 전화번호</label>
                 <input type="text" id='club_phone' ref='club_phone' onChange={this.handleChange} />
-                <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
-                <a className={this.state.club_phone.err ? 'warning-color' : 'recommend-color'}>{this.state.club_phone.err_msg}</a>
+                <a className={errorClassName(this.state.club_phone)}>{this.state.club_phone.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
                 <input type="text" id='club_phone_auth' ref='club_phone_auth' onChange={this.handleChange} />
-                <input type="button" value="확인" onClick={this.responsePhoneAuth} />
-                <a className={this.state.club_phone_auth.err ? 'warning-color' : 'recommend-color'}>{this.state.club_phone_auth.err_msg}</a>
+                <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+                <a className={errorClassName(this.state.club_phone_auth)}>{this.state.club_phone_auth.err_msg}</a>
               </div>
             </div>
 
@@ -508,7 +463,7 @@ class Register extends React.Component {
               <div className='input-register'>
                 <label htmlFor='club_name' className='input-title'>동아리 이름</label>
                 <input type="text" id='club_name' ref='club_name' onChange={this.handleChange} onBlur={this.handleBlur}/>
-                <a className={this.state.club_name.err ? 'warning-color' : 'recommend-color'}>{this.state.club_name.err_msg}</a>
+                <a className={errorClassName(this.state.club_name)}>{this.state.club_name.err_msg}</a>
               </div>
               <div className='input-register'>
                 <label htmlFor='cate_id' className='input-title'>동아리 종류</label>
@@ -520,7 +475,6 @@ class Register extends React.Component {
                     })
                   }
                 </select>
-                <a className={this.state.cate_id.err ? 'warning-color' : 'recommend-color'}>{this.state.cate_id.err_msg}</a>
               </div>
               <div className='input-register college'>
                 <label htmlFor='club_college' className='input-title'>동아리 소속</label>
@@ -536,7 +490,7 @@ class Register extends React.Component {
               <div className='input-register'>
                 <label htmlFor='club_copyright' className='input-title'>동아리 설명</label>
                 <input type="text" id='club_copyright' ref='club_copyright' placeholder='동아리의 매력을 한 줄로 설명해주세요!' onChange={this.handleChange}/>
-                <a className={this.state.club_copyright.err ? 'warning-color' : 'recommend-color'}>{this.state.club_copyright.err_msg}</a>
+                <a className={errorClassName(this.state.club_copyright)}>{this.state.club_copyright.err_msg}</a>
               </div>
             </div>
 

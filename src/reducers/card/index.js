@@ -1,10 +1,12 @@
 import * as types from 'actions/card/actionTypes';
-
+import { cardListEnd } from 'helper/variables';
 const initial = {
   isLoading: false,
   error: false,
-  hasMore: false,
+  start: 0,
   data: [],
+  hasMore: false,
+  byCateId: false,
 }
 
 export default function Card(state = initial, action) {
@@ -18,6 +20,7 @@ export default function Card(state = initial, action) {
     case types.CARD_RECV_DATA :
       let datas = [...state.data];
       let hasMore = false;
+
       if(action.data.rows.length !== 0){
         hasMore = true;
       }
@@ -29,37 +32,34 @@ export default function Card(state = initial, action) {
           club_name: data.club_name,
           club_copyright: data.club_copyright,
           club_rating: data.club_rating,
-          cate_id: data.cate_id,
-          tag_id: data.tag_id,
         }];
       });
+
       return {
           ...state,
           isLoading: false,
           error: false,
-          hasMore: hasMore,
           count: action.data.count,
-          data: datas
+          hasMore: hasMore,
+          data: datas,
+          start: state.start + cardListEnd,
       };
-    case types.CARD_SORT_DATA :
-      datas = [];
-      state.data.map((item) => {
-        if(parseInt(action.cate_id, 10) === item.cate_id){
-          datas = [...datas, item];
-        }
-        return false;
-      })
+    case types.CARD_RESET_DATA :
+      const byCateId = action.byCateId;
+
       return {
         ...state,
-        isLoading: false,
-        error: false,
-        data: datas,
-      };
+        byCateId: byCateId,
+        cate_id: action.cate_id,
+        data: [],
+        hasMore: false,
+        start: 0,
+      }
     case types.CARD_RECV_ERROR :
       return {
         ...state,
         isLoading: false,
-        error: true
+        error: true,
       }
     default :
       return state;

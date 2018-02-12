@@ -5,15 +5,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import '../scss/index.scss';
 
-import { fetchCards } from 'actions/card';
+import * as Services from 'actions/card';
 
 import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
-
-// import { getClubLists } from 'services/card/';
+import { cardListEnd } from 'helper/variables';
 import { Card } from 'components/';
-
-let paginationStart = 0;
-const paginationCount = 12;
 
 class CardsList extends React.Component {
   constructor(props){
@@ -24,8 +20,13 @@ class CardsList extends React.Component {
   }
 
   loadingData() {
-    paginationStart += 12;
-    this.props.fetchCards(paginationStart, paginationCount);
+    console.log(this.props.cards.start);
+    //카테고리로 서치할 때
+    if(this.props.cards.byCateId) {
+      this.props.fetchCardsByCateId(this.props.cards.cate_id, this.props.cards.start, cardListEnd);
+    } else {
+      this.props.fetchCards(this.props.cards.start, cardListEnd);
+    }
   }
 
   render() {
@@ -96,8 +97,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchCards: (start, count) => {
-      dispatch(fetchCards(start, count));
-    }
+      dispatch(Services.fetchCards(start, count));
+    },
+    fetchCardsByCateId: (cate_id, start, end) => {
+      dispatch(Services.fetchCardsByCateId(cate_id, start, end));
+    },
   }
 }
 

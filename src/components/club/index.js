@@ -8,6 +8,7 @@ import './scss/index.scss';
 
 import { fetchClub } from 'actions/club';
 import { fetchCareer } from 'actions/portfolio';
+import { fetchSnsByClubId } from 'actions/sns';
 
 import { getClubUserId } from 'services/club';
 
@@ -42,8 +43,6 @@ class Club extends React.Component {
     if(!this.state.myPage) {
       //Fetch club data
       this.props.fetchClub(club_id, cate_id, tag_id);
-      //Fetch portfolio data
-      this.props.fetchCareer(this.props.match.params.club_id, 0, 6);
     } else {
       if(token){
         const { club_userid } = jwtDecode(token);
@@ -52,8 +51,6 @@ class Club extends React.Component {
           .then((response) => {
             //Fetch club data
             this.props.fetchClub(club_id, cate_id, tag_id);
-            //Fetch portfolio data
-            this.props.fetchCareer(this.props.match.params.club_id, 0, 6);
           })
           .catch((err) => {
             console.log(err);
@@ -65,20 +62,21 @@ class Club extends React.Component {
   }
 
   render() {
-    const portfolio = (club_id) => {
-      const results = checkStatusComponent(this.props.portfolio);
-
-      if(results) {
-        const portfolio = this.props.portfolio.data;
-        return (
-          <PortfolioNavigation
-            club_id={club_id}
-            myPage={this.state.myPage}
-            data={portfolio}
-          />
-        );
-      }
-    }
+    // const portfolio = (club_id) => {
+    //   const results = checkStatusComponent(this.props.portfolio);
+    //
+    //   if(results) {
+    //     const portfolio = this.props.portfolio.data;
+    //
+    //     return (
+    //       <PortfolioNavigation
+    //         club_id={club_id}
+    //         myPage={this.state.myPage}
+    //         portfolio={portfolio}
+    //       />
+    //     );
+    //   }
+    // }
 
     const club = () => {
       const results = checkStatusComponent(this.props.club);
@@ -89,8 +87,8 @@ class Club extends React.Component {
         //데이터가 없을 경우
         if(checkEmptyData(club)){
           return false;
-        }
 
+        }
         return(
           <div>
             <ImageNavigation
@@ -119,8 +117,9 @@ class Club extends React.Component {
               club_ex={club.club_ex}
 
               //SNS
+              sns={club.sns}
              />
-           {portfolio(club.club_id)}
+           {/* {portfolio(club.club_id)} */}
             {/* comment */}
             {this.state.myPage ? '' : <Comment
               club_id={club.club_id}
@@ -171,9 +170,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchClub: (club_id) => {
       dispatch(fetchClub(club_id));
-    },
-    fetchCareer: (club_id, start, end) => {
-      dispatch(fetchCareer(club_id, start, end));
     }
   }
 }

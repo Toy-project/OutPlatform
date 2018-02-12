@@ -1,8 +1,18 @@
 .portfolio-card {
+  position: relative;
   width: 416px;
   height: 480px;
 
   @include z-depth-1;
+
+  .remove-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
 
   .card-image {
     height: 302px;

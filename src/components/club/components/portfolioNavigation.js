@@ -11,8 +11,8 @@ class PortfolioNavigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: isNull(this.props.data) ? [] : this.props.data, //포트폴리오 아이템
-      length: isNull(this.props.data) ? 0 : this.props.data.length, //data 길이
+      portfolio: isNull(this.props.portfolio) ? [] : this.props.portfolio, //포트폴리오 아이템
+      length: isNull(this.props.portfolio.length) ? 0 : this.props.portfolio.length, //data 길이
       popupToggle : false, //팝업 토글
       editData : '', //수정할 데이터
       type: 0, // 생성 = 0 or 수정 = 1 or 보기 = 2
@@ -91,7 +91,7 @@ class PortfolioNavigation extends React.Component {
     } else {
       //ADD ANIMATION
       const element = document.getElementById('portfolio-slide-wrap');
-      if(element && this.state.length >= 2){
+      if(element && this.state.length > 2){
         if(!element.classList.contains('moveToLeft'))
           element.classList.add('moveToLeft');
       }
@@ -117,9 +117,11 @@ class PortfolioNavigation extends React.Component {
 
   componentDidMount() {
     const element = document.getElementById('portfolio-slide-wrap');
-    if(element && this.state.length >= 2){
-      const element = document.getElementById('portfolio-slide-wrap');
-      element.classList.add('moveToLeft');
+
+    if(element && this.state.length > 2){
+      if(!element.classList.contains('moveToLeft')) {
+        element.classList.add('moveToLeft');
+      }
     }
   }
 
@@ -141,7 +143,7 @@ class PortfolioNavigation extends React.Component {
                                                       type={this.state.type}
                                                     /> : '';
 
-    const items = this.state.data.map((item,i) => {
+    const items = this.state.portfolio.map((item,i) => {
       return (
         <span className='portfolio-obj' key={i}>
           {this.props.myPage ? <Portfolio
@@ -159,6 +161,7 @@ class PortfolioNavigation extends React.Component {
       slidesToScroll: 1,
       arrows: false,
     };
+
     isArrows = (
       <div>
         <div className={this.state.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.previous}></div>
@@ -176,10 +179,12 @@ class PortfolioNavigation extends React.Component {
       } else {
         slider = (
           <div id='portfolio-slide-wrap'>
+            {console.log(this.state.length)}
             <Slider
               ref={ref => this.slider = ref}
               {...settings}
               infinite={false}
+              initialSlide={this.state.length > 2 ? this.state.length - 3 : 0}
             >
                 {items}
                 <span className='portfolio-mypage-add' onClick={this.handleAdd}></span>
@@ -199,7 +204,6 @@ class PortfolioNavigation extends React.Component {
         <div id='portfolio-slide-wrap'>
           <Slider
             ref={ref => this.slider = ref}
-            slidesToShow={4}
             autoplay={true}
             autoplaySpeed={2000}
             {...settings}
@@ -238,7 +242,7 @@ class PortfolioNavigation extends React.Component {
 
 PortfolioNavigation.propTypes = {
   myPage: PropTypes.bool,
-  data: PropTypes.arrayOf(PropTypes.object),
+  portfolio: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default PortfolioNavigation;

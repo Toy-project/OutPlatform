@@ -3,11 +3,11 @@ import { apiAddres } from 'helper/variables';
 
 const urlPortfolio = `${apiAddres}/career`;
 
-export function getAllClubByCareerId(club_id, start, end){
+export function getAllClubByCareerId(club_id){
   return axios({
     method: 'get',
     timeout: 20000,
-    url: `${urlPortfolio}/club/${club_id}?start=${start}&end=${end}`,
+    url: `${urlPortfolio}/club/${club_id}?start=0&end=6`,
     responseType: 'json'
   });
 }
@@ -33,5 +33,16 @@ export function updateCareer(data) {
       'Content-Type': 'application/json',
     },
     data: data,
+  })
+}
+
+export function deleteCareer(career_id) {
+  return axios({
+    method: 'delete',
+    url: `${urlPortfolio}/${career_id}`,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
 }
