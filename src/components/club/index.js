@@ -2,26 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import  { withRouter } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 
 import './scss/index.scss';
 
 import { fetchClub } from 'actions/club';
 import { fetchCareer } from 'actions/portfolio';
-import { fetchSnsByClubId } from 'actions/sns';
 
-import { getClubUserId } from 'services/club';
-
-import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
+import { checkStatusComponent, checkEmptyData } from 'helper/common';
 
 
 import ImageNavigation from './components/imageNavigation';
 import Snippet from './components/snippet';
 import Profile from './components/profile';
-import PortfolioNavigation from './components/portfolioNavigation'
+import PortfolioNavigation from './components/portfolioNavigation';
 import Comment from './components/comment';
 import Quotation from './components/quotation';
 import SmiliarClub from './components/smiliarClub';
+
+import * as Security from 'helper/securityHelper';
 
 class Club extends React.Component {
 
@@ -30,54 +28,34 @@ class Club extends React.Component {
     this.state = {
       myPage: this.props.myPage,
     }
-  }
 
-  componentDidMount() {
-    const param = new URLSearchParams(this.props.location.search);
-    const cate_id = param.get('cate_id');
-    const tag_id = param.get('tag_id');
-    const club_id = this.props.match.params.club_id;
-
-    const token = localStorage.getItem('club_user');
-
-    if(!this.state.myPage) {
-      //Fetch club data
-      this.props.fetchClub(club_id, cate_id, tag_id);
-    } else {
-      if(token){
-        const { club_userid } = jwtDecode(token);
-
-        getClubUserId(club_userid)
-          .then((response) => {
-            //Fetch club data
-            this.props.fetchClub(club_id, cate_id, tag_id);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
+    //Redirect if worng myPage access has been detected,
+    if(this.state.myPage) {
+      //토큰이 없으면
+      if(!Security.defenceAccessingWithoutToken()) {
         alert('잘못왔엉');
+        this.props.history.push(`/`);
+        window.location.reload();
+      } else {
+        if(!Security.defenceAccessingWithInvalidToken(this.props.match.params.club_id)) {
+          alert('잘못왔엉');
+          this.props.history.push(`/`);
+          window.location.reload();
+        }
       }
     }
   }
 
-  render() {
-    // const portfolio = (club_id) => {
-    //   const results = checkStatusComponent(this.props.portfolio);
-    //
-    //   if(results) {
-    //     const portfolio = this.props.portfolio.data;
-    //
-    //     return (
-    //       <PortfolioNavigation
-    //         club_id={club_id}
-    //         myPage={this.state.myPage}
-    //         portfolio={portfolio}
-    //       />
-    //     );
-    //   }
-    // }
+  componentDidMount() {
+    const club_id = this.props.match.params.club_id;
 
+    //fetch Data
+    this.props.fetchClub(club_id);
+    this.props.fetchCareer(club_id);
+  }
+
+  render() {
+    let club_rating = 0;
     const club = () => {
       const results = checkStatusComponent(this.props.club);
 
@@ -87,8 +65,10 @@ class Club extends React.Component {
         //데이터가 없을 경우
         if(checkEmptyData(club)){
           return false;
-
         }
+
+        club_rating = club.club_rating;
+
         return(
           <div>
             <ImageNavigation
@@ -115,30 +95,33 @@ class Club extends React.Component {
               cate_name={club.category.cate_name}
               tag_name={club.tag.tag_name}
               club_ex={club.club_ex}
-
               //SNS
               sns={club.sns}
              />
-           {/* {portfolio(club.club_id)} */}
-            {/* comment */}
-            {this.state.myPage ? '' : <Comment
-              club_id={club.club_id}
-              club_rating={club.club_rating}
-              start={1}
-              end={3}
-            />}
-            {/* comment */}
-            {this.state.myPage ? '' : <Quotation />}
-            {/* 비슷한 단체 데이터 */}
-            {this.state.myPage ? '' : <SmiliarClub />}
           </div>
         );
       }
     }
-
     return (
       <div className='club-container'>
         {club()}
+        <PortfolioNavigation
+         club_id={this.props.match.params.club_id}
+         myPage={this.state.myPage}
+         portfolio={this.props.portfolio.data}
+        />
+
+        {/* comment */}
+        {this.state.myPage ? '' : <Comment
+          club_id={club.club_id}
+          club_rating={club_rating}
+        />}
+
+        {/* comment */}
+        {this.state.myPage ? '' : <Quotation />}
+
+        {/* 비슷한 단체 데이터 */}
+        {this.state.myPage ? '' : <SmiliarClub />}
       </div>
     );
   }
@@ -170,6 +153,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchClub: (club_id) => {
       dispatch(fetchClub(club_id));
+    },
+    fetchCareer: (club_id) => {
+      dispatch(fetchCareer(club_id));
     }
   }
 }

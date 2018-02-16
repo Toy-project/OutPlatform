@@ -3,10 +3,11 @@ import { cardListEnd } from 'helper/variables';
 const initial = {
   isLoading: false,
   error: false,
-  start: 0,
+  count: 0,
   data: [],
   hasMore: false,
   byCateId: false,
+  start: 0,
 }
 
 export default function Card(state = initial, action) {

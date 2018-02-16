@@ -1,17 +1,15 @@
 import React from 'react';
-
-import ic_profile from 'images/icons/ic-profile.png';
+import dateFormat from 'dateformat';
 
 import RatingStar from './ratingStar';
 
 const CommentCard = ( { data }) => {
-  const date = data.comment_update.replace(/-/gi,'/');
   return (
     <div className='comment-card'>
       <div className='comment-card-inner'>
         <div className='comment-card-who'>
           <div className='comment-image'>
-            <img src={ic_profile} alt ='' className='default'/>
+            <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' className='default-image' alt =''/>
             <h5>USER NAME</h5>
           </div>
           <hr />
@@ -19,7 +17,7 @@ const CommentCard = ( { data }) => {
         <div className='comment-card-contents'>
           <div className='comment-card-date'>
             <div className='comment-top'>
-              게시일 : {date}
+              게시일 : {dateFormat(data.comment_update,'yyyy.mm.dd')}
               <span className='star-rating'>
                 별점 &nbsp;
                 <RatingStar to={data.club_rating} />

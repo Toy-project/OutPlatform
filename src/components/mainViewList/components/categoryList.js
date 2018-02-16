@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Category } from 'components/';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
+import { checkStatusComponent, checkEmptyData } from 'helper/common';
 
 class CategoryList extends React.Component {
 

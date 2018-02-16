@@ -68,10 +68,10 @@ class PortfolioPopup extends React.Component{
       'career_ex': this.state.career_ex,
       'career_due_start': this.state.career_due_start,
       'career_due_end': this.state.career_due_end,
-      'club_id': this.props.club_id,
       // 'career_photo': this.state.career_photo,
       'career_people': this.state.career_people,
       'career_co': this.state.career_co,
+      'club_id': this.props.club_id,
     }
 
     this.props.fetchCreateCareer(data);

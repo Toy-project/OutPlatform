@@ -5,14 +5,10 @@ import Slider from 'react-slick';
 import Portfolio from './portfolio';
 import PortfolioPopup from './portfolioPopup';
 
-import { isNull } from 'helper/common';
-
 class PortfolioNavigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      portfolio: isNull(this.props.portfolio) ? [] : this.props.portfolio, //포트폴리오 아이템
-      length: isNull(this.props.portfolio.length) ? 0 : this.props.portfolio.length, //data 길이
       popupToggle : false, //팝업 토글
       editData : '', //수정할 데이터
       type: 0, // 생성 = 0 or 수정 = 1 or 보기 = 2
@@ -37,7 +33,7 @@ class PortfolioNavigation extends React.Component {
 
   next() {
     //안에 데이터가 없으면 작동안함
-    if(this.state.length === 0){
+    if(this.props.portfolio.length === 0){
       return false;
     }
 
@@ -54,14 +50,14 @@ class PortfolioNavigation extends React.Component {
   }
   previous() {
     //안에 데이터가 없으면 작동안함
-    if(this.state.length === 0){
+    if(this.props.portfolio.length === 0){
       return false;
     }
 
     if(this.props.myPage){
       if(this.slider.innerSlider.state.currentSlide === 0){
         const element = document.getElementById('portfolio-slide-wrap');
-        if(element && this.state.length >= 2){
+        if(element && this.props.portfolio.length >= 2){
           if(element.classList.contains('moveToLeft')){
             element.classList.add('moveToRight');
           }
@@ -91,7 +87,7 @@ class PortfolioNavigation extends React.Component {
     } else {
       //ADD ANIMATION
       const element = document.getElementById('portfolio-slide-wrap');
-      if(element && this.state.length > 2){
+      if(element && this.props.portfolio.length > 2){
         if(!element.classList.contains('moveToLeft'))
           element.classList.add('moveToLeft');
       }
@@ -118,7 +114,7 @@ class PortfolioNavigation extends React.Component {
   componentDidMount() {
     const element = document.getElementById('portfolio-slide-wrap');
 
-    if(element && this.state.length > 2){
+    if(element && this.props.portfolio.length > 2){
       if(!element.classList.contains('moveToLeft')) {
         element.classList.add('moveToLeft');
       }
@@ -143,7 +139,7 @@ class PortfolioNavigation extends React.Component {
                                                       type={this.state.type}
                                                     /> : '';
 
-    const items = this.state.portfolio.map((item,i) => {
+    const items = this.props.portfolio.map((item,i) => {
       return (
         <span className='portfolio-obj' key={i}>
           {this.props.myPage ? <Portfolio
@@ -164,27 +160,26 @@ class PortfolioNavigation extends React.Component {
 
     isArrows = (
       <div>
-        <div className={this.state.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.previous}></div>
-        <div className={this.state.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
+        <div className={this.props.portfolio.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.previous}></div>
+        <div className={this.props.portfolio.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
       </div>
     );
 
     //마이페이지일 경우
     if(this.props.myPage){
       //슬라이더 갯수가 0 일 때, 버튼을 가운데로 하기 위해
-      if(this.state.length === 0){
+      if(this.props.portfolio.length === 0){
         slider = (
           <div className='no-items' onClick={this.handleAdd}></div>
         );
       } else {
         slider = (
           <div id='portfolio-slide-wrap'>
-            {console.log(this.state.length)}
             <Slider
               ref={ref => this.slider = ref}
               {...settings}
               infinite={false}
-              initialSlide={this.state.length > 2 ? this.state.length - 3 : 0}
+              initialSlide={this.props.portfolio.length > 2 ? this.props.portfolio.length - 3 : 0}
             >
                 {items}
                 <span className='portfolio-mypage-add' onClick={this.handleAdd}></span>

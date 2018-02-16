@@ -1,6 +1,5 @@
 .register-selection-container {
   @include popup-reset-options(330px, 21%);
-  top: 13.4%;
   z-index:2;
 
   > .register-selection-inner {

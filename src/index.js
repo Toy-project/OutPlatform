@@ -15,13 +15,12 @@ import { fetchCategory } from 'actions/category';
 import { fetchTag } from 'actions/tag';
 
 import { handleExpire } from 'helper/loginHelper';
-import { cardListEnd } from 'helper/variables';
+import { cardListEnd, tokenName } from 'helper/variables';
 
 const store = configureStore();
 
 //Check token expire date
-handleExpire('club_user');
-handleExpire('mem_user');
+handleExpire(tokenName);
 
 store.dispatch(fetchCards(0, cardListEnd));
 store.dispatch(fetchCategory(0, 8));

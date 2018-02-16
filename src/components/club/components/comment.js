@@ -6,24 +6,23 @@ import Pagination from "react-js-pagination";
 import CommentCard from './comment-card';
 import RatingStar from './ratingStar';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
+import { checkStatusComponent, checkEmptyData } from 'helper/common';
+import * as LoginHelper from 'helper/loginHelper';
+import * as Common from 'helper/common';
+import { commentListEnd } from 'helper/variables';
 
-import { fetchComment } from 'actions/comment';
+import * as Services from 'actions/comment';
 
 class Comment extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       activePage: 1,
-      updatedCommentId: -1,
     }
 
     this.setRating = this.setRating.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleAddComment = this.handleAddComment.bind(this);
-
-    //Fetch comment Data
-    this.props.fetchComment(this.props.club_id, this.props.start, this.props.end );
   }
 
   handlePageChange(pageNumber){
@@ -35,8 +34,9 @@ class Comment extends React.Component {
     }
 
     //Data Fetch
-    start = (pageNumber * 2) - 2 + pageNumber;
-    this.props.fetchComment(this.props.club_id, start, this.props.end);
+    start = (pageNumber * 2) - 3 + pageNumber;
+
+    this.props.fetchComment(this.props.club_id, start, commentListEnd);
 
     this.setState({
       ...this.state,
@@ -47,30 +47,34 @@ class Comment extends React.Component {
   //댓글 추가시 별 셋팅
   setRating(rate) {
     //Set rating value to hidden input
-    const element = document.getElementById('hiddenRatingValue');
-    element.value = rate;
+    this.refs.club_raing.value = rate;
   }
 
   //댓글 추가
   handleAddComment() {
-    const rating = document.getElementById('hiddenRatingValue').value;
+    //로그인이 안되어 있을 경우
+    if(LoginHelper.getCurrentToken() === false) {
+      alert('로그인 후에 이용해주세요!');
+      return false;
+    }
+
+    const rating = this.refs.club_raing.value;
+    const comment_writer = LoginHelper.isMember(LoginHelper.getCurrentToken()) ? LoginHelper.getCurrentToken().mem_id : LoginHelper.getCurrentToken().club_id;
+    const comment_writer_type = LoginHelper.isMember(LoginHelper.getCurrentToken()) ? 'member' : 'club';
     const data = {
       'comment_contents': this.refs.comment_contents.value,
-      'club_rating': rating,
-      // 'club_id':
-      // 'mem_id':
+      'comment_writer': comment_writer,
+      'comment_writer_type': comment_writer_type,
+      'club_rating': Common.isEmpty(rating) ? 0 : rating,
+      'club_id': this.props.club_id,
     }
-    let updatedCommentId;
 
     //Call Post API
-    //updatedCommentId = APICALL
-    this.setState({
-      ...this.state,
-      updatedCommentId: updatedCommentId,
-    });
+    this.props.fetchCreateComment(data);
+  }
 
-    //Fetch Data
-    this.props.fetchComment(this.props.club_id, this.props.start, this.props.end);
+  componentDidMount() {
+    this.props.fetchComment(this.props.club_id, 0, commentListEnd);
   }
 
   render() {
@@ -84,16 +88,21 @@ class Comment extends React.Component {
           return false;
         }
 
-        return (
-          <ul>
-            {comment.rows.map((data, key) => {
-              if(this.state.updatedCommentId === data.comment_id){
-                //애니메이션 추가
-              }
-              return <li key={key}><CommentCard data={data} /></li>;
-            })}
-          </ul>
-        );
+        if(comment.count === 0) {
+          return (
+            <span>
+              댓글을 입력해주세요!
+            </span>
+          )
+        } else {
+          return (
+            <ul>
+              {comment.rows.map((data, key) => {
+                return <li key={key}><CommentCard data={data} /></li>;
+              })}
+            </ul>
+          );
+        }
       }
     }
 
@@ -128,7 +137,7 @@ class Comment extends React.Component {
                     </div>
                     <textarea ref='comment_contents'></textarea>
                     <button onClick={this.handleAddComment}>등록</button>
-                    <input type='hidden' id='hiddenRatingValue'></input>
+                    <input type='hidden' ref='club_raing'></input>
                   </div>
                   <div className='comment-list'>
                     {comment()}
@@ -169,7 +178,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComment: (index, start, end) => {
-      dispatch(fetchComment(index, start, end));
+      dispatch(Services.fetchComment(index, start, end));
+    },
+    fetchCreateComment : (data) => {
+      dispatch(Services.fetchCreateComment(data));
     }
   }
 }

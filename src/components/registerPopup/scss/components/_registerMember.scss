@@ -1,7 +1,7 @@
 .register-member-container {
   @include popup-reset-options(500px, 50%);
   z-index: 2;
-  top: 11%;
+  margin-bottom: 11%;
 
   > .register-member-inner {
     float: left;

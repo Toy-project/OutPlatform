@@ -1,30 +1,29 @@
 import * as types from './actionTypes';
-import * as Services from 'services/comment/';
-import { commentListEnd } from 'helper/variables';
+import * as Services from 'services/member/';
 
 function requestData() {
-  return {type: types.COMMENT_REQ_DATA}
+  return {type: types.MEMBER_REQ_DATA}
 };
 
 function receiveData(json){
   return{
-		type: types.COMMENT_RECV_DATA,
+		type: types.MEMBER_RECV_DATA,
 		data: json
 	}
 };
 
 function receiveError(json) {
 	return {
-		type: types.COMMENT_RECV_ERROR,
+		type: types.MEMBER_RECV_ERROR,
 		data: json
 	}
 };
 
-export function fetchComment(club_id, start, end){
+export function fetchMember(mem_id){
   return function(dispatch){
     dispatch(requestData());
     return Services
-          .getCommentById(club_id, start, end)
+          .getMemberByUserId(mem_id)
           .then((response) => {
             return dispatch(receiveData(response.data));
           })
@@ -34,13 +33,14 @@ export function fetchComment(club_id, start, end){
   }
 }
 
-export function fetchCreateComment(data) {
+export function fetchUpdateMember(mem_id, data) {
   return function(dispatch){
     dispatch(requestData());
     return Services
-          .createComment(data)
+          .updateMember(mem_id, data)
           .then((response) => {
-            return dispatch(fetchComment(data.club_id, 0, commentListEnd));
+            console.log(response.data);
+            return dispatch(fetchMember(mem_id));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));

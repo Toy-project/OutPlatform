@@ -7,14 +7,13 @@ import { Club, Footer } from 'components/';
 
 const myPageClub = () => (
   <div>
-    <Nav subPage={true} />
+    <Nav/>
     <Club myPage={true} />
     <Footer />
   </div>
 )
 
 myPageClub.propTypes = {
-  subPage: PropTypes.bool,
   myPage: PropTypes.bool,
 };
 

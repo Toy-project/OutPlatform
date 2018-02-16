@@ -119,11 +119,15 @@ class Register extends React.Component {
       }
     }
     if(target.id === 'club_pw' || target.id === 'club_pw_confirm') {
-      if(target.id === 'club_pw_confirm') err_msg = '영문,숫자,특수문자 포함 12자이내';
+      if(target.id === 'club_pw_confirm') {
+        err_msg = '영문,숫자,특수문자 포함 12자이내';
+      }
       if(!Common.isEmpty(value)) {
         if(!Helper.isPasswordAvailable(value)) {
           err_msg = '영문,숫자,특수문자 포함 12자이내';
           err = true;
+        } else {
+          err_msg = '이용 가능한 비밀번호입니다.';
         }
       }
     }
@@ -315,7 +319,7 @@ class Register extends React.Component {
         err : false,
       },
       club_phone_auth_btn : false,
-    })
+    });
   }
 
   handleEmptyValue() {
@@ -352,7 +356,6 @@ class Register extends React.Component {
       this.state.club_copyright.err,
 
       //True -> Ok / False -> Error
-      this.state.club_phone_btn,
       this.state.club_phone_auth_btn
     ];
 

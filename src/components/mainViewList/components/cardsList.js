@@ -7,7 +7,7 @@ import '../scss/index.scss';
 
 import * as Services from 'actions/card';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/clubHelper';
+import { checkStatusComponent, checkEmptyData } from 'helper/common';
 import { cardListEnd } from 'helper/variables';
 import { Card } from 'components/';
 
@@ -30,6 +30,7 @@ class CardsList extends React.Component {
   }
 
   render() {
+    let club_count = this.props.cards.count;
     const card = () => {
       if(!checkStatusComponent(this.props.cards)){
         //로딩이나 에러
@@ -51,18 +52,25 @@ class CardsList extends React.Component {
         });
       }
     }
+
+    const endMessage = (
+      <div className='end-message'>
+        등록된 단체를 다 보셨습니다! <br />
+        마음에 드시는 단체는 찾으셨나요?:)
+      </div>
+    )
+
     return (
       <div>
-        <ul id="cardsList" className="center">
+        <div className='card-total-number'>
+          등록된 단체 수 : {club_count}
+        </div>
+        <ul>
           <InfiniteScroll
             next={this.loadingData}
             hasMore={this.props.cards.hasMore}
             loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{textAlign: 'center'}}>
-                <b>Yay!   You have seen it all</b>
-              </p>
-            }>
+            endMessage={endMessage}>
             {card()}
           </InfiniteScroll>
         </ul>

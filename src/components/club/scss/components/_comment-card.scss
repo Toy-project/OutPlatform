@@ -21,17 +21,21 @@
 
       .comment-image {
         display: inline-block;
+        margin-top: 15%;
 
         h5 {
           font-size: $font-size-12;
         }
 
-        .default {
-          padding: 10px;
-          border-radius: 100px;
-          background-color: $gray-6;
+        .default-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 50px;
           margin-bottom: 10px;
-
+          background: url("#{$get-path-from-components-to-images}/icons/ic-profile.png");
+          background-position: 50% 50%;
+          background-size: 20px;
+          background-repeat: no-repeat;
           @include z-depth-1;
         }
       }

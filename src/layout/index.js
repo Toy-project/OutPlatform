@@ -3,6 +3,8 @@ import RegisterForClub from './registerForClub';
 import Club from './viewClub';
 import MyPageClub from './myPageClub';
 import TypeFace from './typeFace';
+import MyPageUserMemberLayout from './myPageUserMember';
+import MyPageUserClubLayout from './myPageUserClub';
 
 export {
   Main,
@@ -10,4 +12,6 @@ export {
   Club,
   MyPageClub,
   TypeFace,
+  MyPageUserMemberLayout,
+  MyPageUserClubLayout
 };

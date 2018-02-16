@@ -149,7 +149,7 @@ class Profile extends React.Component {
             <span>
               <span id='club_ex_limitation' className='club-ex-limitation'>0/200</span>
               <textarea ref={id} id='club_ex' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.club_ex}></textarea>
-              <a classNamee='club-ex-error' id='club_ex_error'>최대 200글자까지 허용됩니다.</a>
+              <a className='club-ex-error' id='club_ex_error'>최대 200글자까지 허용됩니다.</a>
             </span>
           );
         case 'sns':

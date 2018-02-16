@@ -8,6 +8,7 @@ import RegisterPopup from './registerPopup';
 import Register from './register';
 import Login from './login';
 import Club from './club';
+import MyPageUser from './myPageUser';
 
 export {
   Card,
@@ -19,5 +20,6 @@ export {
   RegisterPopup,
   Register,
   Login,
-  Club
+  Club,
+  MyPageUser,
 };
