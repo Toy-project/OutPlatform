@@ -12,6 +12,8 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+
+    @include center;
   }
 
   .card-image {

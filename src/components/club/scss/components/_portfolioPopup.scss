@@ -1,8 +1,7 @@
 .portfolio-popup-wrapper {
   @include popup-reset-options(628px, 63%);
   padding: 0;
-  top: 4.6%;
-  margin-bottom: 2.3%;
+  margin-bottom: 1%;
   z-index: 2;
   overflow: hidden;
 
@@ -110,7 +109,19 @@
           @include thick;
         }
 
-        input[type='text'] {
+        select {
+          width: 100%;
+          height: 30px;
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-select-down-arrow-club.png");
+          background-repeat: no-repeat;
+          background-position: 96%;
+          background-size: 20px;
+          text-indent : 5px;
+        }
+
+        input[type='text'],
+        select,
+        textarea {
           border: solid 0.5px #b3b3b3;
           font-size: $font-size-14;
         }
@@ -118,38 +129,30 @@
         input[type='text'] {
           width: 220px;
           height: 30px;
-          border: solid 0.5px #b3b3b3;
           padding-left: 5px;
           font-size: $font-size-14;
         }
 
-        > .from {
+        .from {
           margin-right: 50px;
         }
 
-        > .from,
-        > .to {
-          > .year,
-          > .month,
-          > .day {
-            border: solid 0.5px #b3b3b3;
+        .from,
+        .to {
+          .year,
+          .month,
+          .day {
             font-size: $font-size-14;
             margin-right: 8px;
           }
 
-          > .year,
-          > .month,
-          > .day {
-            border-radius: 2px;
-          }
-
-          > .year {
+          .year {
             width: 82px;
             height: 30px;
           }
 
-          > .month,
-          > .day {
+          .month,
+          .day {
             width: 62px;
             height: 30px;
           }

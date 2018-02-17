@@ -25,13 +25,12 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      float: left;
       @include center;
     }
 
     li {
-      display: inline-block;
-      margin: 0 5px 5.5px 5px;
+      float: left;
+      margin: 5px;
     }
 
     .btn  {

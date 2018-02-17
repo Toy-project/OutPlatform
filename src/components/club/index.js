@@ -51,11 +51,9 @@ class Club extends React.Component {
 
     //fetch Data
     this.props.fetchClub(club_id);
-    this.props.fetchCareer(club_id);
   }
 
   render() {
-    let club_rating = 0;
     const club = () => {
       const results = checkStatusComponent(this.props.club);
 
@@ -66,8 +64,6 @@ class Club extends React.Component {
         if(checkEmptyData(club)){
           return false;
         }
-
-        club_rating = club.club_rating;
 
         return(
           <div>
@@ -98,6 +94,24 @@ class Club extends React.Component {
               //SNS
               sns={club.sns}
              />
+
+             <PortfolioNavigation
+              club_id={this.props.match.params.club_id}
+              myPage={this.state.myPage}
+              portfolio={club.career}
+             />
+
+             {/* comment */}
+             {this.state.myPage ? '' : <Comment
+               club_id={club.club_id}
+               club_rating={club.club_rating}
+             />}
+
+             {/* comment */}
+             {this.state.myPage ? '' : <Quotation />}
+
+             {/* 비슷한 단체 데이터 */}
+             {this.state.myPage ? '' : <SmiliarClub />}
           </div>
         );
       }
@@ -105,23 +119,6 @@ class Club extends React.Component {
     return (
       <div className='club-container'>
         {club()}
-        <PortfolioNavigation
-         club_id={this.props.match.params.club_id}
-         myPage={this.state.myPage}
-         portfolio={this.props.portfolio.data}
-        />
-
-        {/* comment */}
-        {this.state.myPage ? '' : <Comment
-          club_id={club.club_id}
-          club_rating={club_rating}
-        />}
-
-        {/* comment */}
-        {this.state.myPage ? '' : <Quotation />}
-
-        {/* 비슷한 단체 데이터 */}
-        {this.state.myPage ? '' : <SmiliarClub />}
       </div>
     );
   }
@@ -153,9 +150,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchClub: (club_id) => {
       dispatch(fetchClub(club_id));
-    },
-    fetchCareer: (club_id) => {
-      dispatch(fetchCareer(club_id));
     }
   }
 }
