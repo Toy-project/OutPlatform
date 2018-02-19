@@ -14,7 +14,8 @@ export function sendingVerifiedCode(to) {
     headers: {
       'content-type': 'application/json'
     },
-    params: {
+    crossDomain: false,
+    data: {
       api_key : PhoneAuthVar.apiKey,
       api_secret: PhoneAuthVar.apiSecret,
       number: to,

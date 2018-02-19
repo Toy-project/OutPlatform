@@ -6,10 +6,13 @@ import './scss/index.scss';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
+import * as PhoneAuthVar from 'helper/variables';
 
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
 import * as Member from 'services/member';
 import * as PhoneAuth from 'services/phoneAuth';
+
+import Nexmo from 'config/nexmo';
 
 class Register extends React.Component {
   constructor(props) {
@@ -362,9 +365,35 @@ class Register extends React.Component {
     } else {
       const phone = this.state.club_phone.value.split('-');
       const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
+      const data = {
+        number : to,
+        brand : PhoneAuthVar.brand,
+      };
 
       //Sending Phone Auth request
-      PhoneAuth.sendingVerifiedCode(to);
+      Nexmo.verify.request(data, (err, result) => {
+        console.log(err, result);
+        // if(err) { console.error(err); }
+        // else {
+        //   if(!Common.isNull(localStorage.getItem('phoneVerifiedRequestId'))) {
+        //     localStorage.removeItem('phoneVerifiedRequestId');
+        //   }
+        //
+        //   localStorage.setItem('phoneVerifiedRequestId', result.request_id);
+        //
+        //   console.log(result.request_id);
+        //
+        //   this.setState({
+        //     club_phone_auth : {
+        //       ...this.state.club_phone_auth,
+        //       err_msg: '잠시 후 인증번호가 도착합니다. 인증번호를 입력해주세요.',
+        //     },
+        //     club_phone_auth_btn : {
+        //       type: !this.state.club_phone_auth_btn.type,
+        //     },
+        //   });
+        // }
+      });
     }
   }
 
