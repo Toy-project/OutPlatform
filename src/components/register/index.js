@@ -6,7 +6,10 @@ import './scss/index.scss';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
+
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
+import * as Member from 'services/member';
+import * as PhoneAuth from 'services/phoneAuth';
 
 class Register extends React.Component {
   constructor(props) {
@@ -85,7 +88,10 @@ class Register extends React.Component {
         err: null,
       },
 
-      "club_phone_auth_btn" : null,
+      "club_phone_auth_btn" : {
+        type: false,
+        err: null,
+      },
     }
 
     //Input 처리
@@ -96,6 +102,7 @@ class Register extends React.Component {
     this.handleEmptyValue = this.handleEmptyValue.bind(this);
 
     //연락처 인증
+    this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
     this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
 
     //Submit
@@ -205,8 +212,27 @@ class Register extends React.Component {
         getClubUserId(target.value)
           .then((response) => {
             if(!response.data) {
-              err_msg = '이용 가능한 아이디입니다.';
-              err = false;
+              Member.getMemberUserId(target.value)
+                .then((response) => {
+                  if(!response.data) {
+                    err_msg = '이용 가능한 아이디입니다.';
+                    err = false;
+                  } else {
+                    err_msg = '동일한 아이디가 존재합니다.';
+                    err = true;
+                  }
+
+                  this.setState({
+                    club_userid : {
+                      ...this.state.club_userid,
+                      err_msg: err_msg,
+                      err : err,
+                    },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             } else {
               err_msg = '동일한 아이디가 존재합니다.';
               err = true;
@@ -252,8 +278,27 @@ class Register extends React.Component {
         getClubEmail(target.value)
           .then((response) => {
             if(!response.data) {
-              err_msg = '이용 가능한 이메일입니다.';
-              err = false;
+              Member.getMemberEmail(target.value)
+                .then((response) => {
+                  if(!response.data) {
+                    err_msg = '이용 가능한 이메일입니다.';
+                    err = false;
+                  } else {
+                    err_msg = '동일한 이메일이 존재합니다.';
+                    err = true;
+                  }
+
+                  this.setState({
+                    club_email : {
+                      ...this.state.club_email,
+                      err_msg: err_msg,
+                      err : err,
+                    },
+                  });
+                })
+                .catch((err)=>{
+                  console.log(err);
+                })
             } else {
               err_msg = '동일한 이메일이 존재합니다.';
               err = true;
@@ -311,15 +356,28 @@ class Register extends React.Component {
     });
   }
 
+  requestPhoneAuth(e) {
+    if(Common.isEmpty(this.state.club_phone.value)) { this.refs.club_phone.focus();
+    } else if(!Helper.isPhoneAvailable(this.state.club_phone.value)) { this.refs.club_phone.focus();
+    } else {
+      const phone = this.state.club_phone.value.split('-');
+      const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
+
+      //Sending Phone Auth request
+      PhoneAuth.sendingVerifiedCode(to);
+    }
+  }
+
   responsePhoneAuth(e) {
-    this.setState({
-      club_phone_auth : {
-        ...this.state.club_phone_auth,
-        err_msg: '인증에 성공하였습니다.',
-        err : false,
-      },
-      club_phone_auth_btn : false,
-    });
+    if(Common.isEmpty(this.state.club_phone_auth.value)) { this.refs.club_phone_auth.focus();
+    } else {
+      if(!Common.isNull(localStorage.getItem('phoneVerifiedRequestId'))) {
+        // const data = JSON.stringify({
+        //   'request_id' : localStorage.getItem('phoneVerifiedRequestId'),
+        //   'code' : this.state.club_phone_auth,
+        // });
+      }
+    }
   }
 
   handleEmptyValue() {
@@ -409,6 +467,18 @@ class Register extends React.Component {
         return 'warning-color';
       }
     }
+
+    const phoneAuthBtn = () => {
+      if(!this.state.club_phone_auth_btn.type) {
+        return (
+          <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
+        );
+      } else {
+        return (
+          <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+        );
+      }
+    }
     return(
       <div className="register-container">
         <div className="container">
@@ -454,7 +524,7 @@ class Register extends React.Component {
               <div className='input-register'>
                 <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
                 <input type="text" id='club_phone_auth' ref='club_phone_auth' onChange={this.handleChange} />
-                <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+                {phoneAuthBtn()}
                 <a className={errorClassName(this.state.club_phone_auth)}>{this.state.club_phone_auth.err_msg}</a>
               </div>
             </div>
