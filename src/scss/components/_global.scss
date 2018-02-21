@@ -15,6 +15,7 @@
 
 //Text Styles
 @mixin thick { font-weight: 700; }
+@mixin light-thick { font-weight: 500; }
 @mixin light { font-weight: 300; }
 @mixin normal { font-weight: normal; }
 

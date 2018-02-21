@@ -29,7 +29,7 @@ export function fetchClub(club_id) {
             return dispatch(receiveData(response.data));
           })
           .catch((err) => {
-            dispatch(receiveError(err.data));
+            return dispatch(receiveError(err.data));
           });
   }
 }
@@ -45,7 +45,7 @@ export function fetchUpdateClub(club_id, data) {
             }
           })
           .catch((err) => {
-            dispatch(receiveError(err.data));
+            return dispatch(receiveError(err.data));
           });
   }
 }

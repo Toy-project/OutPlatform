@@ -1,7 +1,10 @@
 import React from 'react';
 import  { withRouter } from 'react-router-dom';
 import { CSSTransition, transit } from "react-css-transition";
+
 import { getMemberUserId, getMemberEmail, createMember } from 'services/member';
+import * as Club from 'services/club';
+import * as PhoneAuth from 'services/phoneAuth';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
@@ -72,7 +75,11 @@ class RegisterMember extends React.Component {
         err: null,
       },
 
-      "mem_phone_auth_btn" : true,
+      "mem_phone_auth_btn" : {
+        type: false,
+        err: null,
+        loading: false,
+      },
 
       "active" : true,
     };
@@ -85,6 +92,7 @@ class RegisterMember extends React.Component {
     this.handleEmptyValue = this.handleEmptyValue.bind(this);
 
     //연락처 인증
+    this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
     this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
 
     //handle submit
@@ -98,7 +106,7 @@ class RegisterMember extends React.Component {
     const target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     let err_msg = '';
-    let err = false;
+    let err = null;
 
     if(target.id === 'mem_userid') {
       err_msg = '5자 이상 12자 이내로 지어주세요.';
@@ -152,7 +160,7 @@ class RegisterMember extends React.Component {
         ...[target.id],
         value: value,
         err_msg: err_msg,
-        err : Common.isEmpty(value) ? null : err,
+        err : err,
       },
     });
   }
@@ -178,8 +186,27 @@ class RegisterMember extends React.Component {
         getMemberUserId(target.value)
           .then((response) => {
             if(!response.data) {
-              err_msg = '이용 가능한 아이디입니다.';
-              err = false;
+              Club.getClubUserId(target.value)
+                .then((response) => {
+                  if(!response.data) {
+                    err_msg = '이용 가능한 아이디입니다.';
+                    err = false;
+                  } else {
+                    err_msg = '동일한 아이디가 존재합니다.';
+                    err = true;
+                  }
+
+                  this.setState({
+                    mem_userid : {
+                      ...this.state.mem_userid,
+                      err_msg: err_msg,
+                      err : err,
+                    },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
             } else {
               err_msg = '동일한 아이디가 존재합니다.';
               err = true;
@@ -225,8 +252,27 @@ class RegisterMember extends React.Component {
         getMemberEmail(target.value)
           .then((response) => {
             if(!response.data) {
-              err_msg = '이용 가능한 이메일입니다.';
-              err = false;
+              Club.getClubEmail(target.value)
+                .then((response) => {
+                  if(!response.data) {
+                    err_msg = '이용 가능한 이메일입니다.';
+                    err = false;
+                  } else {
+                    err_msg = '동일한 이메일이 존재합니다.';
+                    err = true;
+                  }
+
+                  this.setState({
+                    mem_email : {
+                      ...this.state.mem_email,
+                      err_msg: err_msg,
+                      err : err,
+                    },
+                  });
+                })
+                .then((err) => {
+                  console.log(err);
+                });
             } else {
               err_msg = '동일한 이메일이 존재합니다.';
               err = true;
@@ -255,16 +301,158 @@ class RegisterMember extends React.Component {
     });
   }
 
+  requestPhoneAuth(e) {
+    const phone = this.state.mem_phone;
+    const phone_ref = this.refs.mem_phone;
+    const phone_auth = this.state.mem_phone_auth;
+    const phone_auth_btn = this.state.mem_phone_auth_btn;
+
+    if(Common.isEmpty(phone.value)) { phone_ref.focus();
+    } else if(!Helper.isPhoneAvailable(phone.value)) { phone_ref.focus();
+    } else {
+      const phone = phone_ref.value.split('-');
+      const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
+
+      //데이터 로딩 true
+      this.setState({
+        mem_phone_auth : {
+          ...phone_auth,
+          err : null,
+          err_msg : '',
+        },
+        mem_phone_auth_btn : {
+          ...phone_auth_btn,
+          loading : !phone_auth_btn.loading
+        }
+      });
+
+      //Sending Phone Auth request
+      PhoneAuth.sendingVerifiedCode(to)
+        .then((res) => {
+          //성공일 때
+          const data = res.data;
+
+          let err_msg = '';
+          let err = null;
+          let type = phone_auth_btn.type;
+          let loading = false;
+
+          if(!Common.isNull(localStorage.getItem('request_id'))) {
+            localStorage.removeItem('request_id', data.request_id);
+            localStorage.setItem('request_id', data.request_id);
+          } else {
+            localStorage.setItem('request_id', data.request_id);
+          }
+
+          //전송 완료
+          if(data.status === '0') {
+            err_msg = '인증번호가 전송되었습니다. 잠시만 기다려주세요.';
+            type = !type;
+          //이미 전송 완료
+          } else if(data.status === '10') {
+            err_msg = '이미 전송되었습니다. 확인 후 인증번호를 입력해주세요.';
+            type = !type;
+
+          }
+
+          this.setState({
+            mem_phone_auth : {
+              ...phone_auth,
+              err_msg : err_msg,
+              err : err
+            },
+            mem_phone_auth_btn : {
+              ...phone_auth_btn,
+              type : type,
+              loading : loading,
+              err : err
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
   responsePhoneAuth(e) {
-    //인증완료
-    this.setState({
-      mem_phone_auth : {
-        ...this.state.mem_phone_auth,
-        err_msg: '인증에 성공하였습니다.',
-        err : false,
-      },
-      mem_phone_auth_btn : false,
-    })
+    const phone_ref = this.refs.mem_phone;
+    const phone_auth = this.state.mem_phone_auth;
+    const phone_auth_ref = this.refs.mem_phone_auth;
+    const phone_auth_btn = this.state.mem_phone_auth_btn;
+
+    if(Common.isEmpty(phone_auth.value)) { phone_auth_ref.focus();
+    } else {
+      if(Common.isNull(localStorage.getItem('request_id'))) return false;
+
+      const data = {
+        request_id : localStorage.getItem('request_id'),
+        code : phone_auth.value
+      }
+
+      //데이터 로딩 true
+      this.setState({
+        mem_phone_auth : {
+          ...phone_auth,
+          err : null,
+          err_msg : '',
+        },
+        mem_phone_auth_btn : {
+          ...phone_auth_btn,
+          loading : !phone_auth_btn.loading
+        }
+      });
+
+      PhoneAuth.checkVerifiedCode(data)
+        .then((res) => {
+          const result = res.data;
+
+          let err_msg = '';
+          let err = null;
+          let type = phone_auth_btn.type;
+          let loading = false;
+
+          //인증완료
+          if(result.status === '0') {
+            err_msg = '인증이 완료되었습니다.';
+            err = false;
+
+            localStorage.removeItem('request_id');
+          //인증코드 일치하지 않을 때
+          } else if(result.status === '16' || result.status === '17') {
+            err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
+            err = true,
+
+            phone_auth_ref.focus();
+          //인증코드 실패
+          } else if(result.status === '6') {
+            err_msg = '많은 입력 실패로 인하여 다시 인증번호를 받아주세요.';
+            err = true;
+            type = !type;
+            phone_auth_ref.value = '';
+            phone_ref.focus();
+
+          } else {
+            //to do list
+          }
+
+          this.setState({
+            mem_phone_auth : {
+              ...phone_auth,
+              err : err,
+              err_msg : err_msg
+            },
+            mem_phone_auth_btn : {
+              ...phone_auth_btn,
+              type: type,
+              loading : loading
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   handleEmptyValue(e) {
@@ -360,6 +548,17 @@ class RegisterMember extends React.Component {
         return 'warning-color';
       }
     }
+    const phoneAuthBtn = () => {
+      if(!this.state.mem_phone_auth_btn.type) {
+        return (
+          <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
+        );
+      } else {
+        return (
+          <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+        );
+      }
+    }
     return (
       <CSSTransition
         transitionAppear={true}
@@ -409,8 +608,11 @@ class RegisterMember extends React.Component {
               <div className="input-register">
                 <label htmlFor="mem_phone_auth">인증번호</label>
                 <input type="text" id="mem_phone_auth" ref='mem_phone_auth' onChange={this.handleChange}/>
-                <input type="button" value="인증번호 발송" onClick={this.responsePhoneAuth} />
-                <a className={errorClassName(this.state.mem_phone_auth)}>{this.state.mem_phone_auth.err_msg}</a>
+                {phoneAuthBtn()}
+                <a className={errorClassName(this.state.mem_phone_auth)}>
+                  {this.state.mem_phone_auth.err_msg}
+                  {this.state.mem_phone_auth_btn.loading ? '잠시만 기달려주세요.' : ''}
+                </a>
               </div>
               <div className="submit-resgister">
                 <input type="submit" value="무료 가입하기"/>

@@ -65,6 +65,7 @@ class myPageUser extends React.Component {
         }
 
         data = {
+          id: member.mem_id,
           userid: member.mem_userid,
           profile_photo: null,
           username: member.mem_name,
@@ -86,6 +87,7 @@ class myPageUser extends React.Component {
         }
 
         data = {
+          id: club.club_id,
           userid: club.club_userid,
           profile_photo: null,
           username: club.club_username,
@@ -110,14 +112,14 @@ class myPageUser extends React.Component {
         />
         <ContactInfo
           type={this.props.type}
-          id={data.userid}
+          id={data.id}
 
           phone={data.phone}
           email={data.email}
         />
         <PasswordInfo
           type={this.props.type}
-          id={data.userid}
+          id={data.id}
 
           userid={data.userid}
         />

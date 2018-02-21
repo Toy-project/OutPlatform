@@ -50,15 +50,6 @@
       @include thick;
     }
 
-    input[type=button] {
-      @include btn-reset-shape(90px, 30px, $btn-background-gray-5-color);
-      @include btn-reset-font($font-size-14, $gray-7, 30px);
-
-      &.inspect-phone-btn {
-        width: $btn-width-3;
-      }
-    }
-
     input[type=text],
     input[type=password],
     input[type=email],
@@ -73,10 +64,6 @@
 
       &.error {
         border: solid 1px red;
-      }
-
-      &#club_phone_auth {
-        width: 310px;
       }
     }
 
@@ -114,5 +101,46 @@
   .gray-btn {
     @include btn-reset-shape(60px, 40px, $gray-5);
     @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+  }
+}
+
+.contact-info-edit-phone,
+.contact-info-edit-email {
+  .info-title {
+    width: 290px;
+    margin-top: 40px;
+    h1 {
+        font-size: $font-size-20;
+        @include light-thick;
+        margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: $font-size-16;
+      margin-bottom: 10px;
+      @include light;
+    }
+  }
+
+  .info-input,
+  .info-title {
+    margin-left: 30px;
+  }
+
+  .info-btn {
+    width: 100%;
+    padding-right: 30px;
+    @include right-align;
+
+    button {
+      font-size: $font-size-16;
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      border: none;
+      background-color: transparent;
+      outline: none;
+    }
   }
 }

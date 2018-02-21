@@ -3,4 +3,18 @@
   color: $gray-7;
   padding-bottom: 2%;
 
+  .info-input {
+    i {
+      display: inline;
+      width: 30px;
+      color: inherit;
+      font-size: $font-size-12;
+      margin-left: 5px;
+      border: solid 1px $gray-5;
+      cursor: pointer;
+      padding: 0 3px;
+
+      @include center;
+    }
+  }
 }

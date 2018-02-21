@@ -6,13 +6,10 @@ import './scss/index.scss';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
-import * as PhoneAuthVar from 'helper/variables';
 
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
 import * as Member from 'services/member';
 import * as PhoneAuth from 'services/phoneAuth';
-
-import Nexmo from 'config/nexmo';
 
 class Register extends React.Component {
   constructor(props) {
@@ -94,6 +91,7 @@ class Register extends React.Component {
       "club_phone_auth_btn" : {
         type: false,
         err: null,
+        loading: false,
       },
     }
 
@@ -116,7 +114,7 @@ class Register extends React.Component {
     const target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     let err_msg = '';
-    let err = false;
+    let err = null;
 
     if(target.id === 'club_userid') {
       err_msg = '5자 이상 12자 이내로 지어주세요.';
@@ -194,7 +192,7 @@ class Register extends React.Component {
         ...[target.id],
         value: value,
         err_msg: err_msg,
-        err : Common.isEmpty(value) ? null : err,
+        err : err,
       },
     });
   }
@@ -360,52 +358,155 @@ class Register extends React.Component {
   }
 
   requestPhoneAuth(e) {
-    if(Common.isEmpty(this.state.club_phone.value)) { this.refs.club_phone.focus();
-    } else if(!Helper.isPhoneAvailable(this.state.club_phone.value)) { this.refs.club_phone.focus();
+    const phone = this.state.club_phone;
+    const phone_ref = this.refs.club_phone;
+    const phone_auth = this.state.club_phone_auth;
+    const phone_auth_btn = this.state.club_phone_auth_btn;
+
+    if(Common.isEmpty(phone.value)) { phone_ref.focus();
+    } else if(!Helper.isPhoneAvailable(phone.value)) { phone_ref.focus();
     } else {
-      const phone = this.state.club_phone.value.split('-');
+      const phone = phone_ref.value.split('-');
       const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
-      const data = {
-        number : to,
-        brand : PhoneAuthVar.brand,
-      };
+
+      //데이터 로딩 true
+      this.setState({
+        club_phone_auth : {
+          ...phone_auth,
+          err : null,
+          err_msg : '',
+        },
+        club_phone_auth_btn : {
+          ...phone_auth_btn,
+          loading : !phone_auth_btn.loading
+        }
+      });
 
       //Sending Phone Auth request
-      Nexmo.verify.request(data, (err, result) => {
-        console.log(err, result);
-        // if(err) { console.error(err); }
-        // else {
-        //   if(!Common.isNull(localStorage.getItem('phoneVerifiedRequestId'))) {
-        //     localStorage.removeItem('phoneVerifiedRequestId');
-        //   }
-        //
-        //   localStorage.setItem('phoneVerifiedRequestId', result.request_id);
-        //
-        //   console.log(result.request_id);
-        //
-        //   this.setState({
-        //     club_phone_auth : {
-        //       ...this.state.club_phone_auth,
-        //       err_msg: '잠시 후 인증번호가 도착합니다. 인증번호를 입력해주세요.',
-        //     },
-        //     club_phone_auth_btn : {
-        //       type: !this.state.club_phone_auth_btn.type,
-        //     },
-        //   });
-        // }
-      });
+      PhoneAuth.sendingVerifiedCode(to)
+        .then((res) => {
+          //성공일 때
+          const data = res.data;
+
+          let err_msg = '';
+          let err = null;
+          let type = phone_auth_btn.type;
+          let loading = false;
+
+          if(!Common.isNull(localStorage.getItem('request_id'))) {
+            localStorage.removeItem('request_id', data.request_id);
+            localStorage.setItem('request_id', data.request_id);
+          } else {
+            localStorage.setItem('request_id', data.request_id);
+          }
+
+          if(data.status === '0') {
+            err_msg = '인증번호가 전송되었습니다. 잠시만 기다려주세요.';
+            type = !type;
+          } else if(data.status === '10') {
+            err_msg = '이미 전송되었습니다. 확인 후 인증번호를 입력해주세요.';
+            type = !type;
+
+          }
+
+          this.setState({
+            club_phone_auth : {
+              ...phone_auth,
+              err_msg : err_msg,
+              err : err
+            },
+            club_phone_auth_btn : {
+              ...phone_auth_btn,
+              type : type,
+              loading : loading,
+              err : err
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
   responsePhoneAuth(e) {
-    if(Common.isEmpty(this.state.club_phone_auth.value)) { this.refs.club_phone_auth.focus();
+    const phone_ref = this.refs.club_phone;
+    const phone_auth = this.state.club_phone_auth;
+    const phone_auth_ref = this.refs.club_phone_auth;
+    const phone_auth_btn = this.state.club_phone_auth_btn;
+
+    if(Common.isEmpty(phone_auth.value)) { phone_auth_ref.focus();
     } else {
-      if(!Common.isNull(localStorage.getItem('phoneVerifiedRequestId'))) {
-        // const data = JSON.stringify({
-        //   'request_id' : localStorage.getItem('phoneVerifiedRequestId'),
-        //   'code' : this.state.club_phone_auth,
-        // });
+      if(Common.isNull(localStorage.getItem('request_id'))) return false;
+
+      const data = {
+        request_id : localStorage.getItem('request_id'),
+        code : phone_auth.value
       }
+
+      //데이터 로딩 true
+      this.setState({
+        club_phone_auth : {
+          ...phone_auth,
+          err : null,
+          err_msg : '',
+        },
+        club_phone_auth_btn : {
+          ...phone_auth_btn,
+          loading : !phone_auth_btn.loading
+        }
+      });
+
+      PhoneAuth.checkVerifiedCode(data)
+        .then((res) => {
+          const result = res.data;
+
+          let err_msg = '';
+          let err = null;
+          let type = phone_auth_btn.type;
+          let loading = false;
+
+          //인증 완료
+          if(result.status === '0') {
+            err_msg = '인증이 완료되었습니다.';
+            err = false;
+
+            localStorage.removeItem('request_id');
+          //인증 코드 일치 하지 않을 때
+          } else if(result.status === '16' || result.status === '17') {
+            err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
+            err = true,
+
+            phone_auth_ref.focus();
+
+          //인증 코드 실패
+          } else if(result.status === '6') {
+            err_msg = '많은 입력 실패로 인하여 다시 인증번호를 받아주세요.';
+            err = true;
+            type = !type;
+            phone_auth_ref.value = '';
+            phone_ref.focus();
+
+          } else {
+            //to do list
+          }
+
+          this.setState({
+            club_phone_auth : {
+              ...phone_auth,
+              err : err,
+              err_msg : err_msg
+            },
+            club_phone_auth_btn : {
+              ...phone_auth_btn,
+              type: type,
+              loading : loading
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -443,7 +544,7 @@ class Register extends React.Component {
       this.state.club_copyright.err,
 
       //True -> Ok / False -> Error
-      this.state.club_phone_auth_btn
+      this.state.club_phone_auth_btn.err
     ];
 
     //Empty data check
@@ -554,7 +655,10 @@ class Register extends React.Component {
                 <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
                 <input type="text" id='club_phone_auth' ref='club_phone_auth' onChange={this.handleChange} />
                 {phoneAuthBtn()}
-                <a className={errorClassName(this.state.club_phone_auth)}>{this.state.club_phone_auth.err_msg}</a>
+                <a className={errorClassName(this.state.club_phone_auth)}>
+                  {this.state.club_phone_auth.err_msg}
+                  {this.state.club_phone_auth_btn.loading ? '잠시만 기달려주세요.' : ''}
+                </a>
               </div>
             </div>
 
