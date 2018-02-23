@@ -120,7 +120,7 @@ class Comment extends React.Component {
                   <div className='comment-top'>
                     <h4>평균 별점</h4>
                     <span className='star-rating'>
-                      <RatingStar to={this.props.club_rating} />
+                      <RatingStar to={parseInt(Math.ceil(this.props.comment.data.club_rating_avg), 10)} />
                     </span>
                     <h4>평가 갯수</h4>
                     <h5>000회</h5>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSTransition, transit } from "react-css-transition";
+import { CSSTransition } from "react-css-transition";
 import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
@@ -10,24 +10,9 @@ import { isEmpty } from 'helper/common';
 
 import * as LoginHelper from 'helper/loginHelper';
 
-const transitionStyles = {
-  defaultStyle: {
-    transform: "translate(0, 0)",
-    opacity: 0,
-  },
-  enterStyle: {
-    transform: transit("translate(0, 100px)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(1, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  leaveStyle: {
-    transform: transit("translate(0, 0)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(0, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  activeStyle: {
-    transform: "translate(0, 100px)",
-    opacity: 1,
-  },
-};
+import * as AnimationStyle from 'helper/animationStyle';
+
+import * as Variables from 'helper/variables';
 
 class Login extends React.Component {
 
@@ -83,11 +68,15 @@ class Login extends React.Component {
     if(!type) {
       memberLogin(userid, pw)
         .then((response) => {
-          LoginHelper.createToken(JSON.stringify(response.data));
-          this.handleToggle();
-          setTimeout(() => {
-            window.location.reload();
-          }, 300);
+          //생성된 토큰이 유효할 때
+          if(response.data.isValid) {
+            LoginHelper.createToken(JSON.stringify(response.data));
+
+            this.handleToggle();
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
+          }
         })
         .catch((err) => {
           this.setState({
@@ -97,11 +86,14 @@ class Login extends React.Component {
     } else {
       clubLogin(userid, pw)
         .then((response) => {
-          LoginHelper.createToken(JSON.stringify(response.data));
-          this.handleToggle();
-          setTimeout(() => {
-            window.location.reload();
-          }, 300);
+          //생성된 토큰이 유효할 때
+          if(response.data.isValid) {
+            LoginHelper.createToken(JSON.stringify(response.data));
+            this.handleToggle();
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
+          }
         })
         .catch((err) => {
           this.setState({
@@ -140,12 +132,15 @@ class Login extends React.Component {
   }
 
   render() {
+    const _thisContainerMinHeight = Variables.loginPopupHeight;
+    const _thisInnerWindowHeight = window.innerHeight;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
     return(
       <div id='popup_container' className='popup_container'>
         <CSSTransition
           id = 'popup_container'
           transitionAppear={true}
-          {...transitionStyles}
+          {...AnimationStyle.transitionStyles(_animationStartFrom)}
           active={this.state.active}>
           <div className='login-container'>
             <div className='login-inner'>

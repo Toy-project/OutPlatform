@@ -8,8 +8,7 @@ import './scss/index.scss';
 import { fetchClub } from 'actions/club';
 import { fetchCareer } from 'actions/portfolio';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/common';
-
+import * as Common from 'helper/common';
 
 import ImageNavigation from './components/imageNavigation';
 import Snippet from './components/snippet';
@@ -54,71 +53,98 @@ class Club extends React.Component {
   }
 
   render() {
-    const club = () => {
-      const results = checkStatusComponent(this.props.club);
+    let components;
+    let data = {
+      'club_id': '',
+      'club_photo' : '',
+      'club_college' : '',
+      'club_profile_photo': [],
+      'cate_id': '',
+      'tag_id': '',
+      'cate_name': '',
+      'tag_name': '',
+      'club_ex': '',
+      'sns': [],
+      'career': [],
+      'club_name': '',
+      'club_copyright': '',
+    };
 
-      if(results) {
-        const club = this.props.club.data;
+    const results = Common.checkStatusComponent(this.props.club);
 
-        //데이터가 없을 경우
-        if(checkEmptyData(club)){
-          return false;
-        }
+    if(results) {
+      const club = this.props.club.data;
 
-        return(
-          <div>
-            <ImageNavigation
-              myPage={this.state.myPage}
+      //데이터가 없을 경우
+      if(Common.checkEmptyData(club)){
+        return false;
+      }
 
-              club_id={club.club_id}
-              club_photo={club.club_photo}
-              club_profile_photo={club.club_profile_photo}
-            />
-            <Snippet
-              myPage={this.state.myPage}
-
-              club_id={club.club_id}
-              club_name={club.club_name}
-              club_copyright={club.club_copyright}
-            />
-            <Profile
-              myPage={this.state.myPage}
-
-              club_id={club.club_id}
-              club_college={club.club_college}
-              cate_id={club.cate_id}
-              tag_id={club.tag_id}
-              cate_name={club.category.cate_name}
-              tag_name={club.tag.tag_name}
-              club_ex={club.club_ex}
-              //SNS
-              sns={club.sns}
-             />
-
-             <PortfolioNavigation
-              club_id={this.props.match.params.club_id}
-              myPage={this.state.myPage}
-              portfolio={club.career}
-             />
-
-             {/* comment */}
-             {this.state.myPage ? '' : <Comment
-               club_id={club.club_id}
-               club_rating={club.club_rating}
-             />}
-
-             {/* comment */}
-             {this.state.myPage ? '' : <Quotation />}
-
-             {/* 비슷한 단체 데이터 */}
-             {this.state.myPage ? '' : <SmiliarClub />}
-          </div>
-        );
+      data = {
+        'club_id': club.club_id,
+        'club_photo' : club.club_photo,
+        'club_profile_photo': club.club_profile_photo,
+        'club_college' : club.club_college,
+        'cate_id': club.cate_id,
+        'tag_id': club.tag_id,
+        'cate_name': club.category.cate_name,
+        'tag_name': club.tag.tag_name,
+        'club_ex': club.club_ex,
+        'sns': club.sns,
+        'career': club.career,
+        'club_name': club.club_name,
+        'club_copyright': club.club_copyright,
       }
     }
+    components = (
+      <div>
+        <ImageNavigation
+          myPage={this.state.myPage}
+
+          club_id={data.club_id}
+          club_photo={data.club_photo}
+          club_profile_photo={data.club_profile_photo}
+        />
+        <Snippet
+          myPage={this.state.myPage}
+
+          club_id={data.club_id}
+          club_name={data.club_name}
+          club_copyright={data.club_copyright}
+        />
+        <Profile
+          myPage={this.state.myPage}
+
+          club_id={data.club_id}
+          club_college={data.club_college}
+          cate_id={data.cate_id}
+          tag_id={data.tag_id}
+          cate_name={data.cate_name}
+          tag_name={data.tag_name}
+          club_ex={data.club_ex}
+          //SNS
+          sns={data.sns}
+         />
+         <PortfolioNavigation
+          club_id={data.club_id}
+          myPage={this.state.myPage}
+          portfolio={data.career}
+         />
+         {/* comment */}
+         {this.state.myPage ? '' : <Comment
+           club_id={data.club_id}
+         />}
+
+         {/* comment */}
+         {this.state.myPage ? '' : <Quotation />}
+
+         {/* 비슷한 단체 데이터 */}
+         {this.state.myPage ? '' : <SmiliarClub />}
+      </div>
+    );
     return (
       <div className='club-container'>
-        {club()}
+        {components}
       </div>
     );
   }
@@ -131,18 +157,12 @@ Club.propTypes = {
     isLoading: PropTypes.bool,
     error: PropTypes.bool,
     data: PropTypes.object,
-  }),
-  portfolio: PropTypes.shape({
-    isLoading: PropTypes.bool,
-    error: PropTypes.bool,
-    data: PropTypes.arrayOf(PropTypes.object),
-  }),
+  })
 };
 
 const mapStateToProps = (state) => {
   return {
     club: state.club,
-    portfolio: state.portfolio,
   }
 }
 

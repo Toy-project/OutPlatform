@@ -1,0 +1,49 @@
+.unregister-popup-container {
+  @include popup-reset-options(500px, 30%);
+  top: 50%;
+  transform: translateY(-50%);
+  color: $gray-1;
+  @include center;
+
+  .header {
+    width: 100%;
+    margin-bottom: 20px;
+
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+    p {
+      width: 100%;
+      padding: 0 50px;
+    }
+  }
+
+  .contents {
+    label {
+      font-size: $font-size-16;
+      @include thick;
+      margin-right: 15px;
+    }
+
+    input[type=password] {
+      width: 190px;
+      height: 35px;
+      background-color: $white;
+      border: solid 1px #dfdfdf;
+      padding-left: 5px;
+    }
+  }
+
+  .footer {
+    position: relative;
+
+    .edit_btn:first-child {
+      left: 0;
+    }
+
+    .edit_btn:last-child {
+      right: 0;
+    }
+  }
+}

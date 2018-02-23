@@ -26,10 +26,10 @@ export function fetchClub(club_id) {
     return Club
           .getClubById(club_id)
           .then((response) => {
-            return dispatch(receiveData(response.data));
+            dispatch(receiveData(response.data));
           })
           .catch((err) => {
-            return dispatch(receiveError(err.data));
+            dispatch(receiveError(err.data));
           });
   }
 }
@@ -41,11 +41,31 @@ export function fetchUpdateClub(club_id, data) {
           .updateClub(club_id, data)
           .then((response) => {
             if(response.data) {
-              return dispatch(fetchClub(club_id));
+              console.log(data);
+              dispatch(fetchClub(club_id));
+              // dispatch(receiveError(response.data));
             }
           })
           .catch((err) => {
-            return dispatch(receiveError(err.data));
+            dispatch(receiveError(err.data));
+          });
+  }
+}
+
+export function fetchUpdatePhotoClub(club_id, file, num) {
+  return function(dispatch){
+    dispatch(requestData());
+    return Club
+          .updateClubPhoto(club_id, file, num)
+          .then((response) => {
+            if(response.data) {
+              console.log(response.data);
+              dispatch(fetchClub(club_id));
+              // dispatch(receiveError(response.data));
+            }
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
           });
   }
 }

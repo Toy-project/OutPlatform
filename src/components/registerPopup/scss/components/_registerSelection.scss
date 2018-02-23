@@ -1,6 +1,6 @@
 .register-selection-container {
   @include popup-reset-options(330px, 21%);
-  z-index:2;
+  padding: 20px 0;
 
   > .register-selection-inner {
     float: left;

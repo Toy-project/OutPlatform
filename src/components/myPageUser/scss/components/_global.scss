@@ -82,10 +82,6 @@
 }
 
 .edit-btn {
-  position: absolute;
-  top: 25px;
-  right: 46px;
-
   button {
     margin-left: 5px;
   }
@@ -101,6 +97,10 @@
   .gray-btn {
     @include btn-reset-shape(60px, 40px, $gray-5);
     @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+
+    &.unregister {
+      width: 95px;
+    }
   }
 }
 

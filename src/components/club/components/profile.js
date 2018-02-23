@@ -11,22 +11,13 @@ class Profile extends React.Component {
   constructor(props){
     super(props);
 
+    console.log(this.props.club_college);
     this.state = {
-      myPage: this.props.myPage,
       isEditToggle: false,
-      isSubmited: false,
-
-      club_college: this.props.club_college,
-      cate_id: this.props.cate_id,
-      tag_id: this.props.tag_id,
-      cate_name: this.props.cate_name,
-      tag_name: this.props.tag_name,
-      club_ex: isNull(this.props.club_ex) ? '' : this.props.club_ex,
-      sns: this.props.sns,
     }
 
     this.editToggle = this.editToggle.bind(this);
-    this.editSubmit = this.editSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.handleSnsTransition = this.handleSnsTransition.bind(this);
 
@@ -36,7 +27,6 @@ class Profile extends React.Component {
   editToggle() {
     this.setState({
       isEditToggle: !this.state.isEditToggle,
-      isSubmited: false,
     });
   }
 
@@ -56,47 +46,18 @@ class Profile extends React.Component {
     }
   }
 
-  editSubmit() {
-    let tag_name;
-    let cate_name;
+  handleSubmit(e) {
+    e.preventDefault();
 
-    this.props.tag.data.map((item) => {
-      if(parseInt(this.refs.tag_id.value, 10) === item.tag_id) {
-        tag_name = item.tag_name;
-      }
-      return false;
-    });
-
-    this.props.category.data.map((item) => {
-      if(parseInt(this.refs.cate_id.value,10) === item.cate_id) {
-        cate_name = item.cate_name;
-      }
-      return false;
-    });
-
-    this.setState({
-      isEditToggle: !this.state.isEditToggle,
-      isSubmited: true,
+    const data = {
       club_college: this.refs.club_college.value,
-      cate_id: this.refs.cate_id.value,
-      tag_id: this.refs.tag_id.value,
-      cate_name: cate_name,
-      tag_name: tag_name,
-      club_ex: this.refs.club_ex.value,
-    });
-  }
-
-  componentDidUpdate() {
-    if(this.state.isSubmited){
-        const data = {
-          club_college: this.state.club_college,
-          cate_id: this.state.cate_id,
-          tag_id: this.state.tag_id,
-          club_ex: this.state.club_ex,
-        }
-
-        this.props.fetchUpdateClub(this.props.club_id, data);
+      cate_id : this.refs.cate_id.value,
+      tag_id : this.refs.tag_id.value,
+      club_ex : this.refs.club_ex.value,
     }
+
+    this.props.fetchUpdateClub(this.props.club_id, data);
+    this.editToggle();
   }
 
   handleSnsTransition = (url) => (e) => {
@@ -111,7 +72,7 @@ class Profile extends React.Component {
 
   render() {
     let editButton;
-    let viewContents = this.state.club_ex.split('\n').map((line, key) => {
+    let viewContents = this.props.club_ex.split('\n').map((line, key) => {
       return (<span key={key}>{line}<br /></span>);
     });
     let viewSNS;
@@ -121,7 +82,7 @@ class Profile extends React.Component {
       switch(id){
         case 'club_college':
           return (
-            <select defaultValue={this.state.club_college} ref={id}>
+            <select defaultValue={this.props.club_college} ref={id}>
               <option value="서울대학교">서울대학교</option>
               <option value="우리대학교">우리대학교</option>
               <option value="하나대학교">하나대학교</option>
@@ -130,7 +91,7 @@ class Profile extends React.Component {
           );
         case 'cate_id':
           return (
-            <select defaultValue={this.state.cate_id} ref={id}>
+            <select defaultValue={this.props.cate_id} ref={id}>
               {this.props.category.data.map((item, key) => {
                 return (<option value={item.cate_id} key={key}>{item.cate_name}</option>);
               })}
@@ -138,7 +99,7 @@ class Profile extends React.Component {
           );
         case 'tag_id':
           return (
-            <select defaultValue={this.state.tag_id} ref={id}>
+            <select defaultValue={this.props.tag_id} ref={id}>
               {this.props.tag.data.map((item, key) => {
                 return (<option value={item.tag_id} key={key}>#{item.tag_name}</option>);
               })}
@@ -148,7 +109,7 @@ class Profile extends React.Component {
           return (
             <span>
               <span id='club_ex_limitation' className='club-ex-limitation'>0/200</span>
-              <textarea ref={id} id='club_ex' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.state.club_ex}></textarea>
+              <textarea ref={id} id='club_ex' onChange={this.snippetLimitStringLength} placeholder={placeholder} defaultValue={this.props.club_ex}></textarea>
               <a className='club-ex-error' id='club_ex_error'>최대 200글자까지 허용됩니다.</a>
             </span>
           );
@@ -164,7 +125,7 @@ class Profile extends React.Component {
     }
 
     //수정 버튼 Toggle
-    if(this.state.myPage && !this.state.isEditToggle){
+    if(this.props.myPage && !this.state.isEditToggle){
       editButton = (
         <div className='edit-btn'>
           <button className='emerald-btn' onClick={this.editToggle}>수정</button>
@@ -174,7 +135,7 @@ class Profile extends React.Component {
       editButton = (
         <div className='edit-btn'>
           <button className='gray-btn' onClick={this.editToggle}>취소</button>
-          <button className='emerald-btn' onClick={this.editSubmit}>확인</button>
+          <button className='emerald-btn' onClick={this.handleSubmit}>확인</button>
         </div>
       );
     } else {
@@ -183,7 +144,7 @@ class Profile extends React.Component {
 
     viewSNS = (
       <span className='sns'>
-        {this.state.sns.map((item, key) => {
+        {this.props.sns.map((item, key) => {
           return (
             <i key={key} id={item.sns_name} onClick={this.handleSnsTransition(item.sns_url)} className={`sns-basic-icon ${item.sns_name}`}></i>
           );
@@ -196,7 +157,7 @@ class Profile extends React.Component {
         return (<p>{editInputText('tag_id')}</p>);
       } else {
         return (
-          <span className='tag'>{`#${this.state.tag_name}`}</span>
+          <span className='tag'>{`#${this.props.tag_name}`}</span>
         );
       }
     }
@@ -214,11 +175,11 @@ class Profile extends React.Component {
               <ul>
                 <li>
                   <h5>소속학교</h5>
-                  <p>{this.state.isEditToggle ? editInputText('club_college') : this.state.club_college}</p>
+                  <p>{this.state.isEditToggle ? editInputText('club_college') : this.props.club_college}</p>
                 </li>
                 <li>
                   <h5>단체종류</h5>
-                  <p>{this.state.isEditToggle ? editInputText('cate_id') : this.state.cate_name}</p>
+                  <p>{this.state.isEditToggle ? editInputText('cate_id') : this.props.cate_name}</p>
                 </li>
                 <li>
                   <h5>태그</h5>

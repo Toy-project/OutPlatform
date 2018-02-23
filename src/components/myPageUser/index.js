@@ -7,6 +7,7 @@ import './scss/index.scss';
 import BasicInfo from './components/basicInfo';
 import ContactInfo from './components/contactInfo';
 import PasswordInfo from './components/passwordInfo';
+import Unregister from './components/unregister';
 
 import * as Common from 'helper/common';
 
@@ -122,6 +123,10 @@ class myPageUser extends React.Component {
           id={data.id}
 
           userid={data.userid}
+        />
+        <Unregister
+          type={this.props.type}
+          id={data.id}
         />
       </div>
     );

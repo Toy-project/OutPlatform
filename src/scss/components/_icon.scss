@@ -1,0 +1,40 @@
+.ic-edit {
+  display: inline;
+  width: 30px;
+  color: inherit;
+  font-size: $font-size-12;
+  margin-left: 5px;
+  border: solid 1px $gray-5;
+  cursor: pointer;
+  padding: 0 3px;
+
+  @include center;
+}
+
+.x-icon,
+.x-icon:after,
+.x-icon:before {
+  position: absolute;
+}
+
+.x-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.x-icon:after,
+.x-icon:before {
+  left: 0;
+  top: 0;
+  content: '';
+  height: 18px;
+  border-left: 2.5px solid $gray-6;
+}
+
+.x-icon:after {
+  transform: rotate(45deg);
+}
+.x-icon:before {
+  transform: rotate(-45deg);
+}

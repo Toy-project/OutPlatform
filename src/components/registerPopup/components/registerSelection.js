@@ -3,24 +3,9 @@ import { CSSTransition, transit } from "react-css-transition";
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 
-const transitionStyles = {
-  defaultStyle: {
-    transform: "translate(0, 0)",
-    opacity: 0,
-  },
-  enterStyle: {
-    transform: transit("translate(0, 100px)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(1, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  leaveStyle: {
-    transform: transit("translate(0, 0)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(0, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  activeStyle: {
-    transform: "translate(0, 100px)",
-    opacity: 1,
-  },
-};
+import * as Variables from 'helper/variables';
+
+import * as AnimationStyle from 'helper/animationStyle';
 
 class RegisterSelection extends React.Component {
   constructor(props){
@@ -64,11 +49,17 @@ class RegisterSelection extends React.Component {
     }, 300);
   }
 
+
+
   render() {
+    const _thisContainerMinHeight = Variables.registerSelectionPopupHeight;
+    const _thisInnerWindowHeight = window.innerHeight;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+
     return (
       <CSSTransition
         transitionAppear={true}
-        {...transitionStyles}
+        {...AnimationStyle.transitionStyles(_animationStartFrom)}
         active={this.state.active}>
         <div className='register-selection-container'>
           <div className='register-selection-inner'>

@@ -1,7 +1,6 @@
 .login-container {
   @include popup-reset-options(330px, 27%);
-  top: 13.4%;
-  z-index:2;
+  padding: 20px 0;
 
   > .login-inner {
     float: left;

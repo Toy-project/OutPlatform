@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getClubName, updateClub } from 'services/club';
-// import { isProfileGood, isNameGood } from 'helper/regExp';
-// import { isNull } from 'helper/common';
+import SnippetEditPopupName from './snippetEditPopupName';
+import SnippetEditPopupCopyright from './snippetEditPopupCopyright';
 
 class Snippet extends React.Component {
   constructor(props){
@@ -11,109 +11,65 @@ class Snippet extends React.Component {
 
     this.state = {
       myPage: this.props.myPage,
-      isEditToggle: false,
-      isSubmited: false,
-      club_name: this.props.club_name,
-      club_copyright: this.props.club_copyright,
+      isEditToggleName: false,
+      isEditToggleCopyright: false,
     }
 
-    this.editToggle = this.editToggle.bind(this);
-    this.editSubmit = this.editSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.editToggleName = this.editToggleName.bind(this);
+    this.editToggleCopyright = this.editToggleCopyright.bind(this);
   }
 
-  onChange(e) {
-    // const target = e.target.id;
-    // const element = document.getElementById(target);
-    // const error = document.getElementById('popup');
-    // const isCopyright = target === 'club_copyright' ? true : false;
-    // const isName = target ==='club_name' ? true : false;
-  }
-
-  editToggle() {
+  editToggleName() {
     this.setState({
-      isEditToggle: !this.state.isEditToggle,
-      isSubmited: false,
+      isEditToggleName: !this.state.isEditToggleName,
     });
   }
-
-  editSubmit() {
+  editToggleCopyright() {
     this.setState({
-      isEditToggle: !this.state.isEditToggle,
-      club_name: this.refs.club_name.value,
-      club_copyright: this.refs.club_copyright.value,
-      isSubmited: true,
+      isEditToggleCopyright: !this.state.isEditToggleCopyright,
     });
-  }
-
-  componentDidUpdate() {
-    if(this.state.isSubmited){
-        // POST API
-        if(this.props.club_name !== this.state.club_name) {
-          getClubName(this.state.club_name)
-            .then((response) => {
-              if(response.data) {
-                console.log('동일한 동아리 이름 존재');
-              } else {
-                const data = {
-                  club_name : this.state.club_name,
-                  club_copyright: this.state.club_copyright,
-                }
-
-                updateClub(this.props.club_id, data)
-                  .then((response) => {
-                    //Todo
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-    }
   }
 
   render() {
-    let editButton;
+    let editNamePopup = this.state.isEditToggleName ? <SnippetEditPopupName
+                                                        close={this.editToggleName}
+                                                        club_name={this.props.club_name}
+                                                        club_id={this.props.club_id} /> : '';
+    let editCopyrightPopup = this.state.isEditToggleCopyright ? <SnippetEditPopupCopyright
+                                                                  close={this.editToggleCopyright}
+                                                                  club_copyright={this.props.club_copyright}
+                                                                  club_id={this.props.club_id}/> : '';
 
-    let editCopyright = <textarea ref='club_copyright' id='club_copyright' placeholder='회원가입 단계에서 미리 입력된 동아리 설명이 나타납니다.(30자 이내)' onChange={this.onChange} defaultValue={this.state.club_copyright}></textarea>;
-    let viewCopyright = this.state.club_copyright.split('\n').map((line, key) => {
-      return (<span key={key}>{line}<br /></span>);
-    });
-
-    let editName = <input type='text' ref='club_name' onChange={this.onChange} defaultValue={this.state.club_name} />
-
-    //let popup = this.state.isEditToggle ? 'show' : '';
-
-    if(this.state.myPage && !this.state.isEditToggle){
-      editButton = (
-        <div className='edit-btn'>
-          <button className='emerald-btn' onClick={this.editToggle}>수정</button>
-        </div>
-      );
-    } else if(this.state.isEditToggle) {
-      editButton = (
-        <div className='edit-btn'>
-          <button className='gray-btn' onClick={this.editToggle}>취소</button>
-          <button className='emerald-btn' onClick={this.editSubmit}>확인</button>
-        </div>
-      );
-    } else {
-      editButton = '';
-    }
+    // let editCopyright = (
+    //   <div>
+    //     <input type='text' id='club_copyright' ref='club_copyright' onChange={this.handleChange} defaultValue={this.state.club_copyright.value} />
+    //     <a>TEST</a>
+    //   </div>
+    // )
+    // let editName = (
+    //   <div>
+    //     <input type='text' id='club_name' ref='club_name' onChange={this.handleChange} defaultValue={this.state.club_name.value} />
+    //     <a>TEST</a>
+    //   </div>
+    // )
 
     return (
       <div className='snippet-container'>
         <div className='container'>
-          {editButton}
           <div className='snippet-inner'>
-            <h1 className='title'>{this.state.isEditToggle ? editName : this.state.club_name}</h1>
-            <p>{this.state.isEditToggle ? editCopyright : viewCopyright}</p>
+            <div className='name'>
+              <h1>{this.props.club_name}</h1>
+              {this.props.myPage ? <i className='ic-edit' onClick={this.editToggleName}>수정</i> : ''}
+            </div>
+
+            <p>
+              {this.props.club_copyright}
+              {this.props.myPage ? <i className='ic-edit' onClick={this.editToggleCopyright}>수정</i> : ''}
+            </p>
           </div>
         </div>
+        {editNamePopup}
+        {editCopyrightPopup}
       </div>
     );
   }

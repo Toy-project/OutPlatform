@@ -2,16 +2,10 @@
   @include popup-reset-options(350px, 30%);
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
-  padding: 0;
 
   @include left-align;
 
   .close-btn-right {
     top: 20px;
-  }
-
-  .info-input {
-    width: 210px;
   }
 }

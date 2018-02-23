@@ -6,25 +6,9 @@ import { CSSTransition, transit } from "react-css-transition";
 import { fetchCreateCareer, fetchUpdateCareer } from 'actions/portfolio';
 
 import { isEmpty } from 'helper/common';
+import * as Variables from 'helper/variables';
 
-const transitionStyles = {
-  defaultStyle: {
-    transform: "translate(0, 0)",
-    opacity: 0,
-  },
-  enterStyle: {
-    transform: transit("translate(0, 20px)", 100, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(1, 100, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  leaveStyle: {
-    transform: transit("translate(0, 0)", 100, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(0, 100, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  activeStyle: {
-    transform: "translate(0, 20px)",
-    opacity: 1,
-  },
-};
+import * as AnimationStyle from 'helper/animationStyle';
 
 class PortfolioPopup extends React.Component{
   constructor(props) {
@@ -138,6 +122,11 @@ class PortfolioPopup extends React.Component{
   }
 
   render() {
+    //Animation Styles
+    const _thisContainerMinHeight = Variables.portfolioPopupHeight;
+    const _thisInnerWindowHeight = window.innerHeight;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+    console.log(_thisInnerWindowHeight, _animationStartFrom);
     //Layout
     const header_submit_btn = () => {
       if(this.props.myPage) {
@@ -309,7 +298,7 @@ class PortfolioPopup extends React.Component{
         <div className='popup_container'>
           <CSSTransition
             transitionAppear={true}
-            {...transitionStyles}
+            {...AnimationStyle.transitionStyles(_animationStartFrom)}
             active={this.state.active}>
             <div className='portfolio-popup-wrapper'>
               <div className='portfolio-popup-inner'>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { apiAddres } from 'helper/variables';
 
-const urlComment = `${apiAddres}/comment/`;
+const urlComment = `${apiAddres}/comment`;
 
 export const getCommentById = (club_id, start, end) => {
   return axios({
@@ -9,7 +9,7 @@ export const getCommentById = (club_id, start, end) => {
     timeout: 20000,
     url: `${urlComment}/club/${club_id}?start=${start}&end=${end}`,
     responseType: 'json'
-  })
+  });
 }
 
 export const createComment = (data) => {
@@ -21,5 +21,28 @@ export const createComment = (data) => {
       'Content-Type': 'application/json',
     },
     data: data,
-  })
+  });
+}
+
+export const updateComment = (data) => {
+  return axios({
+    method: 'put',
+    url: `${urlComment}/${data.comment_id}`,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: data,
+  });
+}
+
+export const deleteComment = (data) => {
+  return axios({
+    method: 'delete',
+    url: `${urlComment}/${data.comment_id}`,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
 }

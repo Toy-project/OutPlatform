@@ -1,10 +1,12 @@
 import React from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { isNull } from 'helper/common';
+import {apiAddres} from 'helper/variables';
 
-import { updateClubProfile } from 'services/club';
+import { fetchUpdatePhotoClub } from 'actions/club/';
 
 class ImageNavigation extends React.Component {
 
@@ -12,14 +14,8 @@ class ImageNavigation extends React.Component {
     super(props);
 
     this.state = {
-      club_photo: isNull(this.props.club_photo) ? [] : this.props.club_photo,
-      club_profile_photo: isNull(this.props.club_profile_photo) ? [] : this.props.club_profile_photo,
-      club_photo_updated_slide: [],
-      club_photo_updated_profile: [],
-      club_photo_upload_slide: false,
-      club_photo_upload_profile: false,
+      club_photo : '',
       isUploadButton_slide: false,
-      isUploadButton_profile: false,
     }
 
     this.next = this.next.bind(this);
@@ -46,27 +42,11 @@ class ImageNavigation extends React.Component {
 
     reader.addEventListener("load", () => {
       //슬라이드 업로드일 경우
-      if(isSlide) {
-        this.setState({
-          ...this.state,
-          club_photo: [...this.state.club_photo, reader.result],
-          club_photo_updated_slide: [...this.state.club_photo_updated_slide, reader.result],
-          club_photo_upload_slide: true,
-          isUploadButton_slide: true,
-        });
-      }
-
-      //프로필 업로드일 경우
-      if(isProfile) {
-
-        this.setState({
-          ...this.state,
-          club_profile_photo: img,
-          club_photo_updated_profile: img,
-          club_photo_upload_profile: true,
-          isUploadButton_profile: true,
-        });
-      }
+      this.setState({
+        ...this.state,
+        club_photo : reader.result,
+        isUploadButton_slide: true,
+      });
     }, false);
 
     if(img) {
@@ -77,25 +57,11 @@ class ImageNavigation extends React.Component {
   onUpload(){
     //업로드 API
     if(this.state.isUploadButton_slide){
-      //Upload Slide Image
-      this.setState({
-        isUploadButton_slide: !this.state.isUploadButton_slide,
-      });
-    }
-
-    if(this.state.isUploadButton_profile){
+      //Append photo
       const form = new FormData();
-
-      form.append('club_profile_photo', this.state.club_profile_photo);
-      console.log(this.state.club_profile_photo);
-      updateClubProfile(this.props.club_id, form)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      //console.log(this.state.club_profile_photo);
+      const num = this.props.club_photo.split(',').length + 1; //다음 이미지 순서
+      form.append('club_photo', this.state.club_photo);
+      this.props.fetchUpdatePhotoClub(this.props.club_id, form.get('club_photo'), num);
     }
   }
 
@@ -104,9 +70,8 @@ class ImageNavigation extends React.Component {
     let isFloatingCircle;
 
     //저장된 단체 이미지, 단체 프로필 이미지
-    const club_photo = this.state.club_photo;
+    const club_photo = this.props.club_photo ? this.props.club_photo.split(',') : [];
     // const club_profile_photo = this.state.club_profile_photo;
-
     const showImages = () => {
       return club_photo
         //최신인 사진을 맨 위로 올리기 위해 정렬
@@ -114,7 +79,7 @@ class ImageNavigation extends React.Component {
           return a > b;
         })
         .map((data, key) => {
-        return (<img key={key} src={data} alt="" className='default-image' />);
+        return (<img key={key} src={`${apiAddres}/${data}`} alt="" className='default-image' />);
       });
     }
 
@@ -134,11 +99,10 @@ class ImageNavigation extends React.Component {
         );
       }
     }
-
     let isArrows = (
       <div>
-        <div className={this.state.club_photo.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
-        <div className={this.state.club_photo.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
+        <div className={this.props.club_photo.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
+        <div className={this.props.club_photo.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
       </div>
     );
 
@@ -159,6 +123,7 @@ class ImageNavigation extends React.Component {
         autoplay={false}
         ref={ref => this.slider = ref}
         >
+          {this.state.club_photo ? <img src={this.state.club_photo} alt="" className='default-image' /> : ''}
           {showImages()}
         </Slider>
       );
@@ -211,4 +176,17 @@ ImageNavigation.propTypes = {
   myPage: PropTypes.bool,
 };
 
-export default ImageNavigation;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUpdatePhotoClub: (club_id, file, num) => {
+      dispatch(fetchUpdatePhotoClub(club_id, file, num));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageNavigation);

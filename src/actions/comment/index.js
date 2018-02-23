@@ -26,7 +26,7 @@ export function fetchComment(club_id, start, end){
     return Services
           .getCommentById(club_id, start, end)
           .then((response) => {
-            return dispatch(receiveData(response.data));
+            dispatch(receiveData(response.data));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));
@@ -40,7 +40,35 @@ export function fetchCreateComment(data) {
     return Services
           .createComment(data)
           .then((response) => {
-            return dispatch(fetchComment(data.club_id, 0, commentListEnd));
+            dispatch(fetchComment(data.club_id, 0, commentListEnd));
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
+  }
+}
+
+export function fetchUpdateComment(data, start) {
+  return function(dispatch){
+    dispatch(requestData());
+    return Services
+          .updateComment(data)
+          .then((response) => {
+            dispatch(fetchComment(data.club_id, start, commentListEnd));
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
+  }
+}
+
+export function fetchDeleteComment(club_id, comment_id, start) {
+  return function(dispatch){
+    dispatch(requestData());
+    return Services
+          .deleteComment(comment_id)
+          .then((response) => {
+            dispatch(fetchComment(club_id, start, commentListEnd));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));

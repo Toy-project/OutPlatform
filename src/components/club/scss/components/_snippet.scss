@@ -11,24 +11,38 @@
 
       @include center;
 
-      > .title {
-        font-size: $font-size-24;
-        color: inherit;
+      // input[type=text] {
+      //   width: 100%;
+      //   height: 35px;
+      //   font-size: 14px;
+      //   border: solid 1px $gray-3;
+      //   outline: none;
+      //   @include center;
+      // }
+      //
+      // a {
+      //   display: block;
+      //   width: 100%;
+      //   font-size: 12px;
+      //   display: block;
+      //   margin-top: 5px;
+      //   margin-bottom: 15px;
+      //   @include right-align;
+      // }
 
+      .name {
         margin-left: auto;
         margin-right: auto;
         width: 76%;
 
-        > input[type=text] {
-          width: 100%;
-          font-size: inherit;
-          border: solid 1px $gray-3;
-          outline: none;
-          @include center;
+        h1 {
+          display:inline;
+          font-size: $font-size-24;
+          color: inherit;
         }
       }
 
-      > p {
+      p {
         width: 76%;
         min-height: 80px;
         margin-left: auto;
@@ -38,7 +52,7 @@
         font-size: $font-size-20;
         color: inherit;
 
-        > textarea {
+        textarea {
           width: 100%;
           overflow-x: hidden;
           overflow-y: hidden;
@@ -48,22 +62,6 @@
 
           font-size: inherit;
           @include center;
-        }
-      }
-
-      > .popup {
-        display: none;
-        width: 23%;
-        font-size: $font-size-14;
-        position: absolute;
-        top: 20px;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-
-        &.show {
-          display: block;
         }
       }
     }

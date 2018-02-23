@@ -8,25 +8,9 @@ import * as PhoneAuth from 'services/phoneAuth';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
+import * as Variables from 'helper/variables';
 
-const transitionStyles = {
-  defaultStyle: {
-    transform: "translate(0, 0)",
-    opacity: 0,
-  },
-  enterStyle: {
-    transform: transit("translate(0, 100px)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(1, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  leaveStyle: {
-    transform: transit("translate(0, 0)", 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-    opacity: transit(0, 300, "cubic-bezier(0.25, 0.1, 0.25, 1)"),
-  },
-  activeStyle: {
-    transform: "translate(0, 100px)",
-    opacity: 1,
-  },
-};
+import * as AnimationStyle from 'helper/animationStyle';
 
 class RegisterMember extends React.Component {
   constructor(props){
@@ -559,10 +543,15 @@ class RegisterMember extends React.Component {
         );
       }
     }
+
+    const _thisContainerMinHeight = Variables.registerMemberPopupHeight;
+    const _thisInnerWindowHeight = window.innerHeight;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+
     return (
       <CSSTransition
         transitionAppear={true}
-        {...transitionStyles}
+        {...AnimationStyle.transitionStyles(_animationStartFrom)}
         active={this.state.active}>
         <div className='register-member-container'>
           <div className='register-member-inner'>

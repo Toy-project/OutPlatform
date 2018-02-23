@@ -2,8 +2,6 @@
   @include popup-reset-options(350px, 30%);
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
-  padding: 0;
 
   @include left-align;
 
@@ -13,12 +11,10 @@
 
   .info-input {
     position: relative;
-    width: 290px;
 
     input[type=button] {
       position: absolute;
       top: 0;
-      right: 0;
       @include btn-reset-shape(80px, 30px, $emerald-1);
       @include btn-reset-font($font-size-12, $btn-text-white-color, 30px);
     }

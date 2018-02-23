@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import * as Common from 'helper/common';
 import * as RegisterHelper from 'helper/registerHelper';
@@ -95,12 +94,12 @@ class ContactInfo extends React.Component {
               <div className='info-input'>
                 <label htmlFor='phone'>대표 전화번호</label>
                 {this.props.phone}
-                <i onClick={this.editTogglePhone}>수정</i>
+                <i className='ic-edit' onClick={this.editTogglePhone}>수정</i>
               </div>
               <div className='info-input'>
                 <label htmlFor='email'>이메일 주소</label>
                 {this.props.email}
-                <i onClick={this.editToggleEmail}>수정</i>
+                <i className='ic-edit' onClick={this.editToggleEmail}>수정</i>
               </div>
             </form>
           </div>
@@ -115,22 +114,4 @@ class ContactInfo extends React.Component {
 ContactInfo.propTypes = {
 };
 
-const mapStateToProps = (state) => {
-  return {
-    member: state.member,
-    club: state.club,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchUpdateMember: (id, data) => {
-      dispatch(MemberActions.fetchUpdateMember(id, data));
-    },
-    fetchUpdateClub: (club_id, data) => {
-      dispatch(ClubActions.fetchUpdateClub(club_id, data));
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactInfo);
+export default ContactInfo;

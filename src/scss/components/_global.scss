@@ -18,31 +18,3 @@
 @mixin light-thick { font-weight: 500; }
 @mixin light { font-weight: 300; }
 @mixin normal { font-weight: normal; }
-
-.x-icon,
-.x-icon:after,
-.x-icon:before {
-  position: absolute;
-}
-
-.x-icon {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.x-icon:after,
-.x-icon:before {
-  left: 0;
-  top: 0;
-  content: '';
-  height: 18px;
-  border-left: 2.5px solid $gray-6;
-}
-
-.x-icon:after {
-  transform: rotate(45deg);
-}
-.x-icon:before {
-  transform: rotate(-45deg);
-}

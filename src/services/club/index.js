@@ -60,10 +60,10 @@ export function createClub(data) {
   })
 }
 
-export function updateClubProfile(club_id, file) {
+export function updateClubPhoto(club_id, file, num) {
   return axios({
     method: 'put',
-    url: `${urlClub}/profile/${club_id}`,
+    url: `${urlClub}/photo/${club_id}?num=1`,
     data: file,
   })
 }

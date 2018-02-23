@@ -90,7 +90,7 @@ class Register extends React.Component {
 
       "club_phone_auth_btn" : {
         type: false,
-        err: null,
+        err: true,
         loading: false,
       },
     }
@@ -123,6 +123,7 @@ class Register extends React.Component {
           err = true;
         } else {
           err_msg = '이용 가능한 아이디입니다.';
+          err = false;
         };
       }
     }
@@ -136,6 +137,7 @@ class Register extends React.Component {
           err = true;
         } else {
           err_msg = '이용 가능한 비밀번호입니다.';
+          err = false;
         }
       }
     }
@@ -172,6 +174,7 @@ class Register extends React.Component {
           err = true;
         } else {
           err_msg = '이용 가능한 동아리 이름입니다.';
+          err = false;
         }
       }
     }

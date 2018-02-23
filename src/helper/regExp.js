@@ -19,7 +19,7 @@ export function isUsernameGood(val) {
 }
 
 export function isNameGood(val) {
-  return /^[가-힣a-zA-Z\s]{5,}$/.test(val);
+  return /^[가-힣a-zA-Z\s]{5,10}$/.test(val);
 }
 
 export function isCopyrightGood(val) {
