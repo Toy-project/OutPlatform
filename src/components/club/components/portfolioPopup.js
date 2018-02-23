@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 
-import { CSSTransition, transit } from "react-css-transition";
+import { CSSTransition } from "react-css-transition";
 import { fetchCreateCareer, fetchUpdateCareer } from 'actions/portfolio';
 
 import { isEmpty } from 'helper/common';
@@ -15,26 +15,20 @@ class PortfolioPopup extends React.Component{
     super(props);
 
     this.state = {
-      career_name: this.props.data.career_name,
-      career_due_start: this.props.data.career_due_start,
-      career_due_end: this.props.data.career_due_end,
-      career_ex: this.props.data.career_ex,
-      career_photo: this.props.data.career_photo,
-      career_people: 0,
-      career_co: '기본값',
-
+      preview_photo : '',
+      career_photo: '',
       active: true,
     }
 
     //닫기 함수
     this.closePopup = this.closePopup.bind(this);
 
-    //Handle input
-    this.handleChange = this.handleChange.bind(this);
-
     //Submit
     this.checkEmptyField = this.checkEmptyField.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    //Upload photo
+    this.onDrop = this.onDrop.bind(this);
 
     //handleAnimationToggle
     this.handleToggle = this.handleToggle.bind(this);
@@ -55,20 +49,21 @@ class PortfolioPopup extends React.Component{
     }, 300);
   }
 
-  handleChange(e) {
-    const target = e.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
+  onDrop(e) {
+    const img = e.target.files[0];
+    const reader = new FileReader();
 
-    if(target.id === 'career_due_start'){
-      value = `${this.refs.from_year.value}-${this.refs.from_month.value}-${this.refs.from_day.value}`;
-    }
-    if(target.id === 'career_due_end'){
-      value = `${this.refs.to_year.value}-${this.refs.to_month.value}-${this.refs.to_day.value}`;
-    }
+    reader.addEventListener("load", () => {
+      // 미리보기 이미지 저장 & 토글 변경
+      this.setState({
+        preview_photo : reader.result,
+        career_photo : img,
+      });
+    }, false);
 
-    this.setState({
-      [target.id] : value,
-    });
+    if(img) {
+      reader.readAsDataURL(img);
+    }
   }
 
   checkEmptyField() {
@@ -92,15 +87,17 @@ class PortfolioPopup extends React.Component{
 
     if(isValid) {
       const data = {
-        career_name: this.state.career_name,
-        career_due_start: this.state.career_due_start,
-        career_due_end: this.state.career_due_end,
-        career_ex: this.state.career_ex,
-        career_photo: this.state.career_photo,
+        career_name: this.refs.career_name.value,
+        career_ex: this.refs.career_ex.value,
+        career_photo: this.state.career_photo ? this.state.career_photo : null,
+        career_due_start: `${this.refs.from_year.value}-${this.refs.from_month.value}-${this.refs.from_day.value}`,
+        career_due_end: `${this.refs.to_year.value}-${this.refs.to_month.value}-${this.refs.to_day.value}`,
         career_people: 0,
         career_co: '기본값',
         club_id: this.props.data.club_id,
       }
+
+      console.log(data);
 
       if(this.props.type === 'create') {
         this.props.fetchCreateCareer(data);
@@ -113,8 +110,6 @@ class PortfolioPopup extends React.Component{
           career_id: this.props.data.career_id,
         }
 
-        console.log(edit);
-
         this.props.fetchUpdateCareer(edit);
         this.closePopup();
       }
@@ -126,7 +121,7 @@ class PortfolioPopup extends React.Component{
     const _thisContainerMinHeight = Variables.portfolioPopupHeight;
     const _thisInnerWindowHeight = window.innerHeight;
     const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
-    console.log(_thisInnerWindowHeight, _animationStartFrom);
+
     //Layout
     const header_submit_btn = () => {
       if(this.props.myPage) {
@@ -249,8 +244,8 @@ class PortfolioPopup extends React.Component{
     let to = [0, 0, 0];
 
     if(this.props.type === 'edit') {
-      from = dateFormat(this.state.career_due_start, 'yyyy-mm-dd').split('-');
-      to = dateFormat(this.state.career_due_end, 'yyyy-mm-dd').split('-');
+      from = dateFormat(this.props.career_due_start, 'yyyy-mm-dd').split('-');
+      to = dateFormat(this.props.career_due_end, 'yyyy-mm-dd').split('-');
     }
 
     let setYear = [];
@@ -265,9 +260,9 @@ class PortfolioPopup extends React.Component{
 
     header = (
       <div>
-        {/* <div className='preview'>
-          <img src={this.state.career_photo} alt="" className='default-image' />
-        </div> */}
+        <div>
+          <img src={this.state.preview_photo} alt="" className='preview' />
+        </div>
         <div className='close-btn' onClick={this.closePopup}>
           <span className='x-icon'></span>
         </div>

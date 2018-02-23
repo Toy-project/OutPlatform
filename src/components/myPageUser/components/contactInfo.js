@@ -1,13 +1,5 @@
 import React from 'react';
 
-import * as Common from 'helper/common';
-import * as RegisterHelper from 'helper/registerHelper';
-
-import * as MemberActions from 'actions/member/';
-import * as ClubActions from 'actions/club/';
-import * as Member from 'services/member';
-import * as Club from 'services/club';
-
 import ContactInfoEditEmail from './contactInfoEditEmail';
 import ContactInfoEditPhone from './contactInfoEditPhone';
 
@@ -38,20 +30,8 @@ class ContactInfo extends React.Component {
 
   render() {
     let editButton;
-    let editContact;
-    let editEmail;
     let editPhonePopup;
     let editEmailPopup;
-
-    const errorClassName = (identifier) => {
-      if(identifier.err == null) {
-        return '';
-      } else if(identifier.err === false) {
-        return 'recommend-color';
-      } else {
-        return 'warning-color';
-      }
-    }
 
     editPhonePopup = () => {
       if(this.state.isEditTogglePhone) {

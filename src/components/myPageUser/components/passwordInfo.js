@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import * as Common from 'helper/common';
 import * as RegisterHelper from 'helper/registerHelper';
-import * as LoginHelper from 'helper/loginHelper';
 
 import * as MemberActions from 'actions/member/';
 import * as Auth from 'services/auth';

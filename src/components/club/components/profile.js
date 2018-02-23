@@ -5,13 +5,12 @@ import  { withRouter } from 'react-router-dom';
 
 import { fetchUpdateClub } from 'actions/club';
 
-import { subStringLimitStringLength, isNull } from 'helper/common';
+import { subStringLimitStringLength } from 'helper/common';
 
 class Profile extends React.Component {
   constructor(props){
     super(props);
 
-    console.log(this.props.club_college);
     this.state = {
       isEditToggle: false,
     }

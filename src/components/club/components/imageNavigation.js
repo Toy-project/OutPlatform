@@ -3,10 +3,9 @@ import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isNull } from 'helper/common';
-import {apiAddres} from 'helper/variables';
+import { updateClubPhoto } from 'services/club/';
+import { fetchClub } from 'actions/club/'
 
-import { fetchUpdatePhotoClub } from 'actions/club/';
 
 class ImageNavigation extends React.Component {
 
@@ -14,7 +13,8 @@ class ImageNavigation extends React.Component {
     super(props);
 
     this.state = {
-      club_photo : '',
+      preview_photo : '',
+      club_photo: '',
       isUploadButton_slide: false,
     }
 
@@ -22,6 +22,7 @@ class ImageNavigation extends React.Component {
     this.previous = this.previous.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onUpload = this.onUpload.bind(this);
+    this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
   }
 
   //단체 좌우 Arrows
@@ -35,16 +36,13 @@ class ImageNavigation extends React.Component {
   //단체 수정 페이지 Upload
   onDrop(e) {
     const img = e.target.files[0];
-    const target = e.target.id;
     const reader = new FileReader();
-    const isSlide = target === 'onDropSlide' ? true : false;
-    const isProfile = target === 'onDropProfile' ? true : false;
 
     reader.addEventListener("load", () => {
-      //슬라이드 업로드일 경우
+      // 미리보기 이미지 저장 & 토글 변경
       this.setState({
-        ...this.state,
-        club_photo : reader.result,
+        preview_photo : reader.result,
+        club_photo : img,
         isUploadButton_slide: true,
       });
     }, false);
@@ -59,27 +57,45 @@ class ImageNavigation extends React.Component {
     if(this.state.isUploadButton_slide){
       //Append photo
       const form = new FormData();
-      const num = this.props.club_photo.split(',').length + 1; //다음 이미지 순서
+      const num = this.props.club_photo.length + 1; //다음 이미지 순서
       form.append('club_photo', this.state.club_photo);
-      this.props.fetchUpdatePhotoClub(this.props.club_id, form.get('club_photo'), num);
+
+      updateClubPhoto(this.props.club_id, form, num)
+        .then((response) => {
+          //Reset 미리보기 사진 정보 / 업로드 사진 정보
+          this.setState({
+            preview_photo : '',
+            club_photo : '',
+            isUploadButton_slide: false,
+          });
+
+          this.props.fetchClub(this.props.club_id);
+        })
+        .then((err) => {
+          //To do
+        });
     }
   }
 
-  render() {
-    let isSlider;
-    let isFloatingCircle;
+  handleDeletePhoto() {
+    const currentPhotoIndex = this.slider.innerSlider.state.currentSlide;
+    let temp = this.props.club_photo;
+    //Remove currentIndex from array
+    temp.splice(currentPhotoIndex, 1);
+    //to DO
+  }
 
-    //저장된 단체 이미지, 단체 프로필 이미지
-    const club_photo = this.props.club_photo ? this.props.club_photo.split(',') : [];
+  render() {
+
     // const club_profile_photo = this.state.club_profile_photo;
     const showImages = () => {
-      return club_photo
+      return this.props.club_photo
         //최신인 사진을 맨 위로 올리기 위해 정렬
         .sort((a, b) => {
           return a > b;
         })
         .map((data, key) => {
-        return (<img key={key} src={`${apiAddres}/${data}`} alt="" className='default-image' />);
+        return (<img key={key} src={`/${data}`} alt="" className='default-image' />);
       });
     }
 
@@ -101,8 +117,8 @@ class ImageNavigation extends React.Component {
     }
     let isArrows = (
       <div>
-        <div className={this.props.club_photo.length > 2 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
-        <div className={this.props.club_photo.length > 2 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
+        <div className={this.props.club_photo.length > 1 ? 'left-arrow' : 'left-arrow disabled'} onClick={this.next} ></div>
+        <div className={this.props.club_photo.length > 1 ? 'right-arrow' : 'right-arrow disabled'} onClick={this.next}></div>
       </div>
     );
 
@@ -115,20 +131,26 @@ class ImageNavigation extends React.Component {
       arrows: false,
     };
 
+    const isSlider = (
+      <Slider
+      {...settings}
+      autoplay={this.props.myPage ? false : true}
+      ref={ref => this.slider = ref}
+      >
+        {this.state.preview_photo ? <img src={this.state.preview_photo  } alt="" className='default-image' /> : ''}
+        {showImages()}
+      </Slider>
+    );
+
+    let isFloatingCircle;
+
     //단체 페이지 수정일 때,
     if(this.props.myPage){
-      isSlider = (
-        <Slider
-        {...settings}
-        autoplay={false}
-        ref={ref => this.slider = ref}
-        >
-          {this.state.club_photo ? <img src={this.state.club_photo} alt="" className='default-image' /> : ''}
-          {showImages()}
-        </Slider>
-      );
       isFloatingCircle = (
         <div>
+          <div className='close-btn' onClick={this.handleDeletePhoto}>
+            <span className='x-icon'></span>
+          </div>
           <div className='add-image'>
             {imageAddToggleForSlide()}
           </div>
@@ -138,18 +160,6 @@ class ImageNavigation extends React.Component {
         </div>
       );
     } else {
-      //Slick
-      isSlider = (
-        <Slider
-          autoplay={true}
-          autoplaySpeed={2000}
-          {...settings}
-          ref={ref => this.slider = ref}
-        >
-          {showImages()}
-        </Slider>
-      );
-
       //Floating Button
       isFloatingCircle = (
         <div className='add-profile'>
@@ -183,8 +193,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUpdatePhotoClub: (club_id, file, num) => {
-      dispatch(fetchUpdatePhotoClub(club_id, file, num));
+    fetchClub: (club_id) => {
+      dispatch(fetchClub(club_id));
     }
   }
 }

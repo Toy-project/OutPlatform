@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import * as Common from 'helper/common';
 import * as RegisterHelper from 'helper/registerHelper';
-import { getClubName } from 'services/club';
 
 import * as ClubActions from 'actions/club/';
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlNexmo = `${apiAddres}/nexmo`;
+const urlNexmo = `/nexmo`;
 
 export function sendingVerifiedCode(number) {
   const brand = "외주대학교"

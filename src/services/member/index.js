@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlMember = `${apiAddres}/member/`;
+const urlMember = `/member/`;
 
 export function getMemberByUserId(mem_id) {
   return axios({
@@ -51,5 +50,12 @@ export function updateMember(mem_id, data) {
       'Content-Type': 'application/json',
     },
     data: data,
+  })
+}
+
+export function deleteMember(mem_id) {
+  return axios({
+    method: 'delete',
+    url: `${urlMember}/${mem_id}`,
   })
 }

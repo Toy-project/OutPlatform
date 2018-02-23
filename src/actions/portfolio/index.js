@@ -7,12 +7,12 @@ function requestData() {
   return {type: types.PORTFOLIO_REQ_DATA}
 };
 
-function receiveData(json){
-  return{
-		type: types.PORTFOLIO_RECV_DATA,
-		data: json
-	}
-};
+// function receiveData(json){
+//   return{
+// 		type: types.PORTFOLIO_RECV_DATA,
+// 		data: json
+// 	}
+// };
 
 function receiveError(json) {
 	return {

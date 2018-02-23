@@ -19,7 +19,7 @@ class Unregister extends React.Component {
     });
   }
   render() {
-    const unregisterPopup = this.state.isUnregisterToggle ? <UnregisterPopup type={this.props.type} close={this.unregisterToggle} /> : '';
+    const unregisterPopup = this.state.isUnregisterToggle ? <UnregisterPopup type={this.props.type} close={this.unregisterToggle} userid={this.props.userid} id={this.props.id} /> : '';
     return (
       <div className='unregister-container'>
         <div className='container'>

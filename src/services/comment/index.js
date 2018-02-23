@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlComment = `${apiAddres}/comment`;
+const urlComment = `/comment`;
 
 export const getCommentById = (club_id, start, end) => {
   return axios({

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getClubName, updateClub } from 'services/club';
 import SnippetEditPopupName from './snippetEditPopupName';
 import SnippetEditPopupCopyright from './snippetEditPopupCopyright';
 

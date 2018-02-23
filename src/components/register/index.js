@@ -478,7 +478,7 @@ class Register extends React.Component {
           //인증 코드 일치 하지 않을 때
           } else if(result.status === '16' || result.status === '17') {
             err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
-            err = true,
+            err = true;
 
             phone_auth_ref.focus();
 

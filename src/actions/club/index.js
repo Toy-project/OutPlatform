@@ -51,21 +51,3 @@ export function fetchUpdateClub(club_id, data) {
           });
   }
 }
-
-export function fetchUpdatePhotoClub(club_id, file, num) {
-  return function(dispatch){
-    dispatch(requestData());
-    return Club
-          .updateClubPhoto(club_id, file, num)
-          .then((response) => {
-            if(response.data) {
-              console.log(response.data);
-              dispatch(fetchClub(club_id));
-              // dispatch(receiveError(response.data));
-            }
-          })
-          .catch((err) => {
-            dispatch(receiveError(err.data));
-          });
-  }
-}

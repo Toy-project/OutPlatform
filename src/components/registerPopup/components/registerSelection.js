@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSTransition, transit } from "react-css-transition";
+import { CSSTransition } from "react-css-transition";
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlGetAllCategory = `${apiAddres}/category`;
+const urlGetAllCategory = `/category`;
 
 export function getAllCategory(start, end){
   return axios({

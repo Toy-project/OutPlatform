@@ -3,6 +3,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: $gray-1;
+  padding: 0 30px;
   @include center;
 
   .header {
@@ -15,11 +16,11 @@
     }
     p {
       width: 100%;
-      padding: 0 50px;
     }
   }
 
   .contents {
+    margin-bottom: 20px;
     label {
       font-size: $font-size-16;
       @include thick;
@@ -36,14 +37,23 @@
   }
 
   .footer {
-    position: relative;
+    width: 100%;
+    overflow: hidden;
 
-    .edit_btn:first-child {
-      left: 0;
+    .emerald-btn {
+      float: right;
+      @include btn-reset-shape(60px, 40px, $emerald-1);
+      @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
     }
+    .gray-btn {
+      float: left;
+      @include btn-reset-shape(60px, 40px, $gray-5);
+      @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
 
-    .edit_btn:last-child {
-      right: 0;
     }
+  }
+
+  .close-btn {
+    top: 15px;
   }
 }

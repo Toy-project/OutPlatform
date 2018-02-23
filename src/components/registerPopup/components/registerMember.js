@@ -1,6 +1,6 @@
 import React from 'react';
 import  { withRouter } from 'react-router-dom';
-import { CSSTransition, transit } from "react-css-transition";
+import { CSSTransition } from "react-css-transition";
 
 import { getMemberUserId, getMemberEmail, createMember } from 'services/member';
 import * as Club from 'services/club';
@@ -405,7 +405,7 @@ class RegisterMember extends React.Component {
           //인증코드 일치하지 않을 때
           } else if(result.status === '16' || result.status === '17') {
             err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
-            err = true,
+            err = true;
 
             phone_auth_ref.focus();
           //인증코드 실패

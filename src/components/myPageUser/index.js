@@ -90,7 +90,7 @@ class myPageUser extends React.Component {
         data = {
           id: club.club_id,
           userid: club.club_userid,
-          profile_photo: null,
+          profile_photo: club.club_profile_photo,
           username: club.club_username,
           phone: club.club_phone,
           email: club.club_email,
@@ -100,13 +100,15 @@ class myPageUser extends React.Component {
       }
     }
 
+    console.log(data.profile_photo);
     components = (
       <div>
         <BasicInfo
           type={this.props.type}
 
+          id={data.id}
           userid={data.userid}
-          profile_photo={data.profile_photo}
+          profile_photo={data.profile_photo ? data.profile_photo : ''}
           username={data.username}
           cate_name={data.cate_name}
           name={data.name}
@@ -127,6 +129,7 @@ class myPageUser extends React.Component {
         <Unregister
           type={this.props.type}
           id={data.id}
+          userid={data.userid}
         />
       </div>
     );

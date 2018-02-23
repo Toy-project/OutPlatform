@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
 
-const urlAuth = `${apiAddres}/auth`;
+const urlAuth = `/auth`;
 
 export function memberLogin(mem_userid, mem_pw){
   const data = {

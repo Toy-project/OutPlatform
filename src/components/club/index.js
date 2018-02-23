@@ -6,7 +6,6 @@ import  { withRouter } from 'react-router-dom';
 import './scss/index.scss';
 
 import { fetchClub } from 'actions/club';
-import { fetchCareer } from 'actions/portfolio';
 
 import * as Common from 'helper/common';
 
@@ -102,8 +101,7 @@ class Club extends React.Component {
           myPage={this.state.myPage}
 
           club_id={data.club_id}
-          club_photo={data.club_photo}
-          club_profile_photo={data.club_profile_photo}
+          club_photo={data.club_photo ? data.club_photo.split(',') : []}
         />
         <Snippet
           myPage={this.state.myPage}
@@ -121,7 +119,7 @@ class Club extends React.Component {
           tag_id={data.tag_id}
           cate_name={data.cate_name}
           tag_name={data.tag_name}
-          club_ex={data.club_ex}
+          club_ex={data.club_ex ? data.club_ex : ''}
           //SNS
           sns={data.sns}
          />

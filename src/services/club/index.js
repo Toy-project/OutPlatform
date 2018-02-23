@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlClub = `${apiAddres}/club`;
+const urlClub = `/club`;
 
 export function getClubById(club_id){
   return axios({
@@ -63,7 +62,11 @@ export function createClub(data) {
 export function updateClubPhoto(club_id, file, num) {
   return axios({
     method: 'put',
-    url: `${urlClub}/photo/${club_id}?num=1`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    responseType: 'json',
+    url: `${urlClub}/photo/${club_id}?num=${num}`,
     data: file,
   })
 }
@@ -83,4 +86,11 @@ export function getClubCategory(cate_id, start, end){
     url: `${urlClub}/category/${cate_id}?start=${start}&end=${end}`,
     responseType: 'json'
   });
+}
+
+export function deleteClub(club_id) {
+  return axios({
+    method: 'delete',
+    url: `${urlClub}/${club_id}`,
+  })
 }

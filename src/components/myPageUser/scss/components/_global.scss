@@ -34,9 +34,14 @@
     }
   }
 
+  .input-container,
+  .basic-info-contents {
+    margin-left: 37%;
+  }
+
   .input-container {
     float: left;
-    margin: -20px 0 0 37%;
+    margin-top: -20px;
   }
 
   .info-input {

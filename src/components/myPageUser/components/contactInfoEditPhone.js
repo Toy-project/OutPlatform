@@ -6,8 +6,6 @@ import * as Helper from 'helper/registerHelper';
 
 import * as MemberActions from 'actions/member/';
 import * as ClubActions from 'actions/club/';
-import * as Member from 'services/member';
-import * as Club from 'services/club';
 import * as PhoneAuth from 'services/phoneAuth';
 
 class ContactInfoEditPhone extends React.Component {
@@ -206,7 +204,7 @@ class ContactInfoEditPhone extends React.Component {
           //인증 코드 일치 하지 않을 때
           } else if(result.status === '16' || result.status === '17') {
             err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
-            err = true,
+            err = true;
 
             phone_auth_ref.focus();
 

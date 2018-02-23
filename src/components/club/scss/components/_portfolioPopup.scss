@@ -17,16 +17,12 @@
     .portfolio-popup-header {
       position: relative;
       background-color: #e6e6e6;
-      height: 400px;
+      height: 440px;
+      overflow: hidden;
 
       .preview {
         width: 100%;
         height: 100%;
-        overflow: hidden;
-
-        & > img {
-          width: 100%;
-        }
       }
 
       .ok-btn,
@@ -91,7 +87,7 @@
     }
 
     .portfolio-popup-footer {
-      padding: 5% 26px;
+      padding: 3% 26px;
       @include left-align;
 
       .portfolio-popup-input {
@@ -155,13 +151,17 @@
           }
         }
 
-        > textarea {
+        textarea {
           width: 570px;
           height: 100px;
           resize: none;
           font-size: $font-size-14;
           padding: 5px;
         }
+      }
+
+      .portfolio-popup-input:last-child {
+        margin-bottom: 0;
       }
     }
   }

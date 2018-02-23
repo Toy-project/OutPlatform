@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlPortfolio = `${apiAddres}/career`;
+const urlPortfolio = `/career`;
 
 export function getAllClubByCareerId(club_id){
   return axios({

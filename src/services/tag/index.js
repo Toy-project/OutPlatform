@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlTag = `${apiAddres}/tag`;
+const urlTag = `/tag`;
 
 export function getAllTag(start, end){
   return axios({

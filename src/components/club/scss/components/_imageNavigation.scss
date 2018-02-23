@@ -29,7 +29,8 @@
       .left-arrow,
       .right-arrow,
       .add-profile,
-      .add-image {
+      .add-image,
+      .close-btn {
         position: absolute;
         outline: none;
       }
@@ -67,6 +68,10 @@
         }
       }
 
+      .close-btn {
+        top: 25px;
+        right: 30px;
+      }
 
       .add-profile {
         left: 30px;

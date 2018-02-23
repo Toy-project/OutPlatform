@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiAddres } from 'helper/variables';
 
-const urlTag = `${apiAddres}/sns`;
+const urlTag = `/sns`;
 
 export function getSnsByClubId(club_id){
   return axios({
