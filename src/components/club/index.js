@@ -8,6 +8,7 @@ import './scss/index.scss';
 import { fetchClub } from 'actions/club';
 
 import * as Common from 'helper/common';
+import * as LoginHelper from 'helper/loginHelper';
 
 import ImageNavigation from './components/imageNavigation';
 import Snippet from './components/snippet';
@@ -30,24 +31,20 @@ class Club extends React.Component {
     //Redirect if worng myPage access has been detected,
     if(this.state.myPage) {
       //토큰이 없으면
-      if(!Security.defenceAccessingWithoutToken()) {
+      if(!Security.defenceAccessingWithoutToken(this.props.login.loggined) ||
+         !Security.defenceAccessingWithInvalidToken()) {
         alert('잘못왔엉');
         this.props.history.push(`/`);
         window.location.reload();
-      } else {
-        if(!Security.defenceAccessingWithInvalidToken(this.props.match.params.club_id)) {
-          alert('잘못왔엉');
-          this.props.history.push(`/`);
-          window.location.reload();
-        }
       }
     }
   }
 
   componentDidMount() {
-    const club_id = this.props.match.params.club_id;
+    const club_id = LoginHelper.getCurrentTokenData().club_id;
 
     //fetch Data
+    console.log(club_id);
     this.props.fetchClub(club_id);
   }
 
@@ -161,6 +158,7 @@ Club.propTypes = {
 const mapStateToProps = (state) => {
   return {
     club: state.club,
+    login: state.login,
   }
 }
 

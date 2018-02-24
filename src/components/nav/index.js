@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
@@ -8,6 +9,8 @@ import { RegisterPopup } from 'components/';
 import { Login } from 'components/';
 
 import * as LoginHelper from 'helper/loginHelper';
+
+import * as LoginActions from 'actions/login';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -43,16 +46,16 @@ class Nav extends React.Component {
 
   //단체수정페이지
   goToMyPageClub() {
-    if(LoginHelper.isMember(LoginHelper.getCurrentToken())) {
+    if(LoginHelper.isMember(LoginHelper.getCurrentTokenData())) {
       return false;
     }
 
-    this.props.history.push(`/myPage/${LoginHelper.getCurrentToken().club_id}`);
+    this.props.history.push(`/myPage/`);
   }
 
   //유저정보페이지
   goToMyPageUser() {
-    if(LoginHelper.isMember(LoginHelper.getCurrentToken())) {
+    if(LoginHelper.isMember(LoginHelper.getCurrentTokenData())) {
       this.props.history.push(`/myPageUser/member`);
     } else {
       this.props.history.push(`/myPageUser/club`);
@@ -66,30 +69,25 @@ class Nav extends React.Component {
 
   //로그아웃
   logout() {
-    if(LoginHelper.getCurrentToken() !== false){
-      LoginHelper.removeToken();
-    }
-
-    window.location.reload();
+    this.props.logout();
   }
 
   render() {
     //회원가입 로그인 팝업 토글
     const registerPopup = this.state.showRegisterPopup ? <RegisterPopup close={this.registerToggle} /> : '';
     const loginPopup = this.state.showLoginPopup ? <Login close={this.loginToggle} register={this.registerToggle} /> : '';
-
     //로그인, 로그아웃 버튼 토글
     const showToggle = () => {
-      if(LoginHelper.getCurrentToken() !== false) {
+      if(this.props.login.loggined) {
         return (
           <ul className="main-menu hide-on-med-and-down">
-            {!LoginHelper.isMember(LoginHelper.getCurrentToken()) ? (<li>장바구니</li>) : ''}
+            {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li>장바구니</li>) : ''}
             <li onClick={this.logout}>로그아웃</li>
             <li className='my-page'>
               마이 페이지
               <div className='sub-menu'>
                 <ul>
-                  {!LoginHelper.isMember(LoginHelper.getCurrentToken()) ? (<li onClick={this.goToMyPageClub}>단체관리</li>) : ''}
+                  {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li onClick={this.goToMyPageClub}>단체관리</li>) : ''}
                   <li onClick={this.goToMyPageClub}>외주관리</li>
                   <li onClick={this.goToMyPageUser}>회원관리</li>
                 </ul>
@@ -132,4 +130,18 @@ Nav.propTypes = {
   subPage: PropTypes.bool,
 }
 
-export default withRouter(Nav);
+const mapStateToProps = (state) => {
+  return {
+    login: state.login,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(LoginActions.loggingOut());
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));

@@ -1,18 +1,14 @@
 import React from 'react';
 import { CSSTransition } from "react-css-transition";
-import  { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './scss/index.scss';
 
-import { memberLogin, clubLogin } from 'services/auth';
-
 import { isEmpty } from 'helper/common';
-
-import * as LoginHelper from 'helper/loginHelper';
-
 import * as AnimationStyle from 'helper/animationStyle';
-
 import * as Variables from 'helper/variables';
+
+import * as LoginActions from 'actions/login';
 
 class Login extends React.Component {
 
@@ -66,40 +62,9 @@ class Login extends React.Component {
 
     // Login API 실행
     if(!type) {
-      memberLogin(userid, pw)
-        .then((response) => {
-          //생성된 토큰이 유효할 때
-          if(response.data.isValid) {
-            LoginHelper.createToken(JSON.stringify(response.data));
-
-            this.handleToggle();
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          }
-        })
-        .catch((err) => {
-          this.setState({
-            err_msg : '일반 회원이 맞으신가요? 다시 확인하시고 로그인해주시기 바랍니다.'
-          });
-        });
+      this.props.tryLoggingIn(userid, pw, 'member');
     } else {
-      clubLogin(userid, pw)
-        .then((response) => {
-          //생성된 토큰이 유효할 때
-          if(response.data.isValid) {
-            LoginHelper.createToken(JSON.stringify(response.data));
-            this.handleToggle();
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          }
-        })
-        .catch((err) => {
-          this.setState({
-            err_msg : '단체 회원이 맞으신가요? 다시 확인하시고 로그인해주시기 바랍니다.'
-          });
-        });
+      this.props.tryLoggingIn(userid, pw, 'club');
     }
   }
 
@@ -175,4 +140,18 @@ class Login extends React.Component {
 Login.propTypes = {
 };
 
-export default withRouter(Login);
+const mapStateToProps = (state) => {
+  return {
+    login : state.login,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    tryLoggingIn: (userid, pw, type) => {
+      dispatch(LoginActions.tryLoggingIn(userid, pw, type));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -28,7 +28,7 @@ export function handleExpire(tokenName) {
 }
 
 export function createToken(token) {
-  localStorage.setItem(tokenName, token);
+  localStorage.setItem(tokenName,JSON.stringify(token));
 }
 
 export function removeToken() {
@@ -36,6 +36,13 @@ export function removeToken() {
 }
 
 export function getCurrentToken() {
+  if(localStorage.getItem(tokenName) === null) {
+    return false;
+  }
+  return JSON.parse(localStorage.getItem(tokenName));
+}
+
+export function getCurrentTokenData() {
   if(localStorage.getItem(tokenName) === null) {
     return false;
   }

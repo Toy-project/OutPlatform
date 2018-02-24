@@ -19,8 +19,8 @@ import { cardListEnd, tokenName } from 'helper/variables';
 
 const store = configureStore();
 
-//Check token expire date
-handleExpire(tokenName);
+// //Check token expire date
+// handleExpire(tokenName);
 
 store.dispatch(fetchCards(0, cardListEnd));
 store.dispatch(fetchCategory(0, 8));

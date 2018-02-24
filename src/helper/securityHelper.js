@@ -1,20 +1,16 @@
 import * as LoginHelper from './loginHelper';
 
-export function defenceAccessingWithoutToken() {
-  if(LoginHelper.getCurrentToken() === false) {
+export function defenceAccessingWithoutToken(loggined) {
+  if(!loggined) {
     return false;
   }
 
   return true;
 }
 
-export function defenceAccessingWithInvalidToken(club_id) {
-  if(LoginHelper.isMember(LoginHelper.getCurrentToken())) {
+export function defenceAccessingWithInvalidToken() {
+  if(LoginHelper.isMember(LoginHelper.getCurrentTokenData())) {
     return false;
-  } else {
-    if(LoginHelper.getCurrentToken().club_id !== parseInt(club_id,10)) {
-      return false;
-    }
   }
   return true;
 }

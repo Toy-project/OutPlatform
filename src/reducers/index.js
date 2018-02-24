@@ -8,6 +8,7 @@ import comment from './comment';
 import tag from './tag';
 import sns from './sns';
 import member from './member';
+import login from './login';
 
 const reducers = combineReducers({
   cards,
@@ -17,7 +18,8 @@ const reducers = combineReducers({
   comment,
   tag,
   sns,
-  member
+  member,
+  login
 });
 
 export default reducers;

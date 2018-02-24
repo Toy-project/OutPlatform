@@ -11,7 +11,7 @@ const App = () => {
       <Route path="/club/:club_id" component={Club} />
       <Route path="/myPageUser/member" component={MyPageUserMemberLayout} />
       <Route path="/myPageUser/club" component={MyPageUserClubLayout} />
-      <Route path="/myPage/:club_id" component={MyPageClub} />
+      <Route path="/myPage/" component={MyPageClub} />
 
       <Route path="/typeface" component={TypeFace} />
     </div>

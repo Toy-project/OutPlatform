@@ -22,7 +22,8 @@ class myPageUser extends React.Component {
     super(props);
 
     //Redirect if worng myPage access has been detected,
-    if(!Security.defenceAccessingWithoutToken()) {
+    //토큰이 없으면
+    if(!Security.defenceAccessingWithoutToken(this.props.login.loggined)) {
       alert('잘못왔엉');
       this.props.history.push(`/`);
       window.location.reload();
@@ -31,12 +32,12 @@ class myPageUser extends React.Component {
 
   componentDidMount() {
     if(this.props.type === 'member') {
-      const mem_id = LoginHelper.getCurrentToken().mem_id;
+      const mem_id = LoginHelper.getCurrentTokenData().mem_id;
       this.props.fetchMember(mem_id);
     }
 
     if(this.props.type === 'club') {
-      const club_id = LoginHelper.getCurrentToken().club_id;
+      const club_id = LoginHelper.getCurrentTokenData().club_id;
       this.props.fetchClub(club_id);
     }
   }
@@ -150,6 +151,7 @@ const mapStateToProps = (state) => {
   return {
     member: state.member,
     club: state.club,
+    login: state.login,
   }
 }
 
