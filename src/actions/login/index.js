@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import * as Services from 'services/auth/';
-import * as History from 'helper/history';
 
 function request() {
   return {
@@ -61,6 +60,6 @@ export function tryLoggingIn(userid, pw, type){
 export function loggingOut() {
   return function(dispatch){
     dispatch(logout());
-    window.location.reload();
+    //window.location.reload();
   }
 }

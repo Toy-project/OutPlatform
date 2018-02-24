@@ -12,7 +12,7 @@ class RegisterSelection extends React.Component {
     super(props);
 
     this.state = {
-      active: true,
+      active: false,
     }
 
     this.onCickToClubRegister = this.onCickToClubRegister.bind(this);
@@ -20,6 +20,8 @@ class RegisterSelection extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleToMemberRegister = this.handleToMemberRegister.bind(this);
+
+    this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
 
   onCickToClubRegister() {
@@ -49,10 +51,23 @@ class RegisterSelection extends React.Component {
     }, 300);
   }
 
+  componentDidMount() {
+    window.addEventListener('load', this.setPopupContainerHeight());
+  }
 
+  componentWillUnmount() {
+    window.removeEventListener('load', this.setPopupContainerHeight());
+  }
+
+  setPopupContainerHeight() {
+    this.setState({
+      active : !this.state.active,
+      popupContainerHeight : document.getElementById('popup-wrapper').offsetHeight,
+    });
+  }
 
   render() {
-    const _thisContainerMinHeight = Variables.registerSelectionPopupHeight;
+    const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
     const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
 
@@ -61,7 +76,7 @@ class RegisterSelection extends React.Component {
         transitionAppear={true}
         {...AnimationStyle.transitionStyles(_animationStartFrom)}
         active={this.state.active}>
-        <div className='register-selection-container'>
+        <div id='popup-wrapper' className='register-selection-container'>
           <div className='register-selection-inner'>
             <div className='close-btn' onClick={this.handleClose}>
               <span className='x-icon'></span>

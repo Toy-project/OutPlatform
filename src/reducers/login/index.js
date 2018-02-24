@@ -7,8 +7,6 @@ const initial = {
   loggined : LoginHelper.getCurrentToken() ? true : false,
 }
 
-console.log(LoginHelper.getCurrentToken());
-
 export default function Login(state = initial, action) {
   switch(action.type){
     case types.LOGIN_REQ :

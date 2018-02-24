@@ -41,7 +41,7 @@ export function fetchCreateCareer(data) {
     return Career
           .createCareer(data)
           .then((response) => {
-            return dispatch(Club.fetchClub(data.club_id));
+            return dispatch(Club.fetchClub(data.get('club_id')));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));
@@ -49,13 +49,13 @@ export function fetchCreateCareer(data) {
   }
 }
 
-export function fetchUpdateCareer(data) {
+export function fetchUpdateCareer(career_id, data) {
   return function(dispatch){
     dispatch(requestData());
     return Career
-          .updateCareer(data)
+          .updateCareer(career_id, data)
           .then((response) => {
-            return dispatch(Club.fetchClub(data.club_id));
+            return dispatch(Club.fetchClub(data.get('club_id')));
           })
           .catch((err) => {
             dispatch(receiveError(err.data));

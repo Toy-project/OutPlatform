@@ -17,7 +17,7 @@ class Login extends React.Component {
 
     this.state = {
       err_msg: '아직 외주대학교 회원이 아니신가요?',
-      active: true,
+      active: false,
     }
     //팝업 토글 처리
     this.registerToggle = this.registerToggle.bind(this);
@@ -30,6 +30,8 @@ class Login extends React.Component {
 
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+
+    this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
 
   componentDidMount() {
@@ -96,8 +98,23 @@ class Login extends React.Component {
     }, 300);
   }
 
+  componentDidMount() {
+    window.addEventListener('load', this.setPopupContainerHeight());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('load', this.setPopupContainerHeight());
+  }
+
+  setPopupContainerHeight() {
+    this.setState({
+      active : !this.state.active,
+      popupContainerHeight : document.getElementById('popup-wrapper').offsetHeight,
+    });
+  }
+
   render() {
-    const _thisContainerMinHeight = Variables.loginPopupHeight;
+    const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
     const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
     return(
@@ -107,7 +124,7 @@ class Login extends React.Component {
           transitionAppear={true}
           {...AnimationStyle.transitionStyles(_animationStartFrom)}
           active={this.state.active}>
-          <div className='login-container'>
+          <div id='popup-wrapper' className='login-container'>
             <div className='login-inner'>
               <div className='close-btn' onClick={this.handleClose}>
                 <span className='x-icon'></span>

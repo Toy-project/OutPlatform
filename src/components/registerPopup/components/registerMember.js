@@ -65,7 +65,7 @@ class RegisterMember extends React.Component {
         loading: false,
       },
 
-      "active" : true,
+      "active" : false,
     };
 
     // handle Input Validation
@@ -84,6 +84,8 @@ class RegisterMember extends React.Component {
 
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+
+    this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
 
   handleChange(e) {
@@ -146,6 +148,21 @@ class RegisterMember extends React.Component {
         err_msg: err_msg,
         err : err,
       },
+    });
+  }
+
+  componentDidMount() {
+    window.addEventListener('load', this.setPopupContainerHeight());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('load', this.setPopupContainerHeight());
+  }
+
+  setPopupContainerHeight() {
+    this.setState({
+      active : !this.state.active,
+      popupContainerHeight : document.getElementById('popup-wrapper').offsetHeight,
     });
   }
 
@@ -523,6 +540,10 @@ class RegisterMember extends React.Component {
   }
 
   render() {
+    const _thisContainerMinHeight = this.state.popupContainerHeight;
+    const _thisInnerWindowHeight = window.innerHeight;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+
     const errorClassName = (identifier) => {
       if(identifier.err == null) {
         return '';
@@ -544,16 +565,12 @@ class RegisterMember extends React.Component {
       }
     }
 
-    const _thisContainerMinHeight = Variables.registerMemberPopupHeight;
-    const _thisInnerWindowHeight = window.innerHeight;
-    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
-
     return (
       <CSSTransition
         transitionAppear={true}
         {...AnimationStyle.transitionStyles(_animationStartFrom)}
         active={this.state.active}>
-        <div className='register-member-container'>
+        <div id='popup-wrapper' className='register-member-container'>
           <div className='register-member-inner'>
             <div className='close-btn' onClick={this.handleClose}>
               <span className='x-icon'></span>

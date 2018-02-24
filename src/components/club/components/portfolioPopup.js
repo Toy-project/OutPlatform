@@ -17,7 +17,8 @@ class PortfolioPopup extends React.Component{
     this.state = {
       preview_photo : '',
       career_photo: '',
-      active: true,
+      popupContainerHeight : 0,
+      active: false,
     }
 
     //닫기 함수
@@ -32,6 +33,8 @@ class PortfolioPopup extends React.Component{
 
     //handleAnimationToggle
     this.handleToggle = this.handleToggle.bind(this);
+
+    this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
 
   handleToggle() {
@@ -86,41 +89,80 @@ class PortfolioPopup extends React.Component{
     let isValid = this.checkEmptyField();
 
     if(isValid) {
-      const data = {
-        career_name: this.refs.career_name.value,
-        career_ex: this.refs.career_ex.value,
-        career_photo: this.state.career_photo ? this.state.career_photo : null,
-        career_due_start: `${this.refs.from_year.value}-${this.refs.from_month.value}-${this.refs.from_day.value}`,
-        career_due_end: `${this.refs.to_year.value}-${this.refs.to_month.value}-${this.refs.to_day.value}`,
-        career_people: 0,
-        career_co: '기본값',
-        club_id: this.props.data.club_id,
+      const form = new FormData();
+
+      form.append('career_name', this.refs.career_name.value);
+      form.append('career_ex', this.refs.career_ex.value);
+      form.append('career_due_start', `${this.refs.from_year.value}-${this.refs.from_month.value}-${this.refs.from_day.value}`);
+      form.append('career_due_end', `${this.refs.to_year.value}-${this.refs.to_month.value}-${this.refs.to_day.value}`);
+      form.append('career_people', 0);
+      form.append('career_co', '기본값');
+      form.append('club_id', this.props.data.club_id);
+
+      //추가한 이미지가 있으면 추가.
+      if(this.state.career_photo) {
+        form.append('career_photo', this.state.career_photo);
       }
 
-      console.log(data);
-
       if(this.props.type === 'create') {
-        this.props.fetchCreateCareer(data);
+        this.props.fetchCreateCareer(form);
         this.closePopup();
       }
 
       if(this.props.type === 'edit') {
-        const edit = {
-          ...data,
-          career_id: this.props.data.career_id,
-        }
-
-        this.props.fetchUpdateCareer(edit);
+        this.props.fetchUpdateCareer(this.props.data.career_id, form);
         this.closePopup();
       }
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('load', this.setPopupContainerHeight());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('load', this.setPopupContainerHeight());
+  }
+
+  setPopupContainerHeight() {
+    this.setState({
+      active : !this.state.active,
+      popupContainerHeight : document.getElementById('popup-wrapper').offsetHeight,
+    });
+  }
+
   render() {
     //Animation Styles
-    const _thisContainerMinHeight = Variables.portfolioPopupHeight;
+    const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
     const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+
+    //2000년을 기준
+    const yearCriteria = 2000;
+    const setToday = new Date();
+    const setMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    const setDay = [
+      '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
+      '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
+      '25', '26', '27', '28', '29', '30', '31'
+    ];
+
+    let from = [0, 0, 0];
+    let to = [0, 0, 0];
+
+    if(this.props.type === 'edit') {
+      from = dateFormat(this.props.data.career_due_start, 'yyyy-mm-dd').split('-');
+      to = dateFormat(this.props.data.career_due_end, 'yyyy-mm-dd').split('-');
+    }
+
+    let setYear = [];
+
+    let header;
+    let footer;
+
+    for(let i = yearCriteria; i <= setToday.getFullYear(); i++) {
+      setYear.push(i);
+    }
 
     //Layout
     const header_submit_btn = () => {
@@ -157,7 +199,7 @@ class PortfolioPopup extends React.Component{
     const footer_name = () => {
       if(this.props.myPage) {
         return (
-          <input type='text' ref='career_name' id='career_name' placeholder='20자 이내' onChange={this.handleChange} defaultValue={this.state.career_name} />
+          <input type='text' ref='career_name' id='career_name' placeholder='20자 이내' onChange={this.handleChange} defaultValue={this.props.data.career_name} />
         );
       } else {
         return this.props.data.career_name;
@@ -221,7 +263,7 @@ class PortfolioPopup extends React.Component{
     const footer_ex = () => {
       if(this.props.myPage) {
         return (
-          <textarea ref='career_ex' id='career_ex' defaultValue={this.state.career_ex} onChange={this.handleChange}></textarea>
+          <textarea ref='career_ex' id='career_ex' defaultValue={this.props.data.career_ex} onChange={this.handleChange}></textarea>
         );
       } else {
         return this.props.data.career_ex.split('\n').map((line, key) => {
@@ -230,38 +272,11 @@ class PortfolioPopup extends React.Component{
       }
     }
 
-    //2000년을 기준
-    const yearCriteria = 2000;
-    const setToday = new Date();
-    const setMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    const setDay = [
-      '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
-      '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
-      '25', '26', '27', '28', '29', '30', '31'
-    ];
-
-    let from = [0, 0, 0];
-    let to = [0, 0, 0];
-
-    if(this.props.type === 'edit') {
-      from = dateFormat(this.props.career_due_start, 'yyyy-mm-dd').split('-');
-      to = dateFormat(this.props.career_due_end, 'yyyy-mm-dd').split('-');
-    }
-
-    let setYear = [];
-
-    let header;
-    let footer;
-
-    for(let i = yearCriteria; i <= setToday.getFullYear(); i++) {
-      setYear.push(i);
-    }
-
-
     header = (
       <div>
         <div>
-          <img src={this.state.preview_photo} alt="" className='preview' />
+          {this.state.preview_photo ? <img src={this.state.preview_photo} alt="" className='preview' /> :
+                                      <img src={`/${this.props.data.career_photo}`} alt="" className='preview' /> }
         </div>
         <div className='close-btn' onClick={this.closePopup}>
           <span className='x-icon'></span>
@@ -295,7 +310,7 @@ class PortfolioPopup extends React.Component{
             transitionAppear={true}
             {...AnimationStyle.transitionStyles(_animationStartFrom)}
             active={this.state.active}>
-            <div className='portfolio-popup-wrapper'>
+            <div id='popup-wrapper' className='portfolio-popup-wrapper'>
               <div className='portfolio-popup-inner'>
                 <div className='portfolio-popup-header'>
                   {header}
@@ -324,8 +339,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchCreateCareer: (data) => {
       dispatch(fetchCreateCareer(data));
     },
-    fetchUpdateCareer: (data) => {
-      dispatch(fetchUpdateCareer(data));
+    fetchUpdateCareer: (career_id, data) => {
+      dispatch(fetchUpdateCareer( career_id, data));
     }
   }
 }

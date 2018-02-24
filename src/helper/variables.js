@@ -9,9 +9,3 @@ export const commentListEnd = 3;
 
 //토큰 이름
 export const tokenName = 'user';
-
-//Animation Container height
-export const portfolioPopupHeight = 770;
-export const loginPopupHeight = 346;
-export const registerMemberPopupHeight = 640;
-export const registerSelectionPopupHeight = 269;

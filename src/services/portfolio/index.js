@@ -23,14 +23,11 @@ export function createCareer(data){
   })
 }
 
-export function updateCareer(data) {
+export function updateCareer(career_id, data) {
   return axios({
     method: 'put',
-    url: `${urlPortfolio}/${data.career_id}`,
+    url: `${urlPortfolio}/${career_id}`,
     responseType: 'json',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     data: data,
   })
 }

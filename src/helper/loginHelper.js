@@ -12,16 +12,20 @@ function checkTokenIsAvailable(token) {
   return true;
 }
 
-export function handleExpire(tokenName) {
+export function handleExpire() {
   //해당 이름의 토큰이 있는지 확인
-  const token = localStorage.getItem(tokenName);
-  if(!token) {
+  const tokenData = getCurrentTokenData();
+  const current = Date.now();
+
+  if(!tokenData) {
     return false;
   }
 
   //토큰 유효성 검사
-  if(!checkTokenIsAvailable(token)) {
-    localStorage.removeItem(tokenName);
+  if(tokenData.exp < parseInt((current.valueOf() / 1000), 10)) {
+    console.log('expired');
+    removeToken();
+    return false;
   }
 
   return true;
@@ -39,6 +43,7 @@ export function getCurrentToken() {
   if(localStorage.getItem(tokenName) === null) {
     return false;
   }
+
   return JSON.parse(localStorage.getItem(tokenName));
 }
 
