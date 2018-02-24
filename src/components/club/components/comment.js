@@ -16,6 +16,7 @@ import * as Services from 'actions/comment';
 class Comment extends React.Component {
   constructor(props){
     super(props);
+
     this.state = {
       activePage: 1,
     }

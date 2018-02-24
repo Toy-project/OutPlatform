@@ -8,7 +8,6 @@ import * as PhoneAuth from 'services/phoneAuth';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
-import * as Variables from 'helper/variables';
 
 import * as AnimationStyle from 'helper/animationStyle';
 

@@ -3,8 +3,6 @@ import { CSSTransition } from "react-css-transition";
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 
-import * as Variables from 'helper/variables';
-
 import * as AnimationStyle from 'helper/animationStyle';
 
 class RegisterSelection extends React.Component {

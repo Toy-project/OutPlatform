@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const urlComment = `/comment`;
 
-export const getCommentById = (club_id, start, end) => {
+export function getCommentById(club_id, start, end) {
   return axios({
     method: 'get',
     timeout: 20000,
@@ -11,7 +11,7 @@ export const getCommentById = (club_id, start, end) => {
   });
 }
 
-export const createComment = (data) => {
+export function createComment(data) {
   return axios({
     method: 'post',
     url: `${urlComment}`,
@@ -23,7 +23,7 @@ export const createComment = (data) => {
   });
 }
 
-export const updateComment = (data) => {
+export function updateComment(data) {
   return axios({
     method: 'put',
     url: `${urlComment}/${data.comment_id}`,
@@ -35,7 +35,7 @@ export const updateComment = (data) => {
   });
 }
 
-export const deleteComment = (data) => {
+export function deleteComment(data) {
   return axios({
     method: 'delete',
     url: `${urlComment}/${data.comment_id}`,

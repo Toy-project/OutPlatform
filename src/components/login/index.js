@@ -6,7 +6,6 @@ import './scss/index.scss';
 
 import { isEmpty } from 'helper/common';
 import * as AnimationStyle from 'helper/animationStyle';
-import * as Variables from 'helper/variables';
 
 import * as LoginActions from 'actions/login';
 
@@ -37,10 +36,12 @@ class Login extends React.Component {
   componentDidMount() {
     //Click outside of inner div
     window.addEventListener('click', this.closePopup);
+    window.addEventListener('load', this.setPopupContainerHeight());
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.closePopup);
+    window.removeEventListener('load', this.setPopupContainerHeight());
   }
 
   handleEmptyValue() {
@@ -96,14 +97,6 @@ class Login extends React.Component {
       this.props.close();
       this.props.register();
     }, 300);
-  }
-
-  componentDidMount() {
-    window.addEventListener('load', this.setPopupContainerHeight());
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('load', this.setPopupContainerHeight());
   }
 
   setPopupContainerHeight() {

@@ -6,7 +6,6 @@ import { CSSTransition } from "react-css-transition";
 import { fetchCreateCareer, fetchUpdateCareer } from 'actions/portfolio';
 
 import { isEmpty } from 'helper/common';
-import * as Variables from 'helper/variables';
 
 import * as AnimationStyle from 'helper/animationStyle';
 

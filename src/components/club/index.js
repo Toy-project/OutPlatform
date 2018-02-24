@@ -24,12 +24,9 @@ class Club extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      myPage: this.props.myPage,
-    }
 
     //Redirect if worng myPage access has been detected,
-    if(this.state.myPage) {
+    if(this.props.myPage) {
       //토큰이 없으면
       if(!Security.defenceAccessingWithoutToken(this.props.login.loggined) ||
          !Security.defenceAccessingWithInvalidToken()) {
@@ -44,7 +41,6 @@ class Club extends React.Component {
     const club_id = LoginHelper.getCurrentTokenData().club_id;
 
     //fetch Data
-    console.log(club_id);
     this.props.fetchClub(club_id);
   }
 
@@ -77,7 +73,6 @@ class Club extends React.Component {
       }
 
       data = {
-        'club_id': club.club_id,
         'club_photo' : club.club_photo,
         'club_profile_photo': club.club_profile_photo,
         'club_college' : club.club_college,
@@ -95,22 +90,22 @@ class Club extends React.Component {
     components = (
       <div>
         <ImageNavigation
-          myPage={this.state.myPage}
+          myPage={this.props.myPage}
+          club_id={this.props.club_id}
 
-          club_id={data.club_id}
           club_photo={data.club_photo ? data.club_photo.split(',') : []}
         />
         <Snippet
-          myPage={this.state.myPage}
+          myPage={this.props.myPage}
+          club_id={this.props.club_id}
 
-          club_id={data.club_id}
           club_name={data.club_name}
           club_copyright={data.club_copyright}
         />
         <Profile
-          myPage={this.state.myPage}
+          myPage={this.props.myPage}
+          club_id={this.props.club_id}
 
-          club_id={data.club_id}
           club_college={data.club_college}
           cate_id={data.cate_id}
           tag_id={data.tag_id}
@@ -119,22 +114,21 @@ class Club extends React.Component {
           club_ex={data.club_ex ? data.club_ex : ''}
           //SNS
           sns={data.sns}
-         />
-         <PortfolioNavigation
-          club_id={data.club_id}
-          myPage={this.state.myPage}
-          portfolio={data.career}
-         />
-         {/* comment */}
-         {this.state.myPage ? '' : <Comment
-           club_id={data.club_id}
-         />}
+        />
+       <PortfolioNavigation
+         myPage={this.props.myPage}
+        club_id={this.props.club_id}
 
-         {/* comment */}
-         {this.state.myPage ? '' : <Quotation />}
+        portfolio={data.career}
+       />
+       {/* comment */}
+       {this.props.myPage ? '' : <Comment club_id={this.props.club_id} />}
 
-         {/* 비슷한 단체 데이터 */}
-         {this.state.myPage ? '' : <SmiliarClub />}
+       {/* comment */}
+       {this.props.myPage ? '' : <Quotation />}
+
+       {/* 비슷한 단체 데이터 */}
+       {this.props.myPage ? '' : <SmiliarClub />}
       </div>
     );
     return (

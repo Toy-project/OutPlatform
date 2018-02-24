@@ -48,30 +48,30 @@ export function fetchCreateComment(data) {
   }
 }
 
-export function fetchUpdateComment(data, start) {
-  return function(dispatch){
-    dispatch(requestData());
-    return Services
-          .updateComment(data)
-          .then((response) => {
-            dispatch(fetchComment(data.club_id, start, commentListEnd));
-          })
-          .catch((err) => {
-            dispatch(receiveError(err.data));
-          });
-  }
-}
-
-export function fetchDeleteComment(club_id, comment_id, start) {
-  return function(dispatch){
-    dispatch(requestData());
-    return Services
-          .deleteComment(comment_id)
-          .then((response) => {
-            dispatch(fetchComment(club_id, start, commentListEnd));
-          })
-          .catch((err) => {
-            dispatch(receiveError(err.data));
-          });
-  }
-}
+// export function fetchUpdateComment(data, start) {
+//   return function(dispatch){
+//     dispatch(requestData());
+//     return Services
+//           .updateComment(data)
+//           .then((response) => {
+//             dispatch(fetchComment(data.club_id, start, commentListEnd));
+//           })
+//           .catch((err) => {
+//             dispatch(receiveError(err.data));
+//           });
+//   }
+// }
+//
+// export function fetchDeleteComment(club_id, comment_id, start) {
+//   return function(dispatch){
+//     dispatch(requestData());
+//     return Services
+//           .deleteComment(comment_id)
+//           .then((response) => {
+//             dispatch(fetchComment(club_id, start, commentListEnd));
+//           })
+//           .catch((err) => {
+//             dispatch(receiveError(err.data));
+//           });
+//   }
+// }

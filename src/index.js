@@ -14,7 +14,7 @@ import { fetchCards } from 'actions/card';
 import { fetchCategory } from 'actions/category';
 import { fetchTag } from 'actions/tag';
 
-import { handleExpire } from 'helper/loginHelper';
+// import { handleExpire } from 'helper/loginHelper';
 import { cardListEnd } from 'helper/variables';
 
 const store = configureStore();

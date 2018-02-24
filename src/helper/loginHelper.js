@@ -1,16 +1,16 @@
 import jwtDecode from 'jwt-decode';
 import { tokenName } from './variables';
 
-function checkTokenIsAvailable(token) {
-  const decoded = jwtDecode(token);
-  const current = Date.now();
-
-  if(decoded.exp < (current.valueOf() / 1000)) {
-    return false;
-  }
-
-  return true;
-}
+// function checkTokenIsAvailable(token) {
+//   const decoded = jwtDecode(token);
+//   const current = Date.now();
+//
+//   if(decoded.exp < (current.valueOf() / 1000)) {
+//     return false;
+//   }
+//
+//   return true;
+// }
 
 export function handleExpire() {
   //해당 이름의 토큰이 있는지 확인
