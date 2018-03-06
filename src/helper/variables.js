@@ -9,3 +9,6 @@ export const commentListEnd = 3;
 
 //토큰 이름
 export const tokenName = 'user';
+
+//File Upload size
+export const FileSize = 2 * 1024 * 1024;

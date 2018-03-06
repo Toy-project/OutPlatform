@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
 import { CSSTransition } from "react-css-transition";
 import { fetchCreateCareer, fetchUpdateCareer } from 'actions/portfolio';
 
+import * as Variables from 'helper/variables';
 import { isEmpty } from 'helper/common';
 
 import * as AnimationStyle from 'helper/animationStyle';
+import { InnerLoading } from 'components/';
+import MessagePopup from 'components/messagePopup';
 
 class PortfolioPopup extends React.Component{
   constructor(props) {
@@ -15,7 +20,14 @@ class PortfolioPopup extends React.Component{
 
     this.state = {
       preview_photo : '',
+      preview_photo_flag : false,
+
       career_photo: '',
+
+      isUploadButton_slide: false,
+      imageOverflowsLimitToggle : false,
+
+      isLoading: false,
       popupContainerHeight : 0,
       active: false,
     }
@@ -29,10 +41,13 @@ class PortfolioPopup extends React.Component{
 
     //Upload photo
     this.onDrop = this.onDrop.bind(this);
+    this.crop = this.crop.bind(this);
     this.addVideoLink = this.addVideoLink.bind(this);
 
     //handleAnimationToggle
     this.handleToggle = this.handleToggle.bind(this);
+
+    this.isImageOverflowsLimitToggle = this.isImageOverflowsLimitToggle.bind(this);
 
     this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
@@ -56,6 +71,31 @@ class PortfolioPopup extends React.Component{
     }, 300);
   }
 
+  crop() {
+    //Loading
+    this.setState({
+      isLoading: !this.state.isLoading,
+    });
+
+    this.refs.cropper.getCroppedCanvas().toBlob((blob) => {
+      // const dataURI = this.refs.cropper.getCroppedCanvas().toDataURL();
+      if(blob.size > Variables.FileSize) {
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
+        this.isImageOverflowsLimitToggle();
+      } else {
+        this.setState({
+          preview_photo : this.refs.cropper.getCroppedCanvas().toDataURL(),
+          career_photo : blob,
+          preview_photo_flag : !this.state.preview_photo_flag,
+          isLoading: !this.state.isLoading,
+          isUploadButton_slide: false,
+        });
+      }
+    });
+  }
+
   onDrop(e) {
     const img = e.target.files[0];
     const reader = new FileReader();
@@ -64,7 +104,8 @@ class PortfolioPopup extends React.Component{
       // 미리보기 이미지 저장 & 토글 변경
       this.setState({
         preview_photo : reader.result,
-        career_photo : img,
+        preview_photo_flag: !this.state.preview_photo_flag,
+        isUploadButton_slide: !this.state.isUploadButton_slide,
       });
     }, false);
 
@@ -82,6 +123,7 @@ class PortfolioPopup extends React.Component{
     else if(isEmpty(this.refs.to_month.value)) this.refs.to_month.focus();
     else if(isEmpty(this.refs.to_day.value)) this.refs.to_day.focus();
     else if(isEmpty(this.refs.career_ex.value)) this.refs.career_ex.focus();
+    else if(this.state.preview_photo_flag) return false;
     else {
       return true;
     }
@@ -135,11 +177,17 @@ class PortfolioPopup extends React.Component{
     });
   }
 
+  isImageOverflowsLimitToggle() {
+    this.setState({
+      imageOverflowsLimitToggle: !this.state.imageOverflowsLimitToggle,
+    });
+  }
+
   render() {
     //Animation Styles
     const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
-    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2 - 20;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
 
     //2000년을 기준
     const yearCriteria = 2000;
@@ -168,6 +216,12 @@ class PortfolioPopup extends React.Component{
       setYear.push(i);
     }
 
+    const loading = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={this.state.isLoading} />
+      </div>
+    );
+
     //Layout
     const header_submit_btn = () => {
       if(this.props.myPage) {
@@ -181,22 +235,33 @@ class PortfolioPopup extends React.Component{
 
     const header_contents = () => {
       if(this.props.myPage) {
-        return (
-          <div>
-            <div className='add-image-icon'>
-              <label htmlFor="career_photo" className='image-icon'></label>
-              <input type='file' ref='career_photo' id='career_photo' onChange={this.onDrop} accept="image/*"/>
-              <h5>사진 업로드</h5>
+        if(this.state.isUploadButton_slide) {
+          return (
+            <div>
+              <div className='add-image-icon'>
+                <label htmlFor="career_photo" className='default-icon' onClick={this.crop}>잘라내기</label>
+              </div>
+              {/* <div className='add-video-icon'>
+                <span className='video-icon' onClick={this.addVideoLink}></span>
+                <h5>영상 url</h5>
+              </div> */}
             </div>
-            <div className='add-video-icon'>
-              <span className='video-icon' onClick={this.addVideoLink}></span>
-              <h5>영상 url</h5>
+          );
+        } else {
+          return (
+            <div>
+              <div className='add-image-icon'>
+                <label htmlFor="career_photo" className='image-icon'></label>
+                <input type='file' ref='career_photo' id='career_photo' onChange={this.onDrop} accept="image/*"/>
+                <h5>사진 업로드</h5>
+              </div>
+              {/* <div className='add-video-icon'>
+                <span className='video-icon' onClick={this.addVideoLink}></span>
+                <h5>영상 url</h5>
+              </div> */}
             </div>
-          </div>
-        );
-      } else {
-        // toDoList
-        return '';
+          );
+        }
       }
     }
 
@@ -276,18 +341,43 @@ class PortfolioPopup extends React.Component{
       }
     }
 
+    const cropper = (
+      <Cropper
+      ref='cropper'
+      src={this.state.preview_photo}
+      style={{height: 440, width: '100%'}}
+      // Cropper.js options
+      aspectRatio={4 / 3}
+      guides={false} />
+    );
+
+    const imageOverflowsLimitToggle = this.state.imageOverflowsLimitToggle ? <MessagePopup msg={'이미지 용량 2MB를 넘을 수 없습니다.'} close={this.isImageOverflowsLimitToggle} /> : '';
+
+    const preview_image = () => {
+      if(this.props.myPage){
+        return (
+          <div>
+            {this.state.preview_photo_flag ? cropper : <img src={this.state.preview_photo} className='preview' alt='' />}
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <img src={`/${this.props.data.career_photo}`} className='preview' alt='' />
+          </div>
+        );
+      }
+    }
+
     header = (
       <div>
-        <div>
-          {this.state.preview_photo ? <img src={this.state.preview_photo} alt="" className='preview' /> :
-                                      <img src={`/${this.props.data.career_photo}`} alt="" className='preview' /> }
-        </div>
+        {preview_image()}
         <div className='close-btn' onClick={this.closePopup}>
           <span className='x-icon'></span>
         </div>
         {header_submit_btn()}
         <div className='icons'>
-          {header_contents()}
+          {this.state.isLoading ? '' : header_contents()}
         </div>
       </div>
     );
@@ -309,22 +399,26 @@ class PortfolioPopup extends React.Component{
       </div>
     );
     return (
-        <div className='popup_container'>
-          <CSSTransition
-            transitionAppear={true}
-            {...AnimationStyle.transitionStyles(_animationStartFrom)}
-            active={this.state.active}>
-            <div id='popup-wrapper' className='portfolio-popup-wrapper'>
-              <div className='portfolio-popup-inner'>
-                <div className='portfolio-popup-header'>
-                  {header}
-                </div>
-                <div className='portfolio-popup-footer'>
-                  {footer}
+        <div>
+          <div className='popup_container'>
+            <CSSTransition
+              transitionAppear={true}
+              {...AnimationStyle.transitionStyles(_animationStartFrom)}
+              active={this.state.active}>
+              <div id='popup-wrapper' className='portfolio-popup-wrapper'>
+                <div className='portfolio-popup-inner'>
+                  <div className='portfolio-popup-header'>
+                    {header}
+                    {this.state.isLoading ? loading : ''}
+                  </div>
+                  <div className='portfolio-popup-footer'>
+                    {footer}
+                  </div>
                 </div>
               </div>
-            </div>
-          </CSSTransition>
+            </CSSTransition>
+          </div>
+          {imageOverflowsLimitToggle}
         </div>
     );
   }

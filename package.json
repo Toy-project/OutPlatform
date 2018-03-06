@@ -50,6 +50,7 @@
     "react": "^16.2.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-update": "^15.6.2",
+    "react-cropper": "^1.0.1",
     "react-css-transition": "^0.7.4",
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.2.0",
@@ -75,9 +76,10 @@
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
   },
-  "babel" : {
-    "presets": [ "react", "es2015", "stage-0"],
-    "plugins": ["emotion"]
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   },
   "jest": {
     "collectCoverageFrom": [
@@ -110,11 +112,6 @@
       "web.jsx",
       "jsx",
       "node"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   },
   "eslintConfig": {

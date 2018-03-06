@@ -22,7 +22,12 @@
 
       .preview {
         width: 100%;
-        height: 100%;
+        height: 440px;
+      }
+
+      .fixed {
+        position: absolute;
+        top: 33%;
       }
 
       .ok-btn,
@@ -51,13 +56,20 @@
           display: inline-block;
           margin: 0 30px;
           .image-icon,
-          .video-icon {
+          .video-icon,
+          .default-icon {
             display: inline-block;
             width: 100px;
             height: 100px;
             border-radius: 100px;
             background-color: #b3b3b3;
             cursor: pointer;
+          }
+
+          .default-icon {
+            color: $white;
+            font-size: 14px;
+            line-height: 100px;
           }
 
           .image-icon {

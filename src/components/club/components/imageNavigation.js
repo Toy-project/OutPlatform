@@ -2,9 +2,16 @@ import React from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
+// import * as FileLoaderHelper from 'helper/fileLoaderHelper';
+import * as Variables from 'helper/variables';
 import { updateClubPhoto } from 'services/club/';
 import { fetchClub } from 'actions/club/';
+
+import { InnerLoading } from 'components/';
+import MessagePopup from 'components/messagePopup';
 
 class ImageNavigation extends React.Component {
 
@@ -13,15 +20,19 @@ class ImageNavigation extends React.Component {
 
     this.state = {
       preview_photo : '',
-      club_photo: '',
       isUploadButton_slide: false,
+      imageOverflowsLimitToggle : false,
+      isLoading: false,
     }
 
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+
     this.onDrop = this.onDrop.bind(this);
     this.onUpload = this.onUpload.bind(this);
-    this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+
+    this.isImageOverflowsLimitToggle = this.isImageOverflowsLimitToggle.bind(this);
+
   }
 
   //단체 좌우 Arrows
@@ -36,12 +47,10 @@ class ImageNavigation extends React.Component {
   onDrop(e) {
     const img = e.target.files[0];
     const reader = new FileReader();
-
     reader.addEventListener("load", () => {
       // 미리보기 이미지 저장 & 토글 변경
       this.setState({
         preview_photo : reader.result,
-        club_photo : img,
         isUploadButton_slide: true,
       });
     }, false);
@@ -57,33 +66,42 @@ class ImageNavigation extends React.Component {
       //Append photo
       const form = new FormData();
       const num = this.props.club_photo.length + 1; //다음 이미지 순서
-      form.append('club_photo', this.state.club_photo);
 
-      updateClubPhoto(this.props.club_id, form, num)
-        .then((response) => {
-          //Reset 미리보기 사진 정보 / 업로드 사진 정보
+      //Loading
+      this.setState({
+        isLoading: !this.state.isLoading,
+      });
+
+      this.refs.cropper.getCroppedCanvas().toBlob((blob) => {
+        if(blob.size > Variables.FileSize) {
           this.setState({
-            preview_photo : '',
-            club_photo : '',
-            isUploadButton_slide: false,
+            isLoading: !this.state.isLoading,
           });
+          this.isImageOverflowsLimitToggle();
+        } else {
+          form.append('club_photo', blob);
+          updateClubPhoto(this.props.club_id, form, num)
+            .then((response) => {
+              //Reset 미리보기 사진 정보 / 업로드 사진 정보
+              this.setState({
+                preview_photo : '',
+                isUploadButton_slide: false,
+              });
 
-          this.props.fetchClub(this.props.club_id);
-        })
-        .then((err) => {
-          //To do
-        });
+              this.props.fetchClub(this.props.club_id);
+            })
+            .then((err) => {
+              //To do
+            });
+        }
+      });
     }
   }
 
-  handleDeletePhoto() {
-    // const currentPhotoIndex = this.slider.innerSlider.state.currentSlide;
-    // let temp = this.props.club_photo;
-    //Remove currentIndex from array
-    // temp.splice(currentPhotoIndex, 1);
-    //to DO
-
-    alert('현재 업데이트 중입니다');
+  isImageOverflowsLimitToggle() {
+    this.setState({
+      imageOverflowsLimitToggle: !this.state.imageOverflowsLimitToggle,
+    });
   }
 
   render() {
@@ -132,29 +150,46 @@ class ImageNavigation extends React.Component {
       arrows: false,
     };
 
+    const cropper = (
+      <Cropper
+      ref='cropper'
+      src={this.state.preview_photo}
+      style={{height: '100%', width: '100%'}}
+      // Cropper.js options
+      aspectRatio={4 / 3}
+      guides={false} />
+    );
+
     const isSlider = (
       <Slider
       {...settings}
       autoplay={this.props.myPage ? false : true}
       ref={ref => this.slider = ref}
       >
-        {this.state.preview_photo ? <img src={this.state.preview_photo  } alt="" className='default-image' /> : ''}
         {showImages()}
       </Slider>
     );
 
+    const loading = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={this.state.isLoading} />
+      </div>
+    );
+
+    const imageOverflowsLimitToggle = this.state.imageOverflowsLimitToggle ? <MessagePopup msg={'이미지 용량 2MB를 넘을 수 없습니다.'} close={this.isImageOverflowsLimitToggle} /> : '';
+
     let isFloatingCircle;
+    let addImageCircle;
 
     //단체 페이지 수정일 때,
     if(this.props.myPage){
+      addImageCircle = (
+        <div className='add-image'>
+          {imageAddToggleForSlide()}
+        </div>
+      );
       isFloatingCircle = (
         <div>
-          <div className='close-btn' onClick={this.handleDeletePhoto}>
-            <span className='x-icon'></span>
-          </div>
-          <div className='add-image'>
-            {imageAddToggleForSlide()}
-          </div>
           <div className='add-profile'>
             <span className='profile'>회원관리에서 <br /> 등록해주세요.</span>
           </div>
@@ -164,19 +199,24 @@ class ImageNavigation extends React.Component {
       //Floating Button
       isFloatingCircle = (
         <div className='add-profile'>
-          <span className='profile'></span>
+          <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/>
         </div>
       );
+      addImageCircle = '';
     }
 
     return (
       <div className='imageNavigation-container'>
         <div className='container'>
           <div className='imageNavigation-inner'>
-            {isSlider}
-            {isArrows}
-            {isFloatingCircle}
+            {this.state.preview_photo ? cropper : ''}
+            {this.state.preview_photo ? '' : isSlider}
+            {this.state.preview_photo ? '' : isArrows}
+            {this.state.preview_photo ? '' : isFloatingCircle}
+            {this.state.isLoading ? '' : addImageCircle}
           </div>
+          {this.state.isLoading ? loading : ''}
+          {imageOverflowsLimitToggle}
         </div>
       </div>
     );

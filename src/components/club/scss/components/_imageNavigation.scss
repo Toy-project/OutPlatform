@@ -86,7 +86,8 @@
       }
 
       .upload-btn-slide,
-      .profile {
+      .profile,
+      .profile-img {
         display: block;
         border-radius: 100px;
         border: 0;
@@ -101,6 +102,13 @@
         font-size: 14px;
         color: $white;
         padding-top: 30px;
+      }
+
+      .profile-img {
+        width: 104px;
+        height: 104px;
+        font-size: 14px;
+        color: $white;
       }
 
       .upload-btn-slide {

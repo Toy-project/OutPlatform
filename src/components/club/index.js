@@ -112,6 +112,7 @@ class Club extends React.Component {
           myPage={this.props.myPage}
           club_id={this.props.club_id | data.club_id}
 
+          club_profile_photo={data.club_profile_photo}
           club_photo={data.club_photo ? data.club_photo.split(',') : []}
         />
         <Snippet
