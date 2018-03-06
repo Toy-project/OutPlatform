@@ -1,8 +1,24 @@
+export function isLoading(props) {
+  if(props.isLoading) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isError(props) {
+  if(props.error) {
+    return true;
+  }
+
+  return false;
+}
+
 export function checkStatusComponent(props){
   if(props.isLoading){
-    console.log('isLoading');
+    return false;
   } else if(props.error) {
-    console.log('error');
+    return false;
   } else {
     return true;
   }

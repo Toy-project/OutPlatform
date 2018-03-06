@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './scss/index.scss';
 import RegisterSelection from './components/registerSelection';
-import TypeOfClubSelection from './components/typeOfClubSelection';
+import RegisterFinish from './components/registerFinish';
 import RegisterMember from './components/registerMember';
 
 
@@ -14,42 +14,43 @@ class RegisterPopup extends React.Component {
 
     this.state = {
       registerSelectionToggle: true,
-      typeOfClubSelectionToggle: false,
-      registerMember: false,
+      registerMemberToggle: false,
     }
 
     this.registerToMemberToggle = this.registerToMemberToggle.bind(this);
-    this.registerToClubToggle = this.registerToClubToggle.bind(this);
+    this.registerFinishToggle = this.registerFinishToggle.bind(this);
   }
 
-  registerToClubToggle() {
+  registerFinishToggle() {
     this.setState({
-      registerSelectionToggle: !this.state.registerSelectionToggle,
-      typeOfClubSelectionToggle: !this.state.typeOfClubSelectionToggle,
+      registerMemberToggle: !this.state.registerMemberToggle,
     });
   }
 
   registerToMemberToggle() {
     this.setState({
       registerSelectionToggle: !this.state.registerSelectionToggle,
-      registerMember: !this.state.registerMember,
+      registerMemberToggle: !this.state.registerMemberToggle,
     });
   }
 
   render() {
     let showRegisterStep;
+    let registerFinish;
 
     if(this.state.registerSelectionToggle){
       showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerToMemberToggle} close={this.props.close} />;
-    } else if(this.state.typeOfClubSelectionToggle) {
-      showRegisterStep = <TypeOfClubSelection toggleToBack={this.registerToClubToggle} close={this.props.close} />;
+    } else if(this.state.registerMemberToggle) {
+      showRegisterStep = <RegisterMember toggleToRegisterFinish={this.registerFinishToggle} close={this.props.close} />;
     } else {
-      showRegisterStep = <RegisterMember close={this.props.close} />;
+      showRegisterStep = '';
+      registerFinish = <RegisterFinish close={this.props.close} />;
     }
 
     return (
       <div className='popup_container'>
         {showRegisterStep}
+        {registerFinish}
       </div>
     );
   }

@@ -26,6 +26,7 @@ export function fetchClub(club_id) {
     return Club
           .getClubById(club_id)
           .then((response) => {
+            // dispatch(receiveError(response.data));
             dispatch(receiveData(response.data));
           })
           .catch((err) => {

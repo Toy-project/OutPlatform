@@ -9,6 +9,11 @@ import Register from './register';
 import Login from './login';
 import Club from './club';
 import MyPageUser from './myPageUser';
+import ErrorPage from './errorPage';
+import InnerError from './innerError';
+import InnerLoading from './innerLoading';
+import FindUserIdPage from './findUserId';
+import FindPasswordPage from './findPassword';
 
 export {
   Card,
@@ -22,4 +27,9 @@ export {
   Login,
   Club,
   MyPageUser,
+  ErrorPage,
+  InnerLoading,
+  InnerError,
+  FindUserIdPage,
+  FindPasswordPage
 };

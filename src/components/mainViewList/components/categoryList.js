@@ -2,28 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Category } from 'components/';
+import { Category, InnerError, InnerLoading } from 'components/';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/common';
+import * as Common from 'helper/common';
 
 class CategoryList extends React.Component {
 
-  componentDidMount() {
-  }
-
   render() {
     let category = () => {
-      if(!checkStatusComponent(this.props.category)) {
-
-      } else {
-        const category = this.props.category;
-
-        if(checkEmptyData(category)) {
-          return false;
-        }
-
-        return <Category {...category} />
+      if(Common.isLoading(this.props.category)) {
+        return <InnerLoading a={this.props.category.isLoading} />;
       }
+
+      if(Common.isError(this.props.category)){
+        return <InnerError component={'카테고리'}/>;
+      }
+
+      const category = this.props.category;
+
+      if(Common.checkEmptyData(category)) {
+        return false;
+      }
+
+      return <Category {...category} />
     }
     return (
       <div className='category-wrapper'>

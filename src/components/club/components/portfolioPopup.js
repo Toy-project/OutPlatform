@@ -29,6 +29,7 @@ class PortfolioPopup extends React.Component{
 
     //Upload photo
     this.onDrop = this.onDrop.bind(this);
+    this.addVideoLink = this.addVideoLink.bind(this);
 
     //handleAnimationToggle
     this.handleToggle = this.handleToggle.bind(this);
@@ -40,6 +41,10 @@ class PortfolioPopup extends React.Component{
     this.setState({
       active: !this.state.active,
     });
+  }
+
+  addVideoLink() {
+    alert('현재 업데이트 중입니다');
   }
 
   //팝업을 종료하는 함수
@@ -134,7 +139,7 @@ class PortfolioPopup extends React.Component{
     //Animation Styles
     const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
-    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+    const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2 - 20;
 
     //2000년을 기준
     const yearCriteria = 2000;

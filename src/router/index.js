@@ -1,7 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { Main, RegisterForClub, Club, MyPageClub, MyPageUserMemberLayout, MyPageUserClubLayout, TypeFace } from 'layout/';
+import { Main,
+         RegisterForClub,
+         Club, MyPageClub,
+         MyPageUserMemberLayout,
+         MyPageUserClubLayout,
+         TypeFace,
+         ErrorPageLayout,
+         FindUserIdLayout,
+         FindPasswordLayout } from 'layout/';
 
 const App = () => {
   return (
@@ -12,8 +20,10 @@ const App = () => {
       <Route path="/myPageUser/member" component={MyPageUserMemberLayout} />
       <Route path="/myPageUser/club" component={MyPageUserClubLayout} />
       <Route path="/myPage/" component={MyPageClub} />
-
       <Route path="/typeface" component={TypeFace} />
+      <Route path="/error/:type" component={ErrorPageLayout} />
+      <Route path='/findUserId/' component={FindUserIdLayout} />
+      <Route path='/findPassword/' component={FindPasswordLayout} />
     </div>
   )
 }

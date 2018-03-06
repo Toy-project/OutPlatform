@@ -11,6 +11,8 @@ import * as Common from 'helper/common';
 
 import * as AnimationStyle from 'helper/animationStyle';
 
+import { InnerLoading } from 'components/';
+
 class RegisterMember extends React.Component {
   constructor(props){
     super(props);
@@ -64,7 +66,10 @@ class RegisterMember extends React.Component {
         loading: false,
       },
 
-      "active" : false,
+      popupContainerHeight : 0,
+      active : false,
+      isLoading : false,
+      err_msg : '',
     };
 
     // handle Input Validation
@@ -183,6 +188,9 @@ class RegisterMember extends React.Component {
         err_msg = '5자 이상 12자 이내로 지어주세요.';
         err = true;
       } else {
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
         getMemberUserId(target.value)
           .then((response) => {
             if(!response.data) {
@@ -195,33 +203,39 @@ class RegisterMember extends React.Component {
                     err_msg = '동일한 아이디가 존재합니다.';
                     err = true;
                   }
-
                   this.setState({
                     mem_userid : {
                       ...this.state.mem_userid,
                       err_msg: err_msg,
                       err : err,
-                    },
+                    }
                   });
                 })
                 .catch((err) => {
-                  console.log(err);
-                })
+                  this.setState({
+                    isLoading: !this.state.isLoading,
+                    err_msg : '네트워크가 원활하지 않습니다.',
+                  });
+                });
             } else {
               err_msg = '동일한 아이디가 존재합니다.';
               err = true;
             }
-
             this.setState({
               mem_userid : {
                 ...this.state.mem_userid,
                 err_msg: err_msg,
                 err : err,
               },
+              isLoading: !this.state.isLoading,
+              err_msg : '',
             });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              isLoading: !this.state.isLoading,
+              err_msg : '네트워크가 원활하지 않습니다.',
+            });
           });
       }
     }
@@ -249,6 +263,10 @@ class RegisterMember extends React.Component {
         err_msg = '올바르지 않는 형식입니다.';
         err = true;
       } else {
+        //Loading
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
         getMemberEmail(target.value)
           .then((response) => {
             if(!response.data) {
@@ -270,8 +288,11 @@ class RegisterMember extends React.Component {
                     },
                   });
                 })
-                .then((err) => {
-                  console.log(err);
+                .catch((err) => {
+                  this.setState({
+                    isLoading: !this.state.isLoading,
+                    err_msg : '네트워크가 원활하지 않습니다.',
+                  });
                 });
             } else {
               err_msg = '동일한 이메일이 존재합니다.';
@@ -284,10 +305,16 @@ class RegisterMember extends React.Component {
                 err_msg: err_msg,
                 err : err,
               },
+
+              isLoading: !this.state.isLoading,
+              err_msg: '',
             });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              isLoading: !this.state.isLoading,
+              err_msg : '네트워크가 원활하지 않습니다.',
+            });
           });
       }
     }
@@ -366,11 +393,14 @@ class RegisterMember extends React.Component {
               type : type,
               loading : loading,
               err : err
-            }
+            },
+            err_msg : '',
           });
         })
         .catch((err) => {
-          console.log(err);
+          this.setState({
+            err_msg : '네트워크가 원활하지 않습니다.',
+          });
         });
     }
   }
@@ -446,11 +476,14 @@ class RegisterMember extends React.Component {
               ...phone_auth_btn,
               type: type,
               loading : loading
-            }
+            },
+            err_msg : '',
           });
         })
         .catch((err) => {
-          console.log(err);
+          this.setState({
+            err_msg : '네트워크가 원활하지 않습니다.',
+          });
         });
     }
   }
@@ -483,10 +516,8 @@ class RegisterMember extends React.Component {
       this.state.mem_phone.err,
 
       //True -> Ok / False -> Error
-      this.state.mem_phone_btn,
-      this.state.mem_phone_auth_btn
+      this.state.mem_phone_auth_btn.err
     ];
-
     //Empty Data check
     if(!this.handleEmptyValue()) return false;
 
@@ -508,19 +539,29 @@ class RegisterMember extends React.Component {
         "mem_mail_agree" : 1
       };
 
+    //loading
+    this.setState({
+      isLoading: !this.state.isLoading,
+    });
+
     //Post 요청(Member)
     createMember(data)
       .then((response) => {
-        alert('회원가입완료!');
+        //loading
+        this.setState({
+          isLoading: !this.state.isLoading,
+          err_msg: '',
+        });
         this.handleToggle();
         setTimeout(() => {
-          window.location.reload();
+          this.props.toggleToRegisterFinish();
         }, 300);
-
       })
       .catch((err) => {
-        alert('에러!');
-        console.log(err);
+        this.setState({
+          isLoading: !this.state.isLoading,
+          err_msg : '네트워크가 원활하지 않습니다.',
+        });
       });
     }
   }
@@ -542,6 +583,12 @@ class RegisterMember extends React.Component {
     const _thisContainerMinHeight = this.state.popupContainerHeight;
     const _thisInnerWindowHeight = window.innerHeight;
     const _animationStartFrom = (_thisInnerWindowHeight - _thisContainerMinHeight) / 2;
+    const loading = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={this.state.isLoading} />
+      </div>
+    );
+
 
     const errorClassName = (identifier) => {
       if(identifier.err == null) {
@@ -577,7 +624,8 @@ class RegisterMember extends React.Component {
             <h3>간편 회원가입</h3>
             <p className='p'>
               회원가입시 외주대학교의 <span>이용약관</span> 및 <span>개인정보취급방침</span>을
-              읽고 이해하였으며, 이에 동의하는 것으로 간주됩니다.
+              읽고 이해하였으며, 이에 동의하는 것으로 간주됩니다. <br /><br />
+              <b>{this.state.err_msg}</b>
             </p>
             <form onSubmit={this.handleSubmit}>
               <div className="input-register">
@@ -623,6 +671,7 @@ class RegisterMember extends React.Component {
                 <input type="submit" value="무료 가입하기"/>
               </div>
             </form>
+            {this.state.isLoading ? loading : ''}
           </div>
         </div>
       </CSSTransition>

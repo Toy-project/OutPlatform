@@ -64,7 +64,7 @@
           top: 40px;
           border: none;
           border-bottom: 1px solid $gray-3;
-          width: 95%;
+          width: 97%;
           height: 1px;
         }
 
@@ -83,6 +83,10 @@
             i {
               font-size: $font-size-15;
             }
+          }
+
+          .option {
+            cursor: pointer;
           }
         }
       }

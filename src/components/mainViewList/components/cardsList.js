@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import  { withRouter } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import '../scss/index.scss';
 
 import * as Services from 'actions/card';
 
-import { checkStatusComponent, checkEmptyData } from 'helper/common';
+import * as Common from 'helper/common';
 import { cardListEnd } from 'helper/variables';
-import { Card } from 'components/';
+
+import { Card, InnerError, InnerLoading } from 'components/';
 
 class CardsList extends React.Component {
   constructor(props){
@@ -20,7 +22,6 @@ class CardsList extends React.Component {
   }
 
   loadingData() {
-    console.log(this.props.cards.start);
     //카테고리로 서치할 때
     if(this.props.cards.byCateId) {
       this.props.fetchCardsByCateId(this.props.cards.cate_id, this.props.cards.start, cardListEnd);
@@ -32,33 +33,49 @@ class CardsList extends React.Component {
   render() {
     let club_count = this.props.cards.count;
     const card = () => {
-      if(!checkStatusComponent(this.props.cards)){
-        //로딩이나 에러
-      } else {
-        const card = this.props.cards.data;
-
-        if(checkEmptyData(card)){
-          return false;
-        }
-
-        return card.map( (card, key) => {
-          return (
-            <li key={key}>
-              <Card
-                {...card}
-              />
-            </li>
-          );
-        });
+      if(Common.isLoading(this.props.cards)) {
+        return (
+          <div className='global-loading'>
+            <InnerLoading loading={this.props.cards.isLoading} />
+          </div>
+        );
       }
+
+      if(Common.isError(this.props.cards)){
+        return (
+          <div className='global-error'>
+            <InnerError component={'단체'} />
+          </div>
+        );
+      }
+
+      const card = this.props.cards.data;
+
+      if(Common.checkEmptyData(card)){
+        return false;
+      }
+
+      return card.map( (card, key) => {
+        return (
+          <li key={key}>
+            <Card
+              {...card}
+            />
+          </li>
+        );
+      });
     }
 
-    const endMessage = (
-      <div className='end-message'>
-        등록된 단체를 다 보셨습니다! <br />
-        마음에 드시는 단체는 찾으셨나요?:)
-      </div>
-    )
+    const endMessage = () => {
+      if(!this.props.cards.isLoading && !this.props.cards.error) {
+        return (
+          <div className='end-message'>
+            등록된 단체를 다 보셨습니다! <br />
+            마음에 드시는 단체는 찾으셨나요?:)
+          </div>
+        );
+      }
+    }
 
     return (
       <div>
@@ -69,8 +86,7 @@ class CardsList extends React.Component {
           <InfiniteScroll
             next={this.loadingData}
             hasMore={this.props.cards.hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={endMessage}>
+            endMessage={endMessage()}>
             {card()}
           </InfiniteScroll>
         </ul>
@@ -113,4 +129,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CardsList);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CardsList));

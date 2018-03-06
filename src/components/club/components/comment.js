@@ -33,7 +33,6 @@ class Comment extends React.Component {
     if(pageNumber === this.state.activePage){
       return false;
     }
-
     //Data Fetch
     start = (pageNumber * 2) - 3 + pageNumber;
 
@@ -60,8 +59,8 @@ class Comment extends React.Component {
     }
 
     const rating = this.refs.club_raing.value;
-    const comment_writer = LoginHelper.isMember(LoginHelper.getCurrentToken()) ? LoginHelper.getCurrentToken().mem_id : LoginHelper.getCurrentToken().club_id;
-    const comment_writer_type = LoginHelper.isMember(LoginHelper.getCurrentToken()) ? 'member' : 'club';
+    const comment_writer = LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? LoginHelper.getCurrentTokenData().mem_id : LoginHelper.getCurrentTokenData().club_id;
+    const comment_writer_type = LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? 'member' : 'club';
     const data = {
       'comment_contents': this.refs.comment_contents.value,
       'comment_writer': comment_writer,
@@ -72,6 +71,8 @@ class Comment extends React.Component {
 
     //Call Post API
     this.props.fetchCreateComment(data);
+
+    this.refs.comment_contents.value = '';
   }
 
   componentDidMount() {
@@ -99,7 +100,7 @@ class Comment extends React.Component {
           return (
             <ul>
               {comment.rows.map((data, key) => {
-                return <li key={key}><CommentCard data={data} /></li>;
+                return <li key={key}><CommentCard data={data} pageNumber={this.state.activePage}/></li>;
               })}
             </ul>
           );

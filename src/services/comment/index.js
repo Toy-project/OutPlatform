@@ -35,10 +35,10 @@ export function updateComment(data) {
   });
 }
 
-export function deleteComment(data) {
+export function deleteComment(comment_id) {
   return axios({
     method: 'delete',
-    url: `${urlComment}/${data.comment_id}`,
+    url: `${urlComment}/${comment_id}`,
     responseType: 'json',
     headers: {
       'Content-Type': 'application/json',

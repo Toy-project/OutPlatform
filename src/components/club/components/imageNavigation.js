@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { updateClubPhoto } from 'services/club/';
-import { fetchClub } from 'actions/club/'
-
+import { fetchClub } from 'actions/club/';
 
 class ImageNavigation extends React.Component {
 
@@ -78,11 +77,13 @@ class ImageNavigation extends React.Component {
   }
 
   handleDeletePhoto() {
-    const currentPhotoIndex = this.slider.innerSlider.state.currentSlide;
-    let temp = this.props.club_photo;
+    // const currentPhotoIndex = this.slider.innerSlider.state.currentSlide;
+    // let temp = this.props.club_photo;
     //Remove currentIndex from array
-    temp.splice(currentPhotoIndex, 1);
+    // temp.splice(currentPhotoIndex, 1);
     //to DO
+
+    alert('현재 업데이트 중입니다');
   }
 
   render() {

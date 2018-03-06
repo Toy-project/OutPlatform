@@ -81,14 +81,14 @@ class Nav extends React.Component {
       if(this.props.login.loggined) {
         return (
           <ul className="main-menu hide-on-med-and-down">
-            {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li>장바구니</li>) : ''}
+            {/* {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li>장바구니</li>) : ''} */}
             <li onClick={this.logout}>로그아웃</li>
             <li className='my-page'>
               마이 페이지
               <div className='sub-menu'>
                 <ul>
                   {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li onClick={this.goToMyPageClub}>단체관리</li>) : ''}
-                  <li onClick={this.goToMyPageClub}>외주관리</li>
+                  {/* <li onClick={this.goToMyPageClub}>외주관리</li> */}
                   <li onClick={this.goToMyPageUser}>회원관리</li>
                 </ul>
               </div>

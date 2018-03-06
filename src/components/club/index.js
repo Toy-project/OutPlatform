@@ -20,6 +20,8 @@ import SmiliarClub from './components/smiliarClub';
 
 import * as Security from 'helper/securityHelper';
 
+import { InnerError, InnerLoading } from 'components/';
+
 class Club extends React.Component {
 
   constructor(props){
@@ -30,7 +32,6 @@ class Club extends React.Component {
       //토큰이 없으면
       if(!Security.defenceAccessingWithoutToken(this.props.login.loggined) ||
          !Security.defenceAccessingWithInvalidToken()) {
-        alert('잘못왔엉');
         this.props.history.push(`/`);
         window.location.reload();
       }
@@ -38,7 +39,7 @@ class Club extends React.Component {
   }
 
   componentDidMount() {
-    const club_id = LoginHelper.getCurrentTokenData().club_id;
+    const club_id = this.props.match.params.club_id || LoginHelper.getCurrentTokenData().club_id;
 
     //fetch Data
     this.props.fetchClub(club_id);
@@ -62,49 +63,67 @@ class Club extends React.Component {
       'club_copyright': '',
     };
 
-    const results = Common.checkStatusComponent(this.props.club);
-
-    if(results) {
-      const club = this.props.club.data;
-
-      //데이터가 없을 경우
-      if(Common.checkEmptyData(club)){
-        return false;
-      }
-
-      data = {
-        'club_photo' : club.club_photo,
-        'club_profile_photo': club.club_profile_photo,
-        'club_college' : club.club_college,
-        'cate_id': club.cate_id,
-        'tag_id': club.tag_id,
-        'cate_name': club.category.cate_name,
-        'tag_name': club.tag.tag_name,
-        'club_ex': club.club_ex,
-        'sns': club.sns,
-        'career': club.career,
-        'club_name': club.club_name,
-        'club_copyright': club.club_copyright,
-      }
+    if(Common.isLoading(this.props.club)) {
+      return (
+        <div className='club-container'>
+          <div className='global-loading'>
+            <InnerLoading loading={this.props.club.isLoading} />
+          </div>
+        </div>
+      );
     }
+
+    if(Common.isError(this.props.club)){
+      return (
+        <div className='club-container'>
+          <div className='global-error'>
+            <InnerError component={'단체'} />
+          </div>
+        </div>
+      );
+    }
+
+    const club = this.props.club.data;
+
+    //데이터가 없을 경우
+    if(Common.checkEmptyData(club)){
+      return false;
+    }
+
+    data = {
+      'club_id' : club.club_id,
+      'club_photo' : club.club_photo,
+      'club_profile_photo': club.club_profile_photo,
+      'club_college' : club.club_college,
+      'cate_id': club.cate_id,
+      'tag_id': club.tag_id,
+      'cate_name': club.category.cate_name,
+      'tag_name': club.tag.tag_name,
+      'club_ex': club.club_ex,
+      'sns': club.sns,
+      'career': club.career,
+      'club_name': club.club_name,
+      'club_copyright': club.club_copyright,
+    }
+
     components = (
       <div>
         <ImageNavigation
           myPage={this.props.myPage}
-          club_id={this.props.club_id}
+          club_id={this.props.club_id | data.club_id}
 
           club_photo={data.club_photo ? data.club_photo.split(',') : []}
         />
         <Snippet
           myPage={this.props.myPage}
-          club_id={this.props.club_id}
+          club_id={this.props.club_id | data.club_id}
 
           club_name={data.club_name}
           club_copyright={data.club_copyright}
         />
         <Profile
           myPage={this.props.myPage}
-          club_id={this.props.club_id}
+          club_id={this.props.club_id | data.club_id}
 
           club_college={data.club_college}
           cate_id={data.cate_id}
@@ -117,18 +136,18 @@ class Club extends React.Component {
         />
        <PortfolioNavigation
          myPage={this.props.myPage}
-        club_id={this.props.club_id}
+        club_id={this.props.club_id | data.club_id}
 
         portfolio={data.career}
        />
        {/* comment */}
-       {this.props.myPage ? '' : <Comment club_id={this.props.club_id} />}
+       {this.props.myPage ? '' : <Comment club_id={this.props.club_id | data.club_id} />}
 
        {/* comment */}
        {this.props.myPage ? '' : <Quotation />}
 
        {/* 비슷한 단체 데이터 */}
-       {this.props.myPage ? '' : <SmiliarClub />}
+       {/* {this.props.myPage ? '' : <SmiliarClub />} */}
       </div>
     );
     return (

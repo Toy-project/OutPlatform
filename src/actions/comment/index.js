@@ -43,6 +43,7 @@ export function fetchCreateComment(data) {
             dispatch(fetchComment(data.club_id, 0, commentListEnd));
           })
           .catch((err) => {
+            console.log(data);
             dispatch(receiveError(err.data));
           });
   }
@@ -62,16 +63,17 @@ export function fetchCreateComment(data) {
 //   }
 // }
 //
-// export function fetchDeleteComment(club_id, comment_id, start) {
-//   return function(dispatch){
-//     dispatch(requestData());
-//     return Services
-//           .deleteComment(comment_id)
-//           .then((response) => {
-//             dispatch(fetchComment(club_id, start, commentListEnd));
-//           })
-//           .catch((err) => {
-//             dispatch(receiveError(err.data));
-//           });
-//   }
-// }
+export function fetchDeleteComment(club_id, comment_id, pageNumber) {
+  const start = (pageNumber * 2) - 3 + pageNumber;
+  return function(dispatch){
+    dispatch(requestData());
+    return Services
+          .deleteComment(comment_id)
+          .then((response) => {
+            dispatch(fetchComment(club_id, start, commentListEnd));
+          })
+          .catch((err) => {
+            dispatch(receiveError(err.data));
+          });
+  }
+}

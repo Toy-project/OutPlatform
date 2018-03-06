@@ -18,13 +18,13 @@ class Images extends React.Component {
   }
 
   render() {
+    const image = this.props.club_photo ? this.props.club_photo.split(',') : [''];
     return(
       <div onClick={this.goToClub}>
         <Scroll offset={0}>
-          <span className="default"></span>
+          {image[0] ? <img src={`/${image[0]}`} alt='' className='card-image' /> :
+                      <span className="default"></span>}
         </Scroll>
-        {/* <img src={img} /> */}
-
         <div href="" className="float"></div>
       </div>
     );

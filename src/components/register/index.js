@@ -11,6 +11,9 @@ import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/c
 import * as Member from 'services/member';
 import * as PhoneAuth from 'services/phoneAuth';
 
+import RegisterFinish from 'components/registerPopup/components/registerFinish';
+import { InnerLoading } from 'components/';
+
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -93,6 +96,9 @@ class Register extends React.Component {
         err: true,
         loading: false,
       },
+
+      registerFinishToggle : false,
+      isLoading : false,
     }
 
     //Input 처리
@@ -108,6 +114,8 @@ class Register extends React.Component {
 
     //Submit
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.registerFinishToggle = this.registerFinishToggle.bind(this);
   }
 
   handleChange(e) {
@@ -575,19 +583,30 @@ class Register extends React.Component {
         "club_copyright" : this.state.club_copyright.value,
       };
 
+      //loading
+      this.setState({
+        isLoading: !this.state.isLoading,
+      });
+
       //Post API
         createClub(data)
           .then((response) => {
-            alert('회원가입완료!');
-            console.log(response.data);
-            this.props.history.push(`/`);
-            window.location.reload();
+            //loading
+            this.setState({
+              isLoading: !this.state.isLoading,
+            });
+
+            this.registerFinishToggle();
           })
           .catch((err) => {
-            alert('에러!');
-            console.log(err);
           })
     }
+  }
+
+  registerFinishToggle() {
+    this.setState({
+      registerFinishToggle : !this.state.registerFinishToggle,
+    });
   }
 
   render() {
@@ -612,6 +631,25 @@ class Register extends React.Component {
         );
       }
     }
+
+    const registerFinish = () => {
+      if(!this.state.registerFinishToggle) {
+        return '';
+      } else {
+        return (
+          <div className='popup_container'>
+            <RegisterFinish close={this.registerFinishToggle} />
+          </div>
+        );
+      }
+    }
+
+    const loading = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={this.state.isLoading} />
+      </div>
+    );
+
     return(
       <div className="register-container">
         <div className="container">
@@ -708,6 +746,8 @@ class Register extends React.Component {
             </div>
           </form>
         </div>
+        {registerFinish()}
+        {this.state.isLoading ? loading : ''}
       </div>
     );
   }

@@ -5,6 +5,9 @@ import MyPageClub from './myPageClub';
 import TypeFace from './typeFace';
 import MyPageUserMemberLayout from './myPageUserMember';
 import MyPageUserClubLayout from './myPageUserClub';
+import ErrorPageLayout from './errorPage';
+import FindUserIdLayout from './findUserId';
+import FindPasswordLayout from './findPassword';
 
 export {
   Main,
@@ -13,5 +16,8 @@ export {
   MyPageClub,
   TypeFace,
   MyPageUserMemberLayout,
-  MyPageUserClubLayout
+  MyPageUserClubLayout,
+  ErrorPageLayout,
+  FindUserIdLayout,
+  FindPasswordLayout
 };

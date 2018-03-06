@@ -4,12 +4,12 @@ import './scss/index.scss';
 import Contents from './components/contents';
 import Images from './components/images';
 
-const Card = ({ club_id, club_profile_photo, club_name, club_copyright, club_rating}) => (
+const Card = ({ club_id, club_name, club_copyright, club_rating, club_photo}) => (
   <div className="card">
     <div className="card-image">
       <Images
         club_id={club_id}
-        club_profile_photo={club_profile_photo}
+        club_photo={club_photo}
       />
     </div>
     <div className="card-content-container">

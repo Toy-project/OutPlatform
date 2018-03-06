@@ -61,6 +61,7 @@
     "react-router-enter": "^0.2.1",
     "react-scroll-to-element": "^0.2.0",
     "react-slick": "^0.18.1",
+    "react-spinners": "^0.2.6",
     "redux": "^3.7.2",
     "redux-react-router": "^1.0.0-beta3",
     "redux-thunk": "^2.2.0",
@@ -73,6 +74,10 @@
     "webpack-dev-server": "2.8.2",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
+  },
+  "babel" : {
+    "presets": [ "react", "es2015", "stage-0"],
+    "plugins": ["emotion"]
   },
   "jest": {
     "collectCoverageFrom": [

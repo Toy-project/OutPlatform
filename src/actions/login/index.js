@@ -35,7 +35,7 @@ export function tryLoggingIn(userid, pw, type){
             .memberLogin(userid, pw)
             .then((response) => {
               dispatch(success(response.data));
-              History.history.push('/');
+              window.location.reload();
             })
             .catch((err) => {
               dispatch(error(err.data));
