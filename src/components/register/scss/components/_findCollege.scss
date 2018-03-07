@@ -1,0 +1,56 @@
+.find-college-container {
+  @include popup-reset-options(330px, 27%);
+  padding: 20px 0;
+
+  .fixed {
+    position: absolute;
+    top: 50%;
+  }
+
+  .contents {
+    margin-top: 15px;
+    padding: 0 20px;
+
+    .college-list {
+      margin-top: 10px;
+      list-style: circle;
+      padding: 0 20px;
+
+      li {
+        font-size: $font-size-12;
+        margin: 5px 0;
+        cursor: pointer;
+
+        &.at-first {
+          list-style: none;
+          width: 100%;
+          @include center;
+        }
+      }
+    }
+
+    h3 {
+      font-size: $font-size-20;
+      color: $emerald-1;
+      margin-bottom: 10px;
+    }
+
+    input[type='text'],
+    input[type='submit'] {
+      border: solid 1px #dfdfdf;
+      height: 25px;
+    }
+
+    input[type='text'] {
+      width: 80%;
+      height: 25px;
+      font-size: $font-size-12;
+    }
+
+    input[type='submit'] {
+      vertical-align: bottom;
+      @include btn-reset-shape(40px, 25px, $btn-background-emerald-color);
+      @include btn-reset-font($font-size-12, $btn-text-white-color, 25px);
+    }
+  }
+}

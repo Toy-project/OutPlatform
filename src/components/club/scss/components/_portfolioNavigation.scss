@@ -15,11 +15,17 @@
 
       .portfolio-slide-wrapper {
         width: 100%;
-        height: 550px;
+        max-height: 550px;
         padding-top: 50px;
         //화면 작아질 시 마진을 없애야 함
         overflow: hidden;
         @include center;
+
+        .whenEmptyData {
+          h2 {
+            font-size: $font-size-16;
+          }
+        }
 
         .slider,
         .not-slider {

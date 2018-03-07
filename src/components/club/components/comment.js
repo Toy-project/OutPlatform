@@ -92,9 +92,12 @@ class Comment extends React.Component {
 
         if(comment.count === 0) {
           return (
-            <span>
-              댓글을 입력해주세요!
-            </span>
+            <div className='whenEmptyData'>
+              <h2>아직 회원 리뷰가 없습니다.</h2>
+              <p>
+                로그인 하신 후 회원리뷰를 달아주세요! 대학단체에게 큰 힘이 됩니다.
+              </p>
+            </div>
           )
         } else {
           return (

@@ -495,7 +495,7 @@ class RegisterMember extends React.Component {
     else if(Common.isEmpty(this.state.mem_email.value)) this.refs.mem_email.focus();
     else if(Common.isEmpty(this.state.mem_name.value)) this.refs.mem_name.focus();
     else if(Common.isEmpty(this.state.mem_phone.value)) this.refs.mem_phone.focus();
-    else if(Common.isEmpty(this.state.mem_phone_auth.value)) this.refs.mem_phone_auth.focus();
+    // else if(Common.isEmpty(this.state.mem_phone_auth.value)) this.refs.mem_phone_auth.focus();
     else {
       return true;
     }
@@ -516,7 +516,7 @@ class RegisterMember extends React.Component {
       this.state.mem_phone.err,
 
       //True -> Ok / False -> Error
-      this.state.mem_phone_auth_btn.err
+      // this.state.mem_phone_auth_btn.err
     ];
     //Empty Data check
     if(!this.handleEmptyValue()) return false;
@@ -599,17 +599,17 @@ class RegisterMember extends React.Component {
         return 'warning-color';
       }
     }
-    const phoneAuthBtn = () => {
-      if(!this.state.mem_phone_auth_btn.type) {
-        return (
-          <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
-        );
-      } else {
-        return (
-          <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
-        );
-      }
-    }
+    // const phoneAuthBtn = () => {
+    //   if(!this.state.mem_phone_auth_btn.type) {
+    //     return (
+    //       <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
+    //     );
+    //   } else {
+    //     return (
+    //       <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+    //     );
+    //   }
+    // }
 
     return (
       <CSSTransition
@@ -658,7 +658,7 @@ class RegisterMember extends React.Component {
                 <input type="text" id="mem_phone" ref='mem_phone' onChange={this.handleChange}/>
                 <a className={errorClassName(this.state.mem_phone)}>{this.state.mem_phone.err_msg}</a>
               </div>
-              <div className="input-register">
+              {/* <div className="input-register">
                 <label htmlFor="mem_phone_auth">인증번호</label>
                 <input type="text" id="mem_phone_auth" ref='mem_phone_auth' onChange={this.handleChange}/>
                 {phoneAuthBtn()}
@@ -666,7 +666,7 @@ class RegisterMember extends React.Component {
                   {this.state.mem_phone_auth.err_msg}
                   {this.state.mem_phone_auth_btn.loading ? '잠시만 기달려주세요.' : ''}
                 </a>
-              </div>
+              </div> */}
               <div className="submit-resgister">
                 <input type="submit" value="무료 가입하기"/>
               </div>

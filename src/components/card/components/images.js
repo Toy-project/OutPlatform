@@ -25,7 +25,7 @@ class Images extends React.Component {
           {image[0] ? <img src={`/${image[0]}`} alt='' className='card-image' /> :
                       <span className="default"></span>}
         </Scroll>
-        <div href="" className="float"></div>
+        {this.props.club_profle_photo ? <img src={`/${this.props.club_profle_photo}`} alt='' className='float' /> : <div href="" className="float"></div>}
       </div>
     );
   }

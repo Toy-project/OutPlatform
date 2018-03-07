@@ -117,7 +117,9 @@ class PortfolioNavigation extends React.Component {
       } else {
         if(this.props.portfolio.length === 0) {
           return (
-            '입력해주세요!'
+            <div className='whenEmptyData'>
+              <h2>아직 등록된 포트폴리오가 없습니다.</h2>
+            </div>
           );
         } else {
           if(this.props.portfolio.length > 2) {

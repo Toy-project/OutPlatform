@@ -17,9 +17,8 @@ import MessagePopup from 'components/messagePopup';
 class PortfolioPopup extends React.Component{
   constructor(props) {
     super(props);
-
     this.state = {
-      preview_photo : '',
+      preview_photo : this.props.data.career_photo ? `/${this.props.data.career_photo}` : '',
       preview_photo_flag : false,
 
       career_photo: '',

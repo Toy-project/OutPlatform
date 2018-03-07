@@ -96,6 +96,21 @@
         .comment-list {
           margin-top: 10px;
 
+          .whenEmptyData {
+            width: 100%;
+            padding: 44px 0;
+            background-color: $white;
+
+            h2 {
+              font-size: $font-size-20;
+            }
+
+            p {
+              font-size: $font-size-12;
+            }
+            @include center;
+          }
+
           ul {
             list-style: none;
             li {
@@ -103,84 +118,84 @@
             }
           }
 
-          .pagination {
-            margin-top: 5px;
-            display:inline-block;
-            width: 100%;
-            color: #797979;
-            @include center;
-
-            > li {
-              display:inline;
-              > a,
-              > span {
-                display:inline-block; // Collapse white-space
-                padding: 3px 8px;
-                color: inherit;
-                background-color: $white;
-                border: 1px solid $gray-9;
-                margin: 0 10px;
-              }
-
-              > .previous,
-              > .next {
-                margin: 0;
-                color: inherit;
-                border: none;
-                background: transparent;
-              }
-
-              > .previous {
-                float: left;
-              }
-              > .next {
-                float: right;
-              }
-
-              &:first-child {
-                > a,
-                > span {
-                  display: none;
-                }
-              }
-              &:last-child {
-                > a,
-                > span {
-                  display: none;
-                }
-              }
-            }
-
-            > li > a,
-            > li > span {
-              &:hover,
-              &:focus {
-                z-index: 2;
-                color: $red;
-              }
-            }
-
-            > .active > a,
-            > .active > span {
-              &,
-              &:hover,
-              &:focus {
-                z-index: 3;
-                color: $red;
-              }
-            }
-
-            > .disabled {
-              > span,
-              > span:hover,
-              > span:focus,
-              > a,
-              > a:hover,
-              > a:focus {
-                color: $gray-3;
-              }
-            }
-          }
+          // .pagination {
+          //   margin-top: 5px;
+          //   display:inline-block;
+          //   width: 100%;
+          //   color: #797979;
+          //   @include center;
+          //
+          //   > li {
+          //     display:inline;
+          //     > a,
+          //     > span {
+          //       display:inline-block; // Collapse white-space
+          //       padding: 3px 8px;
+          //       color: inherit;
+          //       background-color: $white;
+          //       border: 1px solid $gray-9;
+          //       margin: 0 10px;
+          //     }
+          //
+          //     > .previous,
+          //     > .next {
+          //       margin: 0;
+          //       color: inherit;
+          //       border: none;
+          //       background: transparent;
+          //     }
+          //
+          //     > .previous {
+          //       float: left;
+          //     }
+          //     > .next {
+          //       float: right;
+          //     }
+          //
+          //     &:first-child {
+          //       > a,
+          //       > span {
+          //         display: none;
+          //       }
+          //     }
+          //     &:last-child {
+          //       > a,
+          //       > span {
+          //         display: none;
+          //       }
+          //     }
+          //   }
+          //
+          //   > li > a,
+          //   > li > span {
+          //     &:hover,
+          //     &:focus {
+          //       z-index: 2;
+          //       color: $red;
+          //     }
+          //   }
+          //
+          //   > .active > a,
+          //   > .active > span {
+          //     &,
+          //     &:hover,
+          //     &:focus {
+          //       z-index: 3;
+          //       color: $red;
+          //     }
+          //   }
+          //
+          //   > .disabled {
+          //     > span,
+          //     > span:hover,
+          //     > span:focus,
+          //     > a,
+          //     > a:hover,
+          //     > a:focus {
+          //       color: $gray-3;
+          //     }
+          //   }
+          // }
         }
       }
     }

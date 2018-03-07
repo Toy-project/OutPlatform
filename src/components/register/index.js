@@ -10,9 +10,11 @@ import * as Common from 'helper/common';
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
 import * as Member from 'services/member';
 import * as PhoneAuth from 'services/phoneAuth';
+import * as College from 'services/colleges';
 
 import RegisterFinish from 'components/registerPopup/components/registerFinish';
 import { InnerLoading } from 'components/';
+import FindCollege from './components/findCollege';
 
 class Register extends React.Component {
   constructor(props) {
@@ -97,6 +99,7 @@ class Register extends React.Component {
         loading: false,
       },
 
+      findCollegeToggle : false,
       registerFinishToggle : false,
       isLoading : false,
     }
@@ -112,10 +115,24 @@ class Register extends React.Component {
     this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
     this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
 
+    this.setCollegeName = this.setCollegeName.bind(this);
+
     //Submit
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.registerFinishToggle = this.registerFinishToggle.bind(this);
+    this.isFindCollegeToggle = this.isFindCollegeToggle.bind(this);
+  }
+
+  setCollegeName(value) {
+    this.refs.club_college.value = value;
+    this.setState({
+      club_college: {
+        value: value,
+        err_msg: '',
+        err: false,
+      }
+    })
   }
 
   handleChange(e) {
@@ -221,6 +238,9 @@ class Register extends React.Component {
         err_msg = '5자 이상 12자 이내로 지어주세요.';
         err = true;
       } else {
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
         getClubUserId(target.value)
           .then((response) => {
             if(!response.data) {
@@ -242,9 +262,6 @@ class Register extends React.Component {
                     },
                   });
                 })
-                .catch((err) => {
-                  console.log(err);
-                });
             } else {
               err_msg = '동일한 아이디가 존재합니다.';
               err = true;
@@ -256,10 +273,15 @@ class Register extends React.Component {
                 err_msg: err_msg,
                 err : err,
               },
+              isLoading: !this.state.isLoading,
             });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              isLoading: !this.state.isLoading,
+            });
+
+            //to do
           });
       }
     }
@@ -287,6 +309,9 @@ class Register extends React.Component {
         err_msg = '올바르지 않는 형식입니다.';
         err = true;
       } else {
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
         getClubEmail(target.value)
           .then((response) => {
             if(!response.data) {
@@ -308,9 +333,6 @@ class Register extends React.Component {
                     },
                   });
                 })
-                .catch((err)=>{
-                  console.log(err);
-                })
             } else {
               err_msg = '동일한 이메일이 존재합니다.';
               err = true;
@@ -322,10 +344,15 @@ class Register extends React.Component {
                 err_msg: err_msg,
                 err : err,
               },
+              isLoading: !this.state.isLoading,
             });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              isLoading: !this.state.isLoading,
+            });
+
+            //to do
           });
       }
     }
@@ -335,6 +362,9 @@ class Register extends React.Component {
         err_msg = '동아리 이름은 2글자 이상, 10글자 미만으로 해주세요!';
         err = true;
       } else {
+        this.setState({
+          isLoading: !this.state.isLoading,
+        });
         getClubName(target.value)
           .then((response) => {
             if(!response.data) {
@@ -351,10 +381,13 @@ class Register extends React.Component {
                 err_msg: err_msg,
                 err : err,
               },
+              isLoading: !this.state.isLoading,
             });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              isLoading: !this.state.isLoading,
+            });
           });
       }
     }
@@ -528,9 +561,10 @@ class Register extends React.Component {
     else if(Common.isEmpty(this.state.club_email.value)) this.refs.club_email.focus();
     else if(Common.isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
     else if(Common.isEmpty(this.state.club_phone.value)) this.refs.club_phone.focus();
-    else if(Common.isEmpty(this.state.club_phone_auth.value)) this.refs.club_phone_auth.focus();
+    // else if(Common.isEmpty(this.state.club_phone_auth.value)) this.refs.club_phone_auth.focus();
     else if(Common.isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
     else if(Common.isEmpty(this.state.cate_id.value)) this.refs.cate_id.focus();
+    else if(Common.isEmpty(this.state.club_college.value)) this.refs.club_college.focus();
     else if(Common.isEmpty(this.state.club_copyright.value)) this.refs.club_copyright.focus();
     else {
       return true;
@@ -552,10 +586,11 @@ class Register extends React.Component {
       this.state.club_phone.err,
       this.state.club_name.err,
       this.state.cate_id.err,
+      this.state.club_college.err,
       this.state.club_copyright.err,
 
       //True -> Ok / False -> Error
-      this.state.club_phone_auth_btn.err
+      // this.state.club_phone_auth_btn.err
     ];
 
     //Empty data check
@@ -609,7 +644,14 @@ class Register extends React.Component {
     });
   }
 
+  isFindCollegeToggle() {
+    this.setState({
+      findCollegeToggle: !this.state.findCollegeToggle,
+    });
+  }
+
   render() {
+
     const errorClassName = (identifier) => {
       if(identifier.err == null) {
         return '';
@@ -620,17 +662,19 @@ class Register extends React.Component {
       }
     }
 
-    const phoneAuthBtn = () => {
-      if(!this.state.club_phone_auth_btn.type) {
-        return (
-          <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
-        );
-      } else {
-        return (
-          <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
-        );
-      }
-    }
+    const findCollegePopup = this.state.findCollegeToggle ? <FindCollege close={this.isFindCollegeToggle} setCollegeName={this.setCollegeName} /> : '';
+
+    // const phoneAuthBtn = () => {
+    //   if(!this.state.club_phone_auth_btn.type) {
+    //     return (
+    //       <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
+    //     );
+    //   } else {
+    //     return (
+    //       <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
+    //     );
+    //   }
+    // }
 
     const registerFinish = () => {
       if(!this.state.registerFinishToggle) {
@@ -692,7 +736,7 @@ class Register extends React.Component {
                 <input type="text" id='club_phone' ref='club_phone' onChange={this.handleChange} />
                 <a className={errorClassName(this.state.club_phone)}>{this.state.club_phone.err_msg}</a>
               </div>
-              <div className='input-register'>
+              {/* <div className='input-register'>
                 <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
                 <input type="text" id='club_phone_auth' ref='club_phone_auth' onChange={this.handleChange} />
                 {phoneAuthBtn()}
@@ -700,7 +744,7 @@ class Register extends React.Component {
                   {this.state.club_phone_auth.err_msg}
                   {this.state.club_phone_auth_btn.loading ? '잠시만 기달려주세요.' : ''}
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div className='line hide-on-med-and-down'></div>
@@ -724,10 +768,8 @@ class Register extends React.Component {
                 </select>
               </div>
               <div className='input-register college'>
-                <label htmlFor='club_college' className='input-title'>동아리 소속</label>
-                <select id='club_college' onChange={this.handleChange}>
-                  <option value='0'>대학교를 선택해주세요!</option>
-                </select>
+                <label htmlFor='club_college' className='input-title' >동아리 소속</label>
+                <input type='text' ref='club_college' id='club_college' onFocus={this.isFindCollegeToggle} placeholder='여기를 클릭해주세요!'/>
                 <a>
                   <label htmlFor='union_enabled'>대학 연합입니다</label>
                   <input type="checkbox" id='union_enabled' onChange={this.handleChange}/>
@@ -747,6 +789,7 @@ class Register extends React.Component {
           </form>
         </div>
         {registerFinish()}
+        {findCollegePopup}
         {this.state.isLoading ? loading : ''}
       </div>
     );

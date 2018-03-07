@@ -7,12 +7,16 @@ import { fetchUpdateClub } from 'actions/club';
 
 import { subStringLimitStringLength } from 'helper/common';
 
+import FindCollege from 'components/register/components/findCollege';
+
 class Profile extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
+      findCollegeToggle : false,
       isEditToggle: false,
+      emptyValue: '아직 등록되지 않았습니다',
     }
 
     this.editToggle = this.editToggle.bind(this);
@@ -21,6 +25,28 @@ class Profile extends React.Component {
     this.handleSnsTransition = this.handleSnsTransition.bind(this);
 
     this.snippetLimitStringLength = this.snippetLimitStringLength.bind(this);
+
+    this.isFindCollegeToggle = this.isFindCollegeToggle.bind(this);
+    this.setCollegeName = this.setCollegeName.bind(this);
+
+    this.handleEmptyValue = this.handleEmptyValue.bind(this);
+  }
+
+  handleEmptyValue(val) {
+    if(val) {
+      return val;
+    }
+    return this.state.emptyValue;
+  }
+
+  setCollegeName(value) {
+    this.refs.club_college.value = value;
+  }
+
+  isFindCollegeToggle() {
+    this.setState({
+      findCollegeToggle: !this.state.findCollegeToggle,
+    });
   }
 
   editToggle() {
@@ -70,23 +96,19 @@ class Profile extends React.Component {
   }
 
   render() {
+    const findCollegePopup = this.state.findCollegeToggle ? <FindCollege close={this.isFindCollegeToggle} setCollegeName={this.setCollegeName} /> : '';
+
     let editButton;
-    let viewContents = this.props.club_ex.split('\n').map((line, key) => {
+    let viewContents = !this.props.club_ex ? '' : this.props.club_ex.split('\n').map((line, key) => {
       return (<span key={key}>{line}<br /></span>);
     });
-    let viewSNS;
-    let tag;
+    // let viewSNS;
 
     let editInputText = (id, placeholder) => {
       switch(id){
         case 'club_college':
           return (
-            <select defaultValue={this.props.club_college} ref={id}>
-              <option value="서울대학교">서울대학교</option>
-              <option value="우리대학교">우리대학교</option>
-              <option value="하나대학교">하나대학교</option>
-              <option value="test">신나대학교</option>
-            </select>
+            <input type='text' onFocus={this.isFindCollegeToggle} defaultValue={this.props.club_college} ref={id} />
           );
         case 'cate_id':
           return (
@@ -141,25 +163,15 @@ class Profile extends React.Component {
       editButton = '';
     }
 
-    viewSNS = (
-      <span className='sns'>
-        {this.props.sns.map((item, key) => {
-          return (
-            <i key={key} id={item.sns_name} onClick={this.handleSnsTransition(item.sns_url)} className={`sns-basic-icon ${item.sns_name}`}></i>
-          );
-        })}
-      </span>
-    );
-
-    tag = () => {
-      if(this.state.isEditToggle) {
-        return (<p>{editInputText('tag_id')}</p>);
-      } else {
-        return (
-          <span className='tag'>{`#${this.props.tag_name}`}</span>
-        );
-      }
-    }
+    // viewSNS = (
+    //   <span className='sns'>
+    //     {this.props.sns.map((item, key) => {
+    //       return (
+    //         <i key={key} id={item.sns_name} onClick={this.handleSnsTransition(item.sns_url)} className={`sns-basic-icon ${item.sns_name}`}></i>
+    //       );
+    //     })}
+    //   </span>
+    // );
 
     return(
       <div className='profile-container'>
@@ -174,15 +186,15 @@ class Profile extends React.Component {
               <ul>
                 <li>
                   <h5>소속학교</h5>
-                  <p>{this.state.isEditToggle ? editInputText('club_college') : this.props.club_college}</p>
+                  <p>{this.state.isEditToggle ? editInputText('club_college') : this.handleEmptyValue(this.props.club_college)}</p>
                 </li>
                 <li>
                   <h5>단체종류</h5>
-                  <p>{this.state.isEditToggle ? editInputText('cate_id') : this.props.cate_name}</p>
+                  <p>{this.state.isEditToggle ? editInputText('cate_id') : this.handleEmptyValue(this.props.cate_name)}</p>
                 </li>
                 <li>
                   <h5>태그</h5>
-                  {tag()}
+                  {this.state.isEditToggle ? <p>{editInputText('tag_id')}</p> : this.props.tag_name ? <span className='tag'>{`#${this.props.tag_name}`}</span> : this.handleEmptyValue(this.props.tag_name)}
                 </li>
               </ul>
             </div>
@@ -191,16 +203,17 @@ class Profile extends React.Component {
                 <li>
                   <h5>단체소개</h5>
                   <div className='club-ex'>
-                    {this.state.isEditToggle ? editInputText('club_ex', '우리 단체에 대한 소개를 올려주세요!') : viewContents}
+                    {this.state.isEditToggle ? editInputText('club_ex', '우리 단체에 대한 소개를 올려주세요!') : this.handleEmptyValue(viewContents)}
                   </div>
                 </li>
-                <li>
+                {/* <li>
                   <h5>SNS</h5>
                   <p>{this.state.isEditToggle ? editInputText('sns') : viewSNS}</p>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
+          {findCollegePopup}
         </div>
       </div>
     );

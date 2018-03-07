@@ -85,6 +85,7 @@ class ImageNavigation extends React.Component {
               //Reset 미리보기 사진 정보 / 업로드 사진 정보
               this.setState({
                 preview_photo : '',
+                isLoading: !this.state.isLoading,
                 isUploadButton_slide: false,
               });
 
@@ -108,14 +109,20 @@ class ImageNavigation extends React.Component {
 
     // const club_profile_photo = this.state.club_profile_photo;
     const showImages = () => {
-      return this.props.club_photo
-        //최신인 사진을 맨 위로 올리기 위해 정렬
-        .sort((a, b) => {
-          return a > b;
-        })
-        .map((data, key) => {
-        return (<img key={key} src={`/${data}`} alt="" className='default-image' />);
-      });
+      if(this.props.club_photo.length !== 0) {
+        return this.props.club_photo
+          //최신인 사진을 맨 위로 올리기 위해 정렬
+          .sort((a, b) => {
+            return a > b;
+          })
+          .map((data, key) => {
+          return (<img key={key} src={`/${data}`} alt="" className='default-image' />);
+        });
+      } else {
+        return(
+          <span className='default-image'></span>
+        );
+      }
     }
 
     //이미지 업로드 버튼 Toggle (Slide)
@@ -199,7 +206,7 @@ class ImageNavigation extends React.Component {
       //Floating Button
       isFloatingCircle = (
         <div className='add-profile'>
-          <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/>
+          {this.props.club_profile_photo ? <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/> : ''}
         </div>
       );
       addImageCircle = '';

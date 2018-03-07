@@ -99,6 +99,10 @@
           }
         }
 
+        input[type=text]:disabled {
+          cursor: pointer;
+        }
+
         input[type=button] {
           position: absolute;
           top: 0;
