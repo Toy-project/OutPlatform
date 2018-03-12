@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const urlAuth = `/auth`;
+const urlAuth = `${process.env.API_URL}/auth`;
 
 export function memberLogin(mem_userid, mem_pw){
   const data = {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlNexmo = `/nexmo`;
+const urlNexmo = `${process.env.API_URL}/nexmo`;
 
 export function sendingVerifiedCode(number) {
   const brand = "외주대학교"

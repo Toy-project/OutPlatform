@@ -9,8 +9,8 @@ class Footer extends React.Component {
           <div className="contact-info-wrapper">
             <h5>contact</h5>
             <ul>
-              <li>mail@mail.com</li>
-              <li>toy project</li>
+              <li>연락처 : 010-2492-0223</li>
+              <li>이메일 : toyprojectgroup@gmail.com</li>
             </ul>
           </div>
         </div>

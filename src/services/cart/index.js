@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as variables from 'helper/variables';
-const urlCart = `/cart`;
+const urlCart = `${process.env.API_URL}/cart`;
 
 export function getCart(mem_id, start) {
   return axios({

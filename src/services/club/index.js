@@ -1,5 +1,5 @@
 import axios from 'axios';
-const urlClub = `/club`;
+const urlClub = `${process.env.API_URL}/club`;
 
 export function getClubById(club_id){
   return axios({

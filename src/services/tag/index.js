@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlTag = `/tag`;
+const urlTag = `${process.env.API_URL}/tag`;
 
 export function getAllTag(start, end){
   return axios({

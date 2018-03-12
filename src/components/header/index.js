@@ -66,10 +66,10 @@ class Header extends React.Component {
                 <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword')} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
               </div>
             </form>
-            <span className='quoting-count'>
+            {/* <span className='quoting-count'>
               외주 견적 문의 <br />
               130  회
-            </span>
+            </span> */}
             <section>
               <Scroll offset={this.state.containerHeight}>
                 <i className='arrow-to-bottom'></i>

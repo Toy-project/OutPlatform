@@ -12,31 +12,49 @@ pipeline {
             echo 'Building ${BRANCH_NAME}'
             echo 'Current workspace : ${workspace}'
 
+            // remove shared diretory
+            echo 'remove shared diretory'
+            sh 'rm -rf /shared/*'
+
             //copy workspace -> shared
             echo 'copy workspace directory'
             sh 'cp -rf ./* /shared'
+
+            // copy config -> shared
+            echo 'copy config diretory'
+            sh 'cp -rf /config /shared'
           }
         }
 
-        stage('Develop Deploy') {
+        stage('Product Deploy') {
           agent any
           when {
-            branch 'develop'
+            branch 'master'
           }
           steps {
-            //develop container list
-            echo 'develop container list'
-            sh 'docker exec -i develop ls -al'
+            retry(2) {
+              timeout(2) { // 2minutes
+                //develop container list
+                echo 'develop container list'
+                sh 'docker exec -i product ls -al'
 
-            // npm install
-            echo 'npm install'
-            sh 'docker exec -i develop npm --prefix /shared install /shared'
+                // copy shared -> workspace
+                echo 'copy shared directory'
+                sh 'docker exec -i product cp -rf /shared/* /app'
 
+                // npm install
+                echo 'npm install'
+                sh 'docker exec -i product npm --prefix /app install /app'
 
-            //pm2 delete & start
-            echo 'pm2 develop start'
-            sh 'docker exec -i develop pm2 delete /shared/ecosystem.json'
-            sh 'docker exec -i develop pm2 start /shared/ecosystem.json'
+                // npm run build
+                echo 'npm install'
+                sh 'docker exec -i product npm --prefix /app run build /app'
+
+                //pm2 delete & start
+                echo 'pm2 product start'
+                sh 'docker exec -i product npm --prefix /app run product /app'
+              }
+            }
           }
         }
     }

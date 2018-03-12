@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlColleges = `/colleges/`;
+const urlColleges = `${process.env.API_URL}/colleges/`;
 
 export function getColleges(start, end, keyword) {
   return axios({

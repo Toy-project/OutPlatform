@@ -89,7 +89,7 @@ class Portfolio extends React.Component {
         <div className='portfolio-card'>
           {isDelete}
           <div className='card-image'>
-            {this.props.data.career_photo ? <img src={`/${this.props.data.career_photo}`} alt="" className='default-image' /> :
+            {this.props.data.career_photo ? <img src={`${process.env.API_URL}/${this.props.data.career_photo}`} alt="" className='default-image' /> :
                                             <img src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif' alt="" className='default-image' /> }
           </div>
           <div className='card-content-container'>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlMailAuth = `/mail`;
+const urlMailAuth = `${process.env.API_URL}/mail`;
 
 export function sendEmail(receiver){
   console.log(receiver);

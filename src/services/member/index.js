@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlMember = `/member/`;
+const urlMember = `${process.env.API_URL}/member/`;
 
 export function getMemberByUserId(mem_id) {
   return axios({

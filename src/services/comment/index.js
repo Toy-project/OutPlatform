@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlComment = `/comment`;
+const urlComment = `${process.env.API_URL}/comment`;
 
 export function getCommentById(club_id, start, end) {
   return axios({

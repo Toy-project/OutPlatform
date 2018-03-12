@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlPortfolio = `/career`;
+const urlPortfolio = `${process.env.API_URL}/career`;
 
 export function getAllClubByCareerId(club_id){
   return axios({

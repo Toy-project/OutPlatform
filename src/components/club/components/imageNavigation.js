@@ -195,20 +195,7 @@ class ImageNavigation extends React.Component {
           {imageAddToggleForSlide()}
         </div>
       );
-      // isFloatingCircle = (
-      //   <div>
-      //     <div className='add-profile'>
-      //       <span className='profile'>회원관리에서 <br /> 등록해주세요.</span>
-      //     </div>
-      //   </div>
-      // );
     } else {
-      //Floating Button
-      // isFloatingCircle = (
-      //   <div className='add-profile'>
-      //     {this.props.club_profile_photo ? <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/> : ''}
-      //   </div>
-      // );
       addImageCircle = '';
     }
 

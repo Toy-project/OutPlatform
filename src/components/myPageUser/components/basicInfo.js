@@ -77,7 +77,7 @@ class BasicInfo extends React.Component {
     const images = () => {
       if(this.props.profile_photo) {
         return (
-          <img src={`/${this.props.profile_photo}`} alt="" className='profile' />
+          <img src={`${process.env.API_URL}/${this.props.profile_photo}`} alt="" className='profile' />
         );
       } else {
         return (

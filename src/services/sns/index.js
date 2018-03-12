@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlTag = `/sns`;
+const urlTag = `${process.env.API_URL}/sns`;
 
 export function getSnsByClubId(club_id){
   return axios({

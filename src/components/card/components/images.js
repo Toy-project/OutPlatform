@@ -22,10 +22,10 @@ class Images extends React.Component {
     return(
       <div onClick={this.goToClub}>
         <Scroll offset={0}>
-          {image[0] ? <img src={`/${image[0]}`} alt='' className='card-image' /> :
+          {image[0] ? <img src={`${process.env.API_URL}/${image[0]}`} alt='' className='card-image' /> :
                       <span className="default"></span>}
         </Scroll>
-        {this.props.club_profle_photo ? <img src={`/${this.props.club_profle_photo}`} alt='' className='float' /> : <div href="" className="float"></div>}
+        {this.props.club_profle_photo ? <img src={`${process.env.API_URL}/${this.props.club_profle_photo}`} alt='' className='float' /> : <div href="" className="float"></div>}
       </div>
     );
   }

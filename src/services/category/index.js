@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlGetAllCategory = `/category`;
+const urlGetAllCategory = `${process.env.API_URL}/category`;
 
 export function getAllCategory(start, end){
   return axios({

@@ -362,7 +362,7 @@ class PortfolioPopup extends React.Component{
       } else {
         return (
           <div>
-            <img src={`/${this.props.data.career_photo}`} className='preview' alt='' />
+            <img src={`${process.env.API_URL}/${this.props.data.career_photo}`} className='preview' alt='' />
           </div>
         );
       }
