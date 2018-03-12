@@ -3,11 +3,11 @@ import React from 'react';
 import './scss/index.scss';
 
 class ErrorPage extends React.Component {
-  constructor(props){
-    super(props);
-
-    //to do
-  }
+  // constructor(props){
+  //   super(props);
+  //
+  //   //to do
+  // }
   render() {
     let err_title = '';
     let err_msg = '';

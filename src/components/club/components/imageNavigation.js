@@ -185,7 +185,7 @@ class ImageNavigation extends React.Component {
 
     const imageOverflowsLimitToggle = this.state.imageOverflowsLimitToggle ? <MessagePopup msg={'이미지 용량 2MB를 넘을 수 없습니다.'} close={this.isImageOverflowsLimitToggle} /> : '';
 
-    let isFloatingCircle;
+    // let isFloatingCircle;
     let addImageCircle;
 
     //단체 페이지 수정일 때,
@@ -195,20 +195,20 @@ class ImageNavigation extends React.Component {
           {imageAddToggleForSlide()}
         </div>
       );
-      isFloatingCircle = (
-        <div>
-          <div className='add-profile'>
-            <span className='profile'>회원관리에서 <br /> 등록해주세요.</span>
-          </div>
-        </div>
-      );
+      // isFloatingCircle = (
+      //   <div>
+      //     <div className='add-profile'>
+      //       <span className='profile'>회원관리에서 <br /> 등록해주세요.</span>
+      //     </div>
+      //   </div>
+      // );
     } else {
       //Floating Button
-      isFloatingCircle = (
-        <div className='add-profile'>
-          {this.props.club_profile_photo ? <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/> : ''}
-        </div>
-      );
+      // isFloatingCircle = (
+      //   <div className='add-profile'>
+      //     {this.props.club_profile_photo ? <img src={`/${this.props.club_profile_photo}`} className='profile-img' alt=''/> : ''}
+      //   </div>
+      // );
       addImageCircle = '';
     }
 
@@ -219,7 +219,6 @@ class ImageNavigation extends React.Component {
             {this.state.preview_photo ? cropper : ''}
             {this.state.preview_photo ? '' : isSlider}
             {this.state.preview_photo ? '' : isArrows}
-            {this.state.preview_photo ? '' : isFloatingCircle}
             {this.state.isLoading ? '' : addImageCircle}
           </div>
           {this.state.isLoading ? loading : ''}

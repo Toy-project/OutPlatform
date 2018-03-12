@@ -18,17 +18,9 @@ import * as Security from 'helper/securityHelper';
 import * as LoginHelper from 'helper/loginHelper';
 
 class myPageUser extends React.Component {
-  constructor(props) {
-    super(props);
-
-    //Redirect if worng myPage access has been detected,
-    //토큰이 없으면
-    if(!Security.defenceAccessingWithoutToken(this.props.login.loggined)) {
-      alert('잘못왔엉');
-      this.props.history.push(`/`);
-      window.location.reload();
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     if(this.props.type === 'member') {
@@ -43,6 +35,12 @@ class myPageUser extends React.Component {
   }
 
   render() {
+    //Redirect if worng myPage access has been detected,
+    //토큰이 없으면
+    if(!Security.defenceAccessingWithoutToken(this.props.login.loggined)) {
+      this.props.history.push(`/`);
+    }
+
     let components;
     let data = {
       'userid' : '',

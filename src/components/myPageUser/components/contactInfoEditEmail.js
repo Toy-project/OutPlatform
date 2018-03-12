@@ -21,7 +21,6 @@ class ContactInfoEditEmail extends React.Component {
       },
     }
 
-    this.handleBlur = this.handleBlur.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     //공백 처리
@@ -45,6 +44,57 @@ class ContactInfoEditEmail extends React.Component {
         if(!RegisterHelper.isEmailAvailable(value)) {
           err_msg = '올바르지 않는 형식입니다.';
           err = true;
+        } else {
+          if(!RegisterHelper.isEmailAvailable(target.value)) {
+            err_msg = '올바르지 않는 형식입니다.';
+            err = true;
+          } else {
+            err_msg = '잠시만 기달려주세요.';
+            if(target.value === this.props.email) {
+              err_msg = '현재와 동일한 이메일입니다.';
+              err = true;
+            } else {
+              Member.getMemberEmail(target.value)
+                .then((response) => {
+                  if(!response.data) {
+                    Club.getClubEmail(target.value)
+                      .then((response)=> {
+                        if(!response.data) {
+                          err_msg = '이용 가능한 이메일입니다.';
+                          err = false;
+                        } else {
+                          err_msg = '동일한 이메일이 존재합니다.';
+                          err = true;
+                        }
+
+                        this.setState({
+                          email : {
+                            ...this.state.email,
+                            err_msg: err_msg,
+                            err : err,
+                          },
+                        });
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      })
+                  } else {
+                    err_msg = '동일한 이메일이 존재합니다.';
+                    err = true;
+                  }
+                  this.setState({
+                    email : {
+                      ...this.state.email,
+                      err_msg: err_msg,
+                      err : err,
+                    },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          }
         }
       }
     }
@@ -53,75 +103,6 @@ class ContactInfoEditEmail extends React.Component {
       [target.id] : {
         ...[target.id],
         value: value,
-        err_msg: err_msg,
-        err : err,
-      },
-    });
-  }
-
-  handleBlur(e) {
-    const target = e.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
-    let err_msg = '';
-    let err = false;
-
-    if(Common.isEmpty(value)) return false;
-
-    if(target.id === 'email') {
-      if(!RegisterHelper.isEmailAvailable(target.value)) {
-        err_msg = '올바르지 않는 형식입니다.';
-        err = true;
-      } else {
-        if(target.value === this.props.email) {
-          err_msg = '현재와 동일한 이메일입니다.';
-          err = true;
-        } else {
-          Member.getMemberEmail(target.value)
-            .then((response) => {
-              if(!response.data) {
-                Club.getClubEmail(target.value)
-                  .then((response)=> {
-                    if(!response.data) {
-                      err_msg = '이용 가능한 이메일입니다.';
-                      err = false;
-                    } else {
-                      err_msg = '동일한 이메일이 존재합니다.';
-                      err = true;
-                    }
-
-                    this.setState({
-                      email : {
-                        ...this.state.email,
-                        err_msg: err_msg,
-                        err : err,
-                      },
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  })
-              } else {
-                err_msg = '동일한 이메일이 존재합니다.';
-                err = true;
-              }
-              this.setState({
-                email : {
-                  ...this.state.email,
-                  err_msg: err_msg,
-                  err : err,
-                },
-              });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      }
-    }
-
-    this.setState({
-      [target.id] : {
-        value: target.value,
         err_msg: err_msg,
         err : err,
       },

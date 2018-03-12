@@ -2,12 +2,13 @@ import React from 'react';
 import  { withRouter } from 'react-router-dom';
 import { CSSTransition } from "react-css-transition";
 
-import { getMemberUserId, getMemberEmail, createMember } from 'services/member';
+import { getMemberUserId, getMemberEmail } from 'services/member';
 import * as Club from 'services/club';
-import * as PhoneAuth from 'services/phoneAuth';
+import * as MailAuth from 'services/mailAuth';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
+import * as MailAuthHelper from 'helper/mailAuthHelper';
 
 import * as AnimationStyle from 'helper/animationStyle';
 
@@ -48,11 +49,6 @@ class RegisterMember extends React.Component {
         err_msg: '',
         err: null,
       },
-      "mem_phone_auth" : {
-        value: '',
-        err_msg: '',
-        err: null,
-      },
 
       "mem_mail_agree" : {
         value: 1,
@@ -60,11 +56,7 @@ class RegisterMember extends React.Component {
         err: null,
       },
 
-      "mem_phone_auth_btn" : {
-        type: false,
-        err: null,
-        loading: false,
-      },
+      email_auth_flag : false,
 
       popupContainerHeight : 0,
       active : false,
@@ -78,10 +70,6 @@ class RegisterMember extends React.Component {
 
     //공백 처리
     this.handleEmptyValue = this.handleEmptyValue.bind(this);
-
-    //연락처 인증
-    this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
-    this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
 
     //handle submit
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -144,6 +132,8 @@ class RegisterMember extends React.Component {
         }
       }
     }
+
+    sessionStorage.setItem(target.id, value);
 
     this.setState({
       [target.id] : {
@@ -328,166 +318,6 @@ class RegisterMember extends React.Component {
     });
   }
 
-  requestPhoneAuth(e) {
-    const phone = this.state.mem_phone;
-    const phone_ref = this.refs.mem_phone;
-    const phone_auth = this.state.mem_phone_auth;
-    const phone_auth_btn = this.state.mem_phone_auth_btn;
-
-    if(Common.isEmpty(phone.value)) { phone_ref.focus();
-    } else if(!Helper.isPhoneAvailable(phone.value)) { phone_ref.focus();
-    } else {
-      const phone = phone_ref.value.split('-');
-      const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
-
-      //데이터 로딩 true
-      this.setState({
-        mem_phone_auth : {
-          ...phone_auth,
-          err : null,
-          err_msg : '',
-        },
-        mem_phone_auth_btn : {
-          ...phone_auth_btn,
-          loading : !phone_auth_btn.loading
-        }
-      });
-
-      //Sending Phone Auth request
-      PhoneAuth.sendingVerifiedCode(to)
-        .then((res) => {
-          //성공일 때
-          const data = res.data;
-
-          let err_msg = '';
-          let err = null;
-          let type = phone_auth_btn.type;
-          let loading = false;
-
-          if(!Common.isNull(localStorage.getItem('request_id'))) {
-            localStorage.removeItem('request_id', data.request_id);
-            localStorage.setItem('request_id', data.request_id);
-          } else {
-            localStorage.setItem('request_id', data.request_id);
-          }
-
-          //전송 완료
-          if(data.status === '0') {
-            err_msg = '인증번호가 전송되었습니다. 잠시만 기다려주세요.';
-            type = !type;
-          //이미 전송 완료
-          } else if(data.status === '10') {
-            err_msg = '이미 전송되었습니다. 확인 후 인증번호를 입력해주세요.';
-            type = !type;
-
-          }
-
-          this.setState({
-            mem_phone_auth : {
-              ...phone_auth,
-              err_msg : err_msg,
-              err : err
-            },
-            mem_phone_auth_btn : {
-              ...phone_auth_btn,
-              type : type,
-              loading : loading,
-              err : err
-            },
-            err_msg : '',
-          });
-        })
-        .catch((err) => {
-          this.setState({
-            err_msg : '네트워크가 원활하지 않습니다.',
-          });
-        });
-    }
-  }
-
-  responsePhoneAuth(e) {
-    const phone_ref = this.refs.mem_phone;
-    const phone_auth = this.state.mem_phone_auth;
-    const phone_auth_ref = this.refs.mem_phone_auth;
-    const phone_auth_btn = this.state.mem_phone_auth_btn;
-
-    if(Common.isEmpty(phone_auth.value)) { phone_auth_ref.focus();
-    } else {
-      if(Common.isNull(localStorage.getItem('request_id'))) return false;
-
-      const data = {
-        request_id : localStorage.getItem('request_id'),
-        code : phone_auth.value
-      }
-
-      //데이터 로딩 true
-      this.setState({
-        mem_phone_auth : {
-          ...phone_auth,
-          err : null,
-          err_msg : '',
-        },
-        mem_phone_auth_btn : {
-          ...phone_auth_btn,
-          loading : !phone_auth_btn.loading
-        }
-      });
-
-      PhoneAuth.checkVerifiedCode(data)
-        .then((res) => {
-          const result = res.data;
-
-          let err_msg = '';
-          let err = null;
-          let type = phone_auth_btn.type;
-          let loading = false;
-
-          //인증완료
-          if(result.status === '0') {
-            err_msg = '인증이 완료되었습니다.';
-            err = false;
-
-            localStorage.removeItem('request_id');
-          //인증코드 일치하지 않을 때
-          } else if(result.status === '16' || result.status === '17') {
-            err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
-            err = true;
-
-            phone_auth_ref.focus();
-          //인증코드 실패
-          } else if(result.status === '6') {
-            err_msg = '많은 입력 실패로 인하여 다시 인증번호를 받아주세요.';
-            err = true;
-            type = !type;
-            phone_auth_ref.value = '';
-            phone_ref.focus();
-
-          } else {
-            //to do list
-          }
-
-          this.setState({
-            mem_phone_auth : {
-              ...phone_auth,
-              err : err,
-              err_msg : err_msg
-            },
-            mem_phone_auth_btn : {
-              ...phone_auth_btn,
-              type: type,
-              loading : loading
-            },
-            err_msg : '',
-          });
-        })
-        .catch((err) => {
-          this.setState({
-            err_msg : '네트워크가 원활하지 않습니다.',
-          });
-        });
-    }
-  }
-
   handleEmptyValue(e) {
     if(Common.isEmpty(this.state.mem_userid.value)) this.refs.mem_userid.focus();
     else if(Common.isEmpty(this.state.mem_pw.value)) this.refs.mem_pw.focus();
@@ -495,7 +325,6 @@ class RegisterMember extends React.Component {
     else if(Common.isEmpty(this.state.mem_email.value)) this.refs.mem_email.focus();
     else if(Common.isEmpty(this.state.mem_name.value)) this.refs.mem_name.focus();
     else if(Common.isEmpty(this.state.mem_phone.value)) this.refs.mem_phone.focus();
-    // else if(Common.isEmpty(this.state.mem_phone_auth.value)) this.refs.mem_phone_auth.focus();
     else {
       return true;
     }
@@ -514,9 +343,6 @@ class RegisterMember extends React.Component {
       this.state.mem_email.err,
       this.state.mem_name.err,
       this.state.mem_phone.err,
-
-      //True -> Ok / False -> Error
-      // this.state.mem_phone_auth_btn.err
     ];
     //Empty Data check
     if(!this.handleEmptyValue()) return false;
@@ -538,31 +364,38 @@ class RegisterMember extends React.Component {
         "mem_phone" : this.state.mem_phone.value,
         "mem_mail_agree" : 1
       };
+      //Set Data to parents
+      this.props.setData(data);
 
-    //loading
-    this.setState({
-      isLoading: !this.state.isLoading,
-    });
-
-    //Post 요청(Member)
-    createMember(data)
-      .then((response) => {
-        //loading
-        this.setState({
-          isLoading: !this.state.isLoading,
-          err_msg: '',
-        });
-        this.handleToggle();
-        setTimeout(() => {
-          this.props.toggleToRegisterFinish();
-        }, 300);
-      })
-      .catch((err) => {
-        this.setState({
-          isLoading: !this.state.isLoading,
-          err_msg : '네트워크가 원활하지 않습니다.',
-        });
+      //loading
+      this.setState({
+        isLoading: !this.state.isLoading,
       });
+
+      MailAuth.sendEmail(data.mem_email)
+        .then((res) => {
+          if(res.data) {
+            //Save auth
+            MailAuthHelper.setMailAuth(res.data.auth);
+
+            //5분 후에 자동으로 삭제
+            setTimeout(() => {
+              MailAuthHelper.removeMailAuth();
+            }, 300000);
+
+            this.setState({
+              isLoading: !this.state.isLoading,
+            });
+
+            this.props.toggleToRegisterEmailAuth();
+          }
+        })
+        .catch((err) => {
+          //loading
+          this.setState({
+            isLoading: !this.state.isLoading,
+          });
+        });
     }
   }
 
@@ -588,7 +421,6 @@ class RegisterMember extends React.Component {
         <InnerLoading loading={this.state.isLoading} />
       </div>
     );
-
 
     const errorClassName = (identifier) => {
       if(identifier.err == null) {
@@ -630,12 +462,12 @@ class RegisterMember extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="input-register">
                 <label htmlFor="mem_userid">아이디</label>
-                <input type="text" id="mem_userid" ref='mem_userid' onChange={this.handleChange} onBlur={this.handleBlur} />
+                <input type="text" id="mem_userid" ref='mem_userid' onChange={this.handleChange} onBlur={this.handleBlur} defaultValue={sessionStorage.getItem('mem_userid')} />
                 <a className={errorClassName(this.state.mem_userid)}>{this.state.mem_userid.err_msg}</a>
               </div>
               <div className="input-register">
                 <label htmlFor="mem_pw">비밀번호</label>
-                <input type="password" id="mem_pw" ref='mem_pw' onChange={this.handleChange} onBlur={this.handleBlur} />
+                <input type="password" id="mem_pw" ref='mem_pw' onChange={this.handleChange} onBlur={this.handleBlur}  />
                 <a className={errorClassName(this.state.mem_pw)}>{this.state.mem_pw.err_msg}</a>
               </div>
               <div className="input-register">
@@ -645,17 +477,17 @@ class RegisterMember extends React.Component {
               </div>
               <div className="input-register">
                 <label htmlFor="mem_email">이메일 주소</label>
-                <input type="text" id="mem_email" ref='mem_email' onChange={this.handleChange} onBlur={this.handleBlur} />
+                <input type="text" id="mem_email" ref='mem_email' onChange={this.handleChange} onBlur={this.handleBlur} defaultValue={sessionStorage.getItem('mem_email')} />
                 <a className={errorClassName(this.state.mem_email)}>{this.state.mem_email.err_msg}</a>
               </div>
               <div className="input-register">
                 <label htmlFor="mem_name">이름</label>
-                <input type="text" id="mem_name" ref='mem_name' onChange={this.handleChange} onBlur={this.handleBlur} />
+                <input type="text" id="mem_name" ref='mem_name' onChange={this.handleChange} onBlur={this.handleBlur} defaultValue={sessionStorage.getItem('mem_name')} />
                 <a className={errorClassName(this.state.mem_name)}>{this.state.mem_name.err_msg}</a>
               </div>
               <div className="input-register">
                 <label htmlFor="mem_phone">전화번호</label>
-                <input type="text" id="mem_phone" ref='mem_phone' onChange={this.handleChange}/>
+                <input type="text" id="mem_phone" ref='mem_phone' onChange={this.handleChange} defaultValue={sessionStorage.getItem('mem_phone')}/>
                 <a className={errorClassName(this.state.mem_phone)}>{this.state.mem_phone.err_msg}</a>
               </div>
               {/* <div className="input-register">

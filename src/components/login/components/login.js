@@ -121,7 +121,7 @@ class Login extends React.Component {
               </div>
               <h3>로그인</h3>
               <p className='p'>
-                {Common.isError(this.props.login) ? '네트워크 상태가 좋지 않습니다.' : this.state.err_msg}
+                {Common.isError(this.props.login) ? '로그인에 실패하였습니다.' : this.state.err_msg}
               </p>
               <form onSubmit={this.handleSubmit}>
                 <input type='text' ref='userid' placeholder='아이디를 입력해주세요.' />

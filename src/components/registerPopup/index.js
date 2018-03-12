@@ -6,6 +6,9 @@ import RegisterSelection from './components/registerSelection';
 import RegisterFinish from './components/registerFinish';
 import RegisterMember from './components/registerMember';
 
+import { InnerLoading, EmailAuth } from 'components/';
+
+import { createMember } from 'services/member';
 
 class RegisterPopup extends React.Component {
 
@@ -15,42 +18,89 @@ class RegisterPopup extends React.Component {
     this.state = {
       registerSelectionToggle: true,
       registerMemberToggle: false,
+      registerEmailAuthToggle: false,
+
+      //이메일 인증용
+      error: false,
+      //이메일 인증 체크여부
+      emailAuthCheck: false,
+
+      //폼 작성 데이터
+      data : [],
+      isLoading : false,
     }
 
-    this.registerToMemberToggle = this.registerToMemberToggle.bind(this);
-    this.registerFinishToggle = this.registerFinishToggle.bind(this);
+    this.registerMemberToggle = this.registerMemberToggle.bind(this);
+    this.registerEmailAuthToggle = this.registerEmailAuthToggle.bind(this);
+
+    this.setEmailAuthFlag = this.setEmailAuthFlag.bind(this);
+    this.setData = this.setData.bind(this);
   }
 
-  registerFinishToggle() {
+  setData(data) {
     this.setState({
-      registerMemberToggle: !this.state.registerMemberToggle,
+      data: data,
     });
   }
 
-  registerToMemberToggle() {
+  setEmailAuthFlag() {
     this.setState({
-      registerSelectionToggle: !this.state.registerSelectionToggle,
+      isLoading: !this.state.isLoading,
+    });
+
+    createMember(this.state.data)
+      .then((response) => {
+        //loading
+        this.setState({
+          isLoading: !this.state.isLoading,
+          emailAuthCheck: !this.state.emailAuthCheck,
+        });
+      })
+      .catch((err) => {
+        this.registerEmailAuthToggle();
+        this.setState({
+          isLoading: !this.state.isLoading,
+          error: !this.state.error,
+        });
+      });
+  }
+
+  registerEmailAuthToggle() {
+    this.setState({
+      registerEmailAuthToggle: !this.state.registerEmailAuthToggle,
+    });
+  }
+
+  registerMemberToggle() {
+    this.setState({
       registerMemberToggle: !this.state.registerMemberToggle,
     });
   }
 
   render() {
-    let showRegisterStep;
-    let registerFinish;
+    let showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerMemberToggle} close={this.props.close} />;
+    const loading = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={this.state.isLoading} />
+      </div>
+    );
 
-    if(this.state.registerSelectionToggle){
-      showRegisterStep = <RegisterSelection toggleToRegisterMember={this.registerToMemberToggle} close={this.props.close} />;
-    } else if(this.state.registerMemberToggle) {
-      showRegisterStep = <RegisterMember toggleToRegisterFinish={this.registerFinishToggle} close={this.props.close} />;
-    } else {
-      showRegisterStep = '';
-      registerFinish = <RegisterFinish close={this.props.close} />;
+    if(this.state.registerMemberToggle){
+      showRegisterStep = <RegisterMember toggleToRegisterEmailAuth={this.registerEmailAuthToggle} setData={this.setData} close={this.props.close} />;
+    }
+
+    if(this.state.registerEmailAuthToggle){
+      showRegisterStep = <EmailAuth close={this.registerEmailAuthToggle} emailAuthCheck={this.setEmailAuthFlag} recevier={this.state.data.mem_email} error={this.state.error} />;
+    }
+
+    if(this.state.emailAuthCheck) {
+      showRegisterStep = <RegisterFinish close={this.props.close} data={this.state.data} />;
     }
 
     return (
       <div className='popup_container'>
         {showRegisterStep}
-        {registerFinish}
+        {this.state.isLoading ? loading : ''}
       </div>
     );
   }

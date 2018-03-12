@@ -12,13 +12,32 @@ import * as Common from 'helper/common';
 import { cardListEnd } from 'helper/variables';
 
 import { Card, InnerError, InnerLoading } from 'components/';
+import MessagePopup from 'components/messagePopup';
 
 class CardsList extends React.Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      //카트 로딩
+      isLoading: false,
+
+      //카트 완료 메세지
+      messagePopup: false,
+    }
+
     //SetState binding
     this.loadingData = this.loadingData.bind(this);
+    this.isLoadingToggle = this.isLoadingToggle.bind(this);
+
+    //카트 완료 메세지
+    this.messagePopup = this.messagePopup.bind(this);
+  }
+
+  messagePopup() {
+    this.setState({
+      messagePopup: !this.state.messagePopup,
+    });
   }
 
   loadingData() {
@@ -30,8 +49,27 @@ class CardsList extends React.Component {
     }
   }
 
+  isLoadingToggle() {
+    this.setState({
+      isLoading: !this.state.isLoading
+    });
+  }
+
   render() {
     let club_count = this.props.cards.count;
+
+    //카트 담기 로딩
+    let loadingForCart = (
+      <div className='global-loading fixed'>
+        <InnerLoading loading={true} />
+      </div>
+    );
+
+    //카트 완료 메세지
+    const messagePopupForCart = (
+      <MessagePopup close={this.messagePopup} msg={'장바구니에 담겼습니다.'} />
+    );
+
     const card = () => {
       if(Common.isLoading(this.props.cards)) {
         return (
@@ -59,7 +97,9 @@ class CardsList extends React.Component {
         return (
           <li key={key}>
             <Card
-              {...card}
+              data = {card}
+              loadingForCart = {this.isLoadingToggle}
+              messagePopupForCart = {this.messagePopup}
             />
           </li>
         );
@@ -90,6 +130,9 @@ class CardsList extends React.Component {
             {card()}
           </InfiniteScroll>
         </ul>
+        {/* 카트 로딩 */}
+        {this.state.isLoading ? loadingForCart : ''}
+        {this.state.messagePopup ? messagePopupForCart : ''}
       </div>
     );
   }
@@ -115,6 +158,7 @@ CardsList.propTypes = {
 const mapStateToProps = (state) => {
   return {
     cards: state.cards,
+    cart: state.cart,
   }
 }
 

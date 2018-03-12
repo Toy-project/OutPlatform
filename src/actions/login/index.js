@@ -38,7 +38,7 @@ export function tryLoggingIn(userid, pw, type){
               window.location.reload();
             })
             .catch((err) => {
-              dispatch(error(err.data));
+              dispatch(error(err));
             });
     } else if(type === 'club') {
       return Services
@@ -48,7 +48,7 @@ export function tryLoggingIn(userid, pw, type){
               window.location.reload();
             })
             .catch((err) => {
-              dispatch(error(err.data));
+              dispatch(error(err));
             });
     } else {
       //To do

@@ -9,7 +9,7 @@ export function defenceAccessingWithoutToken(loggined) {
 }
 
 export function defenceAccessingWithInvalidToken() {
-  if(LoginHelper.isMember(LoginHelper.getCurrentTokenData())) {
+  if(LoginHelper.isMember(LoginHelper.getCurrentTokenData() ? LoginHelper.getCurrentTokenData() : [])) {
     return false;
   }
   return true;

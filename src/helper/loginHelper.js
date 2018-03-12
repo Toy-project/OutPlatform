@@ -23,7 +23,7 @@ export function handleExpire() {
 
   //토큰 유효성 검사
   if(tokenData.exp < parseInt((current.valueOf() / 1000), 10)) {
-    console.log('expired');
+    // console.log('expired');
     removeToken();
     return false;
   }
@@ -32,26 +32,26 @@ export function handleExpire() {
 }
 
 export function createToken(token) {
-  localStorage.setItem(tokenName,JSON.stringify(token));
+  sessionStorage.setItem(tokenName,JSON.stringify(token));
 }
 
 export function removeToken() {
-  localStorage.removeItem(tokenName);
+  sessionStorage.removeItem(tokenName);
 }
 
 export function getCurrentToken() {
-  if(localStorage.getItem(tokenName) === null) {
+  if(sessionStorage.getItem(tokenName) === null) {
     return false;
   }
 
-  return JSON.parse(localStorage.getItem(tokenName));
+  return JSON.parse(sessionStorage.getItem(tokenName));
 }
 
 export function getCurrentTokenData() {
-  if(localStorage.getItem(tokenName) === null) {
+  if(sessionStorage.getItem(tokenName) === null) {
     return false;
   }
-  return jwtDecode(localStorage.getItem(tokenName));
+  return jwtDecode(sessionStorage.getItem(tokenName));
 }
 
 //True: 일반회원, False: 단체회원

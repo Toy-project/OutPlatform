@@ -27,7 +27,7 @@ class Nav extends React.Component {
     this.goToMyPageClub = this.goToMyPageClub.bind(this);
     this.goToMyPageUser= this.goToMyPageUser.bind(this);
     this.goToMain = this.goToMain.bind(this);
-
+    this.goToCart = this.goToCart.bind(this);
     //로그아웃
     this.logout = this.logout.bind(this);
   }
@@ -62,6 +62,14 @@ class Nav extends React.Component {
     }
   }
 
+  goToCart() {
+    if(!LoginHelper.isMember(LoginHelper.getCurrentTokenData())) {
+      return false;
+    }
+
+    this.props.history.push(`/cart/`);
+  }
+
   //메인으로 가는 버튼
   goToMain(){
     this.props.history.push(`/`);
@@ -81,7 +89,7 @@ class Nav extends React.Component {
       if(this.props.login.loggined) {
         return (
           <ul className="main-menu hide-on-med-and-down">
-            {/* {!LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li>장바구니</li>) : ''} */}
+            {LoginHelper.isMember(LoginHelper.getCurrentTokenData()) ? (<li onClick={this.goToCart}>장바구니</li>) : ''}
             <li onClick={this.logout}>로그아웃</li>
             <li className='my-page'>
               마이 페이지

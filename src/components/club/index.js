@@ -16,7 +16,7 @@ import Profile from './components/profile';
 import PortfolioNavigation from './components/portfolioNavigation';
 import Comment from './components/comment';
 import Quotation from './components/quotation';
-import SmiliarClub from './components/smiliarClub';
+// import SmiliarClub from './components/smiliarClub';
 
 import * as Security from 'helper/securityHelper';
 
@@ -24,19 +24,9 @@ import { InnerError, InnerLoading } from 'components/';
 
 class Club extends React.Component {
 
-  constructor(props){
-    super(props);
-
-    //Redirect if worng myPage access has been detected,
-    if(this.props.myPage) {
-      //토큰이 없으면
-      if(!Security.defenceAccessingWithoutToken(this.props.login.loggined) ||
-         !Security.defenceAccessingWithInvalidToken()) {
-        this.props.history.push(`/`);
-        window.location.reload();
-      }
-    }
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   componentDidMount() {
     const club_id = this.props.match.params.club_id || LoginHelper.getCurrentTokenData().club_id;
@@ -46,6 +36,15 @@ class Club extends React.Component {
   }
 
   render() {
+    //Redirect if worng myPage access has been detected,
+    if(this.props.myPage) {
+      //토큰이 없으면
+      if(!Security.defenceAccessingWithoutToken(this.props.login.loggined) ||
+         !Security.defenceAccessingWithInvalidToken()) {
+        this.props.history.push(`/`);
+      }
+    }
+
     let components;
     let data = {
       'club_id': '',
@@ -173,6 +172,7 @@ const mapStateToProps = (state) => {
   return {
     club: state.club,
     login: state.login,
+    cart: state.cart,
   }
 }
 

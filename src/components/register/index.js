@@ -6,14 +6,14 @@ import './scss/index.scss';
 
 import * as Helper from 'helper/registerHelper';
 import * as Common from 'helper/common';
+import * as MailAuthHelper from 'helper/mailAuthHelper';
 
 import { getClubUserId, createClub, getClubEmail, getClubName } from 'services/club';
 import * as Member from 'services/member';
-import * as PhoneAuth from 'services/phoneAuth';
-import * as College from 'services/colleges';
+import * as MailAuth from 'services/mailAuth';
 
 import RegisterFinish from 'components/registerPopup/components/registerFinish';
-import { InnerLoading } from 'components/';
+import { InnerLoading, EmailAuth } from 'components/';
 import FindCollege from './components/findCollege';
 
 class Register extends React.Component {
@@ -100,8 +100,13 @@ class Register extends React.Component {
       },
 
       findCollegeToggle : false,
-      registerFinishToggle : false,
       isLoading : false,
+
+      registerEmailAuthToggle: false,
+      //이메일 인증용
+      error: false,
+      //이메일 인증 체크여부
+      emailAuthCheck: false,
     }
 
     //Input 처리
@@ -111,16 +116,16 @@ class Register extends React.Component {
     //공백 처리
     this.handleEmptyValue = this.handleEmptyValue.bind(this);
 
-    //연락처 인증
-    this.requestPhoneAuth = this.requestPhoneAuth.bind(this);
-    this.responsePhoneAuth = this.responsePhoneAuth.bind(this);
+    //이메일 인증
+    this.registerEmailAuthToggle = this.registerEmailAuthToggle.bind(this);
+    this.createClub = this.createClub.bind(this);
+    this.EmailAuthCheck = this.EmailAuthCheck.bind(this);
 
     this.setCollegeName = this.setCollegeName.bind(this);
 
     //Submit
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.registerFinishToggle = this.registerFinishToggle.bind(this);
     this.isFindCollegeToggle = this.isFindCollegeToggle.bind(this);
   }
 
@@ -401,157 +406,53 @@ class Register extends React.Component {
     });
   }
 
-  requestPhoneAuth(e) {
-    const phone = this.state.club_phone;
-    const phone_ref = this.refs.club_phone;
-    const phone_auth = this.state.club_phone_auth;
-    const phone_auth_btn = this.state.club_phone_auth_btn;
-
-    if(Common.isEmpty(phone.value)) { phone_ref.focus();
-    } else if(!Helper.isPhoneAvailable(phone.value)) { phone_ref.focus();
-    } else {
-      const phone = phone_ref.value.split('-');
-      const to = `+82${phone[0]}${phone[1]}${phone[2]}`;
-
-      //데이터 로딩 true
-      this.setState({
-        club_phone_auth : {
-          ...phone_auth,
-          err : null,
-          err_msg : '',
-        },
-        club_phone_auth_btn : {
-          ...phone_auth_btn,
-          loading : !phone_auth_btn.loading
-        }
-      });
-
-      //Sending Phone Auth request
-      PhoneAuth.sendingVerifiedCode(to)
-        .then((res) => {
-          //성공일 때
-          const data = res.data;
-
-          let err_msg = '';
-          let err = null;
-          let type = phone_auth_btn.type;
-          let loading = false;
-
-          if(!Common.isNull(localStorage.getItem('request_id'))) {
-            localStorage.removeItem('request_id', data.request_id);
-            localStorage.setItem('request_id', data.request_id);
-          } else {
-            localStorage.setItem('request_id', data.request_id);
-          }
-
-          if(data.status === '0') {
-            err_msg = '인증번호가 전송되었습니다. 잠시만 기다려주세요.';
-            type = !type;
-          } else if(data.status === '10') {
-            err_msg = '이미 전송되었습니다. 확인 후 인증번호를 입력해주세요.';
-            type = !type;
-
-          }
-
-          this.setState({
-            club_phone_auth : {
-              ...phone_auth,
-              err_msg : err_msg,
-              err : err
-            },
-            club_phone_auth_btn : {
-              ...phone_auth_btn,
-              type : type,
-              loading : loading,
-              err : err
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  EmailAuthCheck() {
+    this.setState({
+      emailAuthCheck: !this.state.emailAuthCheck,
+    });
   }
 
-  responsePhoneAuth(e) {
-    const phone_ref = this.refs.club_phone;
-    const phone_auth = this.state.club_phone_auth;
-    const phone_auth_ref = this.refs.club_phone_auth;
-    const phone_auth_btn = this.state.club_phone_auth_btn;
+  registerEmailAuthToggle() {
+    this.setState({
+      registerEmailAuthToggle: !this.state.registerEmailAuthToggle,
+    });
+  }
 
-    if(Common.isEmpty(phone_auth.value)) { phone_auth_ref.focus();
-    } else {
-      if(Common.isNull(localStorage.getItem('request_id'))) return false;
+  createClub() {
+    const data = {
+      "club_userid" : this.state.club_userid.value,
+      "club_pw" : this.state.club_pw.value,
+      "club_email" : this.state.club_email.value,
+      "club_username" : this.state.club_username.value,
+      "club_phone" : this.state.club_phone.value,
+      "club_name" : this.state.club_name.value,
+      "club_college" : this.state.club_college.value,
+      "union_enabled" : this.state.union_enabled.value ? 1 : 0,
+      "cate_id" : this.state.cate_id.value,
+      "club_copyright" : this.state.club_copyright.value,
+    };
 
-      const data = {
-        request_id : localStorage.getItem('request_id'),
-        code : phone_auth.value
-      }
+    //Loading
+    this.setState({
+      isLoading: !this.state.isLoading,
+    });
 
-      //데이터 로딩 true
-      this.setState({
-        club_phone_auth : {
-          ...phone_auth,
-          err : null,
-          err_msg : '',
-        },
-        club_phone_auth_btn : {
-          ...phone_auth_btn,
-          loading : !phone_auth_btn.loading
-        }
-      });
-
-      PhoneAuth.checkVerifiedCode(data)
-        .then((res) => {
-          const result = res.data;
-
-          let err_msg = '';
-          let err = null;
-          let type = phone_auth_btn.type;
-          let loading = false;
-
-          //인증 완료
-          if(result.status === '0') {
-            err_msg = '인증이 완료되었습니다.';
-            err = false;
-
-            localStorage.removeItem('request_id');
-          //인증 코드 일치 하지 않을 때
-          } else if(result.status === '16' || result.status === '17') {
-            err_msg = '인증번호가 일치하지 않습니다. 다시 입력해주세요.';
-            err = true;
-
-            phone_auth_ref.focus();
-
-          //인증 코드 실패
-          } else if(result.status === '6') {
-            err_msg = '많은 입력 실패로 인하여 다시 인증번호를 받아주세요.';
-            err = true;
-            type = !type;
-            phone_auth_ref.value = '';
-            phone_ref.focus();
-
-          } else {
-            //to do list
-          }
-
-          this.setState({
-            club_phone_auth : {
-              ...phone_auth,
-              err : err,
-              err_msg : err_msg
-            },
-            club_phone_auth_btn : {
-              ...phone_auth_btn,
-              type: type,
-              loading : loading
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
+    //Post API
+    createClub(data)
+      .then((response) => {
+        //loading
+        this.setState({
+          isLoading: !this.state.isLoading,
         });
-    }
+        this.EmailAuthCheck();
+      })
+      .catch((err) => {
+        this.registerEmailAuthToggle();
+        this.setState({
+          isLoading: !this.state.isLoading,
+          error: !this.state.error,
+        });
+      });
   }
 
   handleEmptyValue() {
@@ -605,43 +506,37 @@ class Register extends React.Component {
     });
 
     if(isValid) {
-      const data = {
-        "club_userid" : this.state.club_userid.value,
-        "club_pw" : this.state.club_pw.value,
-        "club_email" : this.state.club_email.value,
-        "club_username" : this.state.club_username.value,
-        "club_phone" : this.state.club_phone.value,
-        "club_name" : this.state.club_name.value,
-        "club_college" : this.state.club_college.value,
-        "union_enabled" : this.state.union_enabled.value ? 1 : 0,
-        "cate_id" : this.state.cate_id.value,
-        "club_copyright" : this.state.club_copyright.value,
-      };
 
       //loading
       this.setState({
         isLoading: !this.state.isLoading,
       });
 
-      //Post API
-        createClub(data)
-          .then((response) => {
-            //loading
+      MailAuth.sendEmail(this.state.club_email.value)
+        .then((res) => {
+          if(res.data) {
+            //Save auth
+            MailAuthHelper.setMailAuth(res.data.auth);
+
+            //5분 후에 자동으로 삭제
+            setTimeout(() => {
+              MailAuthHelper.removeMailAuth();
+            }, 300000);
+
             this.setState({
               isLoading: !this.state.isLoading,
             });
 
-            this.registerFinishToggle();
-          })
-          .catch((err) => {
-          })
+            this.registerEmailAuthToggle();
+          }
+        })
+        .catch((err) => {
+          //loading
+          this.setState({
+            isLoading: !this.state.isLoading,
+          });
+        });
     }
-  }
-
-  registerFinishToggle() {
-    this.setState({
-      registerFinishToggle : !this.state.registerFinishToggle,
-    });
   }
 
   isFindCollegeToggle() {
@@ -664,29 +559,13 @@ class Register extends React.Component {
 
     const findCollegePopup = this.state.findCollegeToggle ? <FindCollege close={this.isFindCollegeToggle} setCollegeName={this.setCollegeName} /> : '';
 
-    // const phoneAuthBtn = () => {
-    //   if(!this.state.club_phone_auth_btn.type) {
-    //     return (
-    //       <input type="button" value="인증번호 발송" className='inspect-phone-btn' onClick={this.requestPhoneAuth} />
-    //     );
-    //   } else {
-    //     return (
-    //       <input type="button" value="확인" className='inspect-phone-btn' onClick={this.responsePhoneAuth} />
-    //     );
-    //   }
-    // }
+    const registerFinish = (
+      <div className='popup_container'>
+        <RegisterFinish close={this.EmailAuthCheck} />
+      </div>
+    );
 
-    const registerFinish = () => {
-      if(!this.state.registerFinishToggle) {
-        return '';
-      } else {
-        return (
-          <div className='popup_container'>
-            <RegisterFinish close={this.registerFinishToggle} />
-          </div>
-        );
-      }
-    }
+    const mailAuth = this.state.registerEmailAuthToggle ? <EmailAuth close={this.registerEmailAuthToggle} emailAuthCheck={this.createClub} recevier={this.state.club_email.value} error={false} /> : '';
 
     const loading = (
       <div className='global-loading fixed'>
@@ -736,15 +615,6 @@ class Register extends React.Component {
                 <input type="text" id='club_phone' ref='club_phone' onChange={this.handleChange} />
                 <a className={errorClassName(this.state.club_phone)}>{this.state.club_phone.err_msg}</a>
               </div>
-              {/* <div className='input-register'>
-                <label htmlFor='club_phone_auth' className='input-title'>인증번호</label>
-                <input type="text" id='club_phone_auth' ref='club_phone_auth' onChange={this.handleChange} />
-                {phoneAuthBtn()}
-                <a className={errorClassName(this.state.club_phone_auth)}>
-                  {this.state.club_phone_auth.err_msg}
-                  {this.state.club_phone_auth_btn.loading ? '잠시만 기달려주세요.' : ''}
-                </a>
-              </div> */}
             </div>
 
             <div className='line hide-on-med-and-down'></div>
@@ -788,8 +658,16 @@ class Register extends React.Component {
             </div>
           </form>
         </div>
-        {registerFinish()}
+        {/* 인증성공시 */}
+        {this.state.emailAuthCheck ? registerFinish : ''}
+
+        {/* 이메일 인증 팝업 */}
+        {mailAuth}
+
+        {/* 대학교 선택 팝업 */}
         {findCollegePopup}
+
+        {/* 로딩 팝업 */}
         {this.state.isLoading ? loading : ''}
       </div>
     );

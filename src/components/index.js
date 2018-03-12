@@ -14,6 +14,9 @@ import InnerError from './innerError';
 import InnerLoading from './innerLoading';
 import FindUserIdPage from './findUserId';
 import FindPasswordPage from './findPassword';
+import EmailAuth from './emailAuth';
+import Cart from './cart';
+import Search from './search';
 
 export {
   Card,
@@ -31,5 +34,8 @@ export {
   InnerLoading,
   InnerError,
   FindUserIdPage,
-  FindPasswordPage
+  FindPasswordPage,
+  EmailAuth,
+  Cart,
+  Search
 };

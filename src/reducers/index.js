@@ -9,6 +9,8 @@ import tag from './tag';
 import sns from './sns';
 import member from './member';
 import login from './login';
+import cart from './cart';
+import search from './search';
 
 const reducers = combineReducers({
   cards,
@@ -19,7 +21,9 @@ const reducers = combineReducers({
   tag,
   sns,
   member,
-  login
+  login,
+  cart,
+  search
 });
 
 export default reducers;

@@ -13,8 +13,9 @@ import configureStore from 'store/';
 import { fetchCards } from 'actions/card';
 import { fetchCategory } from 'actions/category';
 import { fetchTag } from 'actions/tag';
+// import { fetchCart } from 'actions/cart';
 
-// import { handleExpire } from 'helper/loginHelper';
+// import * as LoginHelper from 'helper/loginHelper';
 import { cardListEnd } from 'helper/variables';
 
 const store = configureStore();

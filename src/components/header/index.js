@@ -1,5 +1,6 @@
 import React from 'react';
 import Scroll from 'react-scroll-to-element';
+import  { withRouter } from 'react-router-dom';
 
 import './scss/index.scss';
 import { Nav } from 'components/';
@@ -11,6 +12,7 @@ class Header extends React.Component {
       containerHeight: 0,
     }
     this.onArrowToBottom = this.onArrowToBottom.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +33,15 @@ class Header extends React.Component {
     });
   }
 
+  handleSearch(e) {
+    const keyword = this.refs.keyword.value;
+
+    //세션 저장소에 저장
+    sessionStorage.setItem('keyword', keyword);
+
+    this.props.history.push(`/search/${keyword}`);
+  }
+
   render(){
     return (
       <div id="container" style={{height: window.innerHeight + 'px'}} className="top-container">
@@ -45,10 +56,9 @@ class Header extends React.Component {
             <form>
               <div className="input-field">
                 <label htmlFor="search">
-                  <i></i>
+                  <i onClick={this.handleSearch}></i>
                 </label>
-                <input type="text" id="search" placeholder='ex) 동아리명, 카테고리' />
-
+                <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword')} placeholder='ex) 동아리명, 카테고리' />
               </div>
             </form>
             <span className='quoting-count'>
@@ -67,4 +77,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

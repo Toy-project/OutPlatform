@@ -11,11 +11,11 @@ class RegisterFinish extends React.Component {
     this.state = {
       popupContainerHeight : 0,
       active : false,
-    }
+    };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
-    this.goToMain = this.goToMain.bind(this);
+
     this.setPopupContainerHeight = this.setPopupContainerHeight.bind(this);
   }
 
@@ -29,12 +29,8 @@ class RegisterFinish extends React.Component {
     this.handleToggle();
     setTimeout(() => {
       this.props.close();
+      this.props.history.push('/');
     }, 300);
-  }
-
-  goToMain() {
-    this.props.history.push('/');
-    this.handleClose();
   }
 
   componentDidMount() {
@@ -65,14 +61,15 @@ class RegisterFinish extends React.Component {
         active={this.state.active}>
 
         <div id='popup-wrapper' className="register-finish-container">
-          <div className='close-btn' onClick={this.handleClose}>
+          <div className='close-btn' onClick={this.goToMain}>
             <span className='x-icon'></span>
           </div>
           <h3>회원가입</h3>
           <p className='p'>
+            이메일 인증에 성공하였습니다! <br />
             외주대학교에 입학하신걸 환영합니다!
           </p>
-          <button onClick={this.goToMain} className="emerald-btn">메인페이지로 가기</button>
+          <button onClick={this.handleClose} className="emerald-btn">메인페이지로 가기</button>
         </div>
       </CSSTransition>
     );

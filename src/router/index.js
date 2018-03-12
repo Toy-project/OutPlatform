@@ -9,7 +9,9 @@ import { Main,
          TypeFace,
          ErrorPageLayout,
          FindUserIdLayout,
-         FindPasswordLayout } from 'layout/';
+         FindPasswordLayout,
+         CartLayout,
+         SearchLayout } from 'layout/';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
       <Route path="/error/:type" component={ErrorPageLayout} />
       <Route path='/findUserId/' component={FindUserIdLayout} />
       <Route path='/findPassword/' component={FindPasswordLayout} />
+      <Route path='/cart' component={CartLayout} />
+      <Route path='/search/:keyword' component={SearchLayout} />
     </div>
   )
 }

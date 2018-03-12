@@ -8,6 +8,8 @@ import MyPageUserClubLayout from './myPageUserClub';
 import ErrorPageLayout from './errorPage';
 import FindUserIdLayout from './findUserId';
 import FindPasswordLayout from './findPassword';
+import CartLayout from './cartPage';
+import SearchLayout from './searchPage';
 
 export {
   Main,
@@ -19,5 +21,7 @@ export {
   MyPageUserClubLayout,
   ErrorPageLayout,
   FindUserIdLayout,
-  FindPasswordLayout
+  FindPasswordLayout,
+  CartLayout,
+  SearchLayout
 };
