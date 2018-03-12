@@ -57,5 +57,30 @@ pipeline {
             }
           }
         }
+
+        stage('Product Deploy'){
+          agent any
+          when {
+            branch 'master'
+          }
+          steps {
+            //product container list
+            echo 'product container list'
+            sh 'docker exec -i product ls -al'
+
+            // copy shared -> workspace
+            echo 'copy shared directory'
+            sh 'docker exec -i product cp -rf /shared/* /app'
+
+            // npm install
+            echo 'npm install'
+            sh 'docker exec -i product npm --prefix /app install /app'
+
+            //pm2 delete & start
+            echo 'pm2 product delete and start'
+            sh 'docker exec -i product pm2 delete -s develop'
+            sh 'docker exec -i product pm2 start /app/ecosystem.json'
+          }
+        }
     }
 }
