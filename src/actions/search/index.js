@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import * as Search from 'services/search';
-import { searchListEnd } from 'helper/variables';
 
 function requestData() {
   return {type: types.SEARCH_REQ_DATA}

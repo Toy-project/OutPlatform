@@ -13,6 +13,11 @@ class Header extends React.Component {
     }
     this.onArrowToBottom = this.onArrowToBottom.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleDetectEnter = this.handleDetectEnter.bind(this);
+  }
+
+  handleDetectEnter(e) {
+    return e.key === 'Enter' ? this.handleSearch() : false;
   }
 
   componentDidMount() {
@@ -58,7 +63,7 @@ class Header extends React.Component {
                 <label htmlFor="search">
                   <i onClick={this.handleSearch}></i>
                 </label>
-                <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword')} placeholder='ex) 동아리명, 카테고리' />
+                <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword')} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
               </div>
             </form>
             <span className='quoting-count'>
