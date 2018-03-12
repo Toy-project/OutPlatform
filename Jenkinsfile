@@ -19,6 +19,10 @@ pipeline {
             //copy workspace -> shared
             echo 'copy workspace directory'
             sh 'cp -rf ./* /shared'
+
+            // copy config -> shared
+            echo 'copy config diretory'
+            sh 'cp -rf /config /shared'
           }
         }
         stage('Product Deploy') {
