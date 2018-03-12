@@ -87,9 +87,8 @@ class Search extends React.Component {
           return false;
         }
 
-        const image = data.club_photo ? data.club_photo.split(',') : [''];
-
         return search.map((data, key) => {
+          const image = data.club_photo ? data.club_photo.split(',') : [''];
           return (
             <li key={key}>
               <div className='search-card'>
