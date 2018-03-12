@@ -1,0 +1,95 @@
+// Main Top
+.top-container {
+  background-color: $emerald-0;
+  position: relative;
+
+  .container {
+    background-image: url("#{$get-path-from-components-to-images}/header/header-bg-1280.png") ;
+    background-position: 60% 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+  }
+
+  .header-contents-container {
+    padding: $header-contents-container-padding;
+
+    h1 {
+      font-size: $header-contents-h1-font-size;
+      color: $gray-0;
+
+      @include light;
+    }
+
+    p {
+      max-width: $header-contents-p-width;
+      width:100%;
+      height: $header-contents-p-height;
+      margin-bottom: 3.3vh;
+      font-size: $header-contents-p-font-size;
+      color: $gray-0;
+
+      @include left-align;
+    }
+
+    .input-field {
+      position: relative;
+      margin: 0;
+      height: 100%;
+
+      input {
+        box-sizing: border-box;
+        width: $header-search-input-width;
+        height: $header-search-input-height;
+        text-indent: 50px;
+        border: solid 0.5px #{$gray-6};
+        font-size: $font-size-12;
+        background-color: transparent;
+        outline: none;
+      }
+
+      label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        //background-color: $gray-6;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+
+        i {
+          display: block;
+          height: 100%;
+          height: 100%;
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.png");
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-color: $gray-6;
+        }
+      }
+    }
+
+    .quoting-count {
+      display: block;
+      margin: $header-contents-span-margin;
+      font-size: $header-quoting-span-font-size;
+      color: $gray-1;
+    }
+
+    section {
+      @include center;
+
+      .arrow-to-bottom {
+        position: absolute;
+        bottom: 28px;
+        display: inline-block;
+        width: 35px;
+        height: 25px;
+        background-image: url("#{$get-path-from-components-to-images}/icons/ic-under-arrow.png");
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+    }
+
+  }
+}

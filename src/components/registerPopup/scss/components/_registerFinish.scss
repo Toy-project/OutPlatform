@@ -1,0 +1,21 @@
+.register-finish-container {
+  @include popup-reset-options(330px, 13.5%);
+  padding: 20px 0;
+  z-index: 2;
+
+  @include center;
+
+  h3 {
+    width: 100%;
+  }
+
+  .p {
+    width: 100%;
+  }
+
+  .emerald-btn  {
+    @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
+    @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
+    margin: 15px 0 6px 0;
+  }
+}

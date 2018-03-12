@@ -1,0 +1,180 @@
+.portfolio-popup-wrapper {
+  @include popup-reset-options(628px, 63%);
+  z-index: 2;
+
+  .portfolio-popup-inner {
+    float: left;
+    width: 100%;
+
+    @include center;
+
+    .portfolio-popup-header,
+    .portfolio-popup-footer {
+      clear: both;
+      width: 100%;
+    }
+
+    .portfolio-popup-header {
+      position: relative;
+      background-color: #e6e6e6;
+      height: 440px;
+      overflow: hidden;
+
+      .preview {
+        width: 100%;
+        height: 440px;
+      }
+
+      .fixed {
+        position: absolute;
+        top: 33%;
+      }
+
+      .ok-btn,
+      .icons {
+        position: absolute;
+      }
+
+      .close-btn,
+      .ok-btn {
+        top: 28px;
+      }
+
+      .ok-btn  {
+        right: 26px;
+        @include btn-reset-shape(60px, 40px, $emerald-1);
+        @include btn-reset-font($font-size-18, $white, 40px);
+      }
+
+      .icons {
+        width: 100%;
+        top: 33%;
+        left: 0;
+
+        .add-image-icon,
+        .add-video-icon {
+          display: inline-block;
+          margin: 0 30px;
+          .image-icon,
+          .video-icon,
+          .default-icon {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            background-color: #b3b3b3;
+            cursor: pointer;
+          }
+
+          .default-icon {
+            color: $white;
+            font-size: 14px;
+            line-height: 100px;
+          }
+
+          .image-icon {
+            background-image: url("#{$get-path-from-components-to-images}/icons/ic-add.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
+
+          .video-icon {
+            background-image: url("#{$get-path-from-components-to-images}/icons/ic-video.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%;
+          }
+
+          & > h5 {
+            font-size: $font-size-14;
+            color: inherit;
+          }
+
+          & > input[type='file'] {
+            position: absolute;
+            left: -9999px;
+          }
+        }
+      }
+    }
+
+    .portfolio-popup-footer {
+      padding: 3% 26px;
+      @include left-align;
+
+      .portfolio-popup-input {
+        margin-bottom : 16px;
+
+        label {
+          font-size: $font-size-16;
+          display: block;
+          color: #797979;
+          margin-bottom: 8px;
+
+          @include thick;
+        }
+
+        select {
+          width: 100%;
+          height: 30px;
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-select-down-arrow-club.png");
+          background-repeat: no-repeat;
+          background-position: 96%;
+          background-size: 20px;
+          text-indent : 5px;
+        }
+
+        input[type='text'],
+        select,
+        textarea {
+          border: solid 0.5px #b3b3b3;
+          font-size: $font-size-14;
+        }
+
+        input[type='text'] {
+          width: 220px;
+          height: 30px;
+          padding-left: 5px;
+          font-size: $font-size-14;
+        }
+
+        .from {
+          margin-right: 50px;
+        }
+
+        .from,
+        .to {
+          .year,
+          .month,
+          .day {
+            font-size: $font-size-14;
+            margin-right: 8px;
+          }
+
+          .year {
+            width: 82px;
+            height: 30px;
+          }
+
+          .month,
+          .day {
+            width: 62px;
+            height: 30px;
+          }
+        }
+
+        textarea {
+          width: 570px;
+          height: 100px;
+          resize: none;
+          font-size: $font-size-14;
+          padding: 5px;
+        }
+      }
+
+      .portfolio-popup-input:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

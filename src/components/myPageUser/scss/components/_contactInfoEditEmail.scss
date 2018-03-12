@@ -1,0 +1,11 @@
+.contact-info-edit-email {
+  @include popup-reset-options(350px, 30%);
+  top: 50%;
+  transform: translateY(-50%);
+
+  @include left-align;
+
+  .close-btn-right {
+    top: 20px;
+  }
+}

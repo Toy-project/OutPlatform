@@ -1,0 +1,152 @@
+.search-container {
+  position: relative;
+  left: 0;
+  top: 50px;
+  margin-bottom:50px;
+
+  @include center;
+
+  .container {
+    padding: 3.4% 0;
+    color: $gray-1;
+    overflow: hidden;
+
+    .viewList {
+      padding: 0;
+      max-width: 1020px;
+      margin-left: auto;
+      margin-right: auto;
+
+      h1 {
+        color: $emerald-1;
+        font-size: $font-size-22;
+        margin-bottom: 30px;
+      }
+
+      h3 {
+        font-size: $font-size-16;
+      }
+
+      .search-bar {
+        position: relative;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+
+        label {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 56px;
+          height: 56px;
+          cursor: pointer;
+
+          i {
+            display: block;
+            height: 100%;
+            background-image: url("#{$get-path-from-components-to-images}/icons/ic-magnifier.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 25px 25px;
+          }
+        }
+
+        input[type=text] {
+          width: 100%;
+          height: 56px;
+          border-radius: 2px;
+          background-color: $white;
+          border: solid 1px #dfdfdf;
+          padding-left: 20px;
+          font-size: $font-size-14;
+        }
+      }
+
+      .card-total-number,
+      .club-list {
+        width: 100%;
+      }
+
+      .card-total-number {
+        font-size: $font-size-14;
+        color: $gray-6;
+        @include right-align;
+        padding-right: 10px;
+      }
+
+      .club-list {
+        width: 100%;
+        list-style: none;
+        margin: 10px 0 0 0;
+        padding: 0;
+        float: left;
+
+        @include left-align;
+
+        .end-message {
+          padding: 5% 0;
+          width: 100%;
+          font-size: $font-size-18;
+          color: $gray-6;
+
+          @include center;
+        }
+
+        > li {
+          width: 100%;
+          display: inline-block;
+          padding: 0;
+          margin: 0 5px 25px 5px;
+
+          .search-card {
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+            background-color: $gray-4;
+            clear: both;
+
+            img,
+            .default {
+              float: left;
+              height: 100%;
+              width: 307px;
+              margin-right: 15px;
+            }
+
+            .default {
+              display: block;
+              background-color: $gray-3;
+              padding: 109px 0 0 0;
+              background-image: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png");
+              background-repeat: no-repeat;
+              background-position: center center;
+
+              @include center;
+            }
+
+            .club-info {
+              float: none;
+
+              li  {
+                display: block;
+              }
+
+              li:first-child {
+                font-size: $font-size-16;
+                margin-bottom: 10px;
+              }
+
+              :not(:first-child) {
+                font-size: $font-size-14;
+                text-indent: 10px;
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

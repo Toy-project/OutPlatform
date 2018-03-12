@@ -1,0 +1,45 @@
+.login-selection-popup-container {
+  @include popup-reset-options(330px, 23%);
+  padding: 20px 0;
+  z-index: 2;
+
+  @include center;
+
+  h3 {
+    width: 100%;
+  }
+
+  .p-gray,
+  .p-emerald {
+    width: 100%;
+  }
+
+  .p-gray {
+    font-size: $font-size-12;
+    color: $gray-6;
+  }
+
+  .p-emerald {
+    width: 100%;
+    color: $emerald-1;
+  }
+
+  .login-btns {
+    margin: 10px 0 25px 0;
+    .emerald-btn  {
+      @include btn-reset-shape($btn-width-1, $btn-height-0, $btn-background-emerald-color);
+      @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-0);
+      margin: 3px 0 3px 0;
+    }
+  }
+
+  .find-btns {
+    margin: 10px 0 0 0;
+    .gray-btn {
+      display:inline-block;
+      margin: 0 3px;
+      @include btn-reset-shape(90px, 30px, $gray-6);
+      @include btn-reset-font($font-size-12, $btn-text-white-color, 24px);
+    }
+  }
+}

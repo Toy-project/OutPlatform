@@ -1,0 +1,151 @@
+.my-page-user-container {
+  position: relative;
+  left: 0;
+  top: 50px;
+  margin-bottom:50px;
+  background-color: $club-page-bg-1;
+}
+
+.basic-info-container,
+.contact-info-container,
+.password-info-container {
+  width: 100%;
+
+  .container {
+    position: relative;
+    padding: 60px 0 10px 0;
+    overflow: hidden;
+  }
+
+  .title-wrapper {
+    margin: 0 0 0 10.5%;
+
+    h3 {
+      font-size: $font-size-20;
+      color: $gray-7;
+    }
+
+    span {
+      display: inline-block;
+      background-color: $gray-5;
+      width: 75px;
+      height: 2px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .input-container,
+  .basic-info-contents {
+    margin-left: 37%;
+  }
+
+  .input-container {
+    float: left;
+    margin-top: -20px;
+  }
+
+  .info-input {
+    margin-bottom: 33px;
+    font-size: $font-size-12;
+
+    label {
+      display: block;
+      font-size: $font-size-16;
+      margin-bottom: 10px;
+      @include thick;
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    select {
+      width: 210px;
+      height: 30px;
+      border-radius: 2px;
+      background-color: $white;
+      border: solid 1px #dfdfdf;
+      padding-left: 5px;
+      font-size: $font-size-14;
+
+      &.error {
+        border: solid 1px red;
+      }
+    }
+
+    a {
+      font-size: 12px;
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.basic-info-container,
+.password-info-container {
+  background-color: $club-page-bg-0;
+}
+
+.edit-btn {
+  button {
+    margin-left: 5px;
+  }
+
+  .emerald-btn {
+    @include btn-reset-shape(60px, 40px, $emerald-1);
+    @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+
+    &.password {
+      width: 95px;
+    }
+  }
+  .gray-btn {
+    @include btn-reset-shape(60px, 40px, $gray-5);
+    @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+
+    &.unregister {
+      width: 95px;
+    }
+  }
+}
+
+.contact-info-edit-phone,
+.contact-info-edit-email {
+  .info-title {
+    width: 290px;
+    margin-top: 40px;
+    h1 {
+        font-size: $font-size-20;
+        @include light-thick;
+        margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: $font-size-16;
+      margin-bottom: 10px;
+      @include light;
+    }
+  }
+
+  .info-input,
+  .info-title {
+    margin-left: 30px;
+  }
+
+  .info-btn {
+    width: 100%;
+    padding-right: 30px;
+    @include right-align;
+
+    button {
+      font-size: $font-size-16;
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      border: none;
+      background-color: transparent;
+      outline: none;
+    }
+  }
+}

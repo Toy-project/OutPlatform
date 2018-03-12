@@ -1,0 +1,27 @@
+@mixin btn-reset-shape($width, $height, $background-color) {
+  width: $width;
+  height: $height;
+  background-color: $background-color;
+  border: $btn-border;
+  border-radius: $btn-radius;
+  outline: none;
+  @include z-depth-1;
+}
+
+@mixin btn-reset-font($font-size, $color, $line-height) {
+  font-size: $font-size;
+  color: $color;
+  line-height: $line-height;
+
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: .5px;
+  cursor: pointer;
+}
+
+@mixin btn-reset-offset($padding) {
+  display: inline-block;
+  padding: $padding;
+  vertical-align: middle;
+}

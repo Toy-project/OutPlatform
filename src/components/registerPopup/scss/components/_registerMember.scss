@@ -1,0 +1,99 @@
+.register-member-container {
+  @include popup-reset-options(500px, 50%);
+  padding: 20px 0;
+  z-index: 2;
+
+  > .register-member-inner {
+    float: left;
+    width: 100%;
+
+    @include center;
+
+
+    .p {
+      width: 335px;
+      margin-bottom: 22px;
+
+      span {
+        color: red;
+      }
+    }
+
+    form {
+      margin: 0 auto;
+      width: 370.5px;
+      height: 100%;
+
+      & > .input-register {
+        @include left-align;
+      }
+
+      input, select {
+        box-sizing: border-box;
+      }
+
+      input[type=text],
+      input[type=password],
+      input[type=email] {
+        width: 100%;
+        height: 40px;
+        border-radius: 2px;
+        background-color: $white;
+        border: solid 1px #dfdfdf;
+        text-indent: 131px;
+        font-size: $font-size-12;
+
+        &.error {
+          border: solid 1px red;
+        }
+
+        &#mem_phone_auth {
+          width: 283px;
+        }
+      }
+
+      input[type=button] {
+        position: absolute;
+        right:0;
+        top:0;
+        @include btn-reset-shape($btn-width-5, $btn-height-1, $btn-background-gray-5-color);
+        @include btn-reset-font($font-size-12, $btn-text-white-color, $btn-height-1);
+
+        &.member-phone-auth-btn {
+          width: $btn-width-2;
+        }
+      }
+      .submit-resgister {
+        input[type=submit] {
+          margin-top:27px;
+          @include btn-reset-shape($btn-width-1, $btn-height-1, $btn-background-emerald-color);
+          @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-1);
+        }
+      }
+      .input-register {
+        position: relative;
+        margin-bottom: 10px;
+
+        label {
+          position: absolute;
+          left: 10px;
+          top: 8px;
+          font-size: 16px;
+          color: $gray-1;
+        }
+
+        a {
+          font-size: 11px;
+          display: block;
+          margin-top: 5px;
+          margin-bottom: 15px;
+          @include right-align;
+
+          &.red {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}

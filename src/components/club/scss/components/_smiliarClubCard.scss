@@ -1,0 +1,42 @@
+.smiliarClub-card {
+  width: 330px;
+  height: 330px;
+  background-color: $white;
+
+  box-sizing: border-box;
+
+  @include z-depth-1;
+
+  .smiliarClub-card-image {
+    width: 100%;
+    height: 264px;
+    background-color: $gray-3;
+
+    img {
+      width: 100%;
+      height: 100%;
+      background: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png") no-repeat 50% 50%;
+      background-size: 50px;
+    }
+  }
+
+  .smiliarClub-card-contents {
+    padding: 14px 0 0 18px;
+    .star-rating {
+      i {
+        padding: 0 2.5px;
+        font-size: 15px;
+        color: $gray-3;
+        line-height:27px;
+      }
+    }
+
+    h3 {
+      height: 27px;
+      float: left;
+      font-size: $font-size-18;
+      color: $gray-1;
+      margin-right: 15px;
+    }
+  }
+}

@@ -1,0 +1,98 @@
+nav {
+  position: absolute;
+  width:100%;
+
+  background-color: $nav-bg-color;
+  min-height: $navbar-height-main;
+  z-index: 1;
+
+  .logo {
+    float: left;
+    margin-left: 133px;
+    font-size: $font-size-14;
+    line-height: $navbar-height-main;
+    cursor: pointer;
+  }
+  .main-menu {
+    margin-right: 290px;
+    list-style: none;
+    float: right;
+
+    li {
+      margin-left: 130px;
+      float: left;
+
+      font-size: $font-size-14;
+      line-height: $navbar-height-main;
+      color: $black-0;
+      cursor: pointer;
+      @include normal;
+
+      .sub-menu,
+      .sub-menu-bg {
+        visibility: hidden;
+        opacity: 0;
+        transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), visibility 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        transform: translate3d(0, 20px, 0);
+
+        z-index: -1;
+      }
+
+      &:hover .sub-menu,
+      &:hover .sub-menu-bg {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      .sub-menu {
+        position: absolute;
+        min-height: $navbar-height-main;
+        list-style: none;
+        width: 300px;
+        z-index: 2;
+        margin-left: -120px;
+
+        @include center;
+
+        > ul {
+          list-style: none;
+          display: inline-block;
+
+          > li {
+            margin: 0 20px;
+            line-height: $navbar-height-main;
+          }
+        }
+      }
+
+      .sub-menu-bg {
+        position: absolute;
+        background-color: #f6f6f6;
+        width: 100%;
+        min-height: $navbar-height-main;
+        left: 0;
+        z-index: 1;
+
+        @include z-depth-1;
+      }
+    }
+  }
+}
+//
+// .isSub {
+//   background-color: $nav-sub-bg-color;
+//   height: $navbar-height-sub;
+//
+//   .main-menu {
+//     a {
+//       line-height: $navbar-height-sub;
+//     }
+//
+//     .sub-menu {
+//       top: $navbar-height-sub;
+//     }
+//   }
+//
+//   @include z-depth-1;
+// }

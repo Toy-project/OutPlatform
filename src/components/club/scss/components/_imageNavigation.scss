@@ -1,0 +1,202 @@
+.imageNavigation-container {
+  height: auto;
+  .container {
+
+    .fixed {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    //반응형시 이 설정을 변경
+    .imageNavigation-inner,
+    .default-image {
+      width: 880px;
+      height: 660px;
+    }
+
+    .imageNavigation-inner {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: $gray-8;
+      overflow: hidden;
+
+
+      .default-image {
+        display: inline-block;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png") no-repeat 50% 50%;
+        background-size: 80px;
+        border: 0;
+        outline: 0;
+      }
+
+      .slick-dots,
+      .left-arrow,
+      .right-arrow,
+      .add-profile,
+      .add-image,
+      .close-btn {
+        position: absolute;
+        outline: none;
+      }
+
+      .add-image,
+      .add-profile {
+        input[type='file'] {
+          position: absolute;
+          left: -9999px;
+        }
+      }
+
+      .add-image {
+        width: 100px;
+        left: 44%;
+        top: 40.6%;
+        z-index: 1;
+
+        .image-uploader {
+          display: block;
+          width: 100px;
+          height: 100px;
+          border-radius: 100px;
+          background: url("#{$get-path-from-components-to-images}/icons/ic-add.png") no-repeat 50% 50%;
+          background-color: $gray-6;
+          cursor: pointer;
+        }
+
+        h3 {
+          margin-top: 5px;
+          color: $gray-7;
+          font-size: $font-size-14;
+          width: 100%;
+          @include center;
+        }
+      }
+
+      .close-btn {
+        top: 25px;
+        right: 30px;
+      }
+
+      .add-profile {
+        left: 30px;
+        top: 25px;
+      }
+
+      .upload-btn-slide,
+      .profile,
+      .profile-img {
+        display: block;
+        border-radius: 100px;
+        border: 0;
+        background-color: rgba(179, 179, 179, 0.7);
+
+        @include center;
+      }
+
+      .profile {
+        width: 104px;
+        height: 104px;
+        font-size: 14px;
+        color: $white;
+        padding-top: 30px;
+      }
+
+      .profile-img {
+        width: 104px;
+        height: 104px;
+        font-size: 14px;
+        color: $white;
+      }
+
+      .upload-btn-slide {
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+        cursor: pointer;
+        z-index: 2;
+
+        @include thick;
+
+        &.afterUpload:before {
+          content: '확인';
+        }
+        &.afterUpload {
+          font-size: $font-size-20;
+          color: $white;
+        }
+      }
+
+      .slick-dots {
+        bottom: 4.9%;
+        list-style: none;
+        display: block;
+        padding: 0;
+        width: 100%;
+
+        @include center;
+
+        li {
+          display: inline-block;
+          margin: 0 2.5px;
+          padding: 0;
+          cursor: pointer;
+        }
+
+        li button {
+          border: 0;
+          background: transparent;
+          outline: none;
+          color: transparent;
+        }
+
+        li button:hover,
+        li button:focus { outline: none; }
+
+        li button:hover:before,
+        li button:focus:before { opacity: 1; }
+
+        li button:before {
+          content: "•";
+          width: 15px;
+          height: 15px;
+          font-size: 40px;
+          line-height: 20px;
+          color: black;
+          opacity: 0.25;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+
+          @include center;
+        }
+
+        li.slick-active
+        button:before {
+          color: black;
+          opacity: 0.75;
+        }
+      }
+
+      .left-arrow,
+      .right-arrow {
+        top: 47.5%;
+      }
+
+      .left-arrow {
+        left: 3.5%;
+        width: 20px;
+        height: 30px;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-left.png") no-repeat 50% 50%;
+      }
+
+      .right-arrow {
+        right: 3.5%;
+        width: 20px;
+        height: 30px;
+        background: url("#{$get-path-from-components-to-images}/icons/ic-arrow-right.png") no-repeat 50% 50%;
+      }
+    }
+  }
+}

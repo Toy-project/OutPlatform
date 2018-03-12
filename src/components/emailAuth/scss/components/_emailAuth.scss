@@ -1,0 +1,35 @@
+.email-auth-container {
+  @include popup-reset-options(500px, 50%);
+  padding: 20px 0;
+  z-index: 2;
+  @include center;
+
+  p {
+    display: inline;
+    width: 100%;
+  }
+
+  input[type=button],
+  input[type=text] {
+    vertical-align: bottom;
+    height: 40px;
+    border: solid 1px #dfdfdf;
+  }
+
+  input[type=button] {
+    margin-left: -2px;
+    @include btn-reset-shape(80px, 40px, $btn-background-emerald-color);
+    @include btn-reset-font($font-size-14, $btn-text-white-color, 40px);
+  }
+
+  input[type=text] {
+    margin-top: 10px;
+    width: 50%;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $white;
+    border: solid 1px #dfdfdf;
+    text-indent: 10px;
+    font-size: $font-size-12;
+  }
+}

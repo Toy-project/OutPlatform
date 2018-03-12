@@ -1,0 +1,98 @@
+.quotation-container {
+  height: auto;
+  color: $gray-7;
+
+  .quotation-inner {
+    padding: 60px 0;
+
+    .quotation-card {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      //반응형 width
+      min-width: 350px;
+      width: 36%;
+      height: 36%;
+      background-color: $gray-10;
+      padding: 30px;
+
+      .quotation-title,
+      .quotation-contents {
+        width: 100%;
+      }
+
+      .quotation-title {
+
+        @include center;
+
+        h1 {
+          font-size: $font-size-24;
+          color: inherit;
+        }
+      }
+
+      .quotation-contents {
+        margin-top: 32px;
+        padding: 0 20px;
+        overflow: hidden;
+
+        .quotation-image {
+          float: left;
+          width: 48%;
+
+          .quotation-who,
+          h5 {
+            width: 100%;
+          }
+
+          .quotation-who {
+            background: url("#{$get-path-from-components-to-images}/icons/ic-profile.png") no-repeat 50% 50%;
+            background-color: $white;
+            border-radius: 100px;
+
+            @include z-depth-1;
+          }
+
+          h5 {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #b3b3b3;
+            @include center;
+          }
+        }
+
+        .quotation-count {
+          float: left;
+          display: inline-block;
+          margin-top: 15%;
+          padding-left: 20px;
+          width: 52%;
+          @include center;
+
+          h3, h4 {
+            font-size: $font-size-18;
+            color: inherit;
+          }
+
+          h4 {
+            width: 100%;
+            margin-top: 10px;
+
+            @include center;
+          }
+        }
+      }
+
+      .quotation-btn {
+        margin-top: 45px;
+        width: 100%;
+        @include center;
+
+        button {
+          @include btn-reset-shape(100%, 72px, $btn-background-emerald-color);
+          @include btn-reset-font($font-size-20, $btn-text-white-color, 72px);
+        }
+      }
+    }
+  }
+}

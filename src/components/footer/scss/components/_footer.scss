@@ -1,0 +1,19 @@
+.footer-wrapper {
+  height: 15.5%;
+  background-color: $gray-1;
+
+  .contact-info-wrapper {
+    padding: 4.05% 10.9%;
+    color: $white;
+
+    h5 {
+      font-size: $font-size-14;
+    }
+
+    ul {
+      font-size: $font-size-12;
+      margin-top: 1.64%;
+      list-style: none;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.category {
+  @include center;
+
+  .category-title {
+    display: inline-block;
+    width: 306px;
+    margin-bottom:36px;
+    padding-left: 30px;
+
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-good.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+
+    font-size: $title-size;
+    color: $gray-1;
+    @include normal;
+  }
+
+  .category_list {
+    max-width: $category-list-width;
+    margin-left: auto;
+    margin-right: auto;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      @include center;
+    }
+
+    li {
+      float: left;
+      margin: 5px;
+    }
+
+    .btn  {
+      @include light;
+      @include btn-reset-shape($category-btn-width, $category-btn-height, $btn-background-gray-color);
+      @include btn-reset-font($font-size-16, $btn-text-gray-color, $category-btn-height);
+    }
+  }
+}

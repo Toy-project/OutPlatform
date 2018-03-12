@@ -1,0 +1,100 @@
+.basic-info-container {
+  height: auto;
+  color: $gray-7;
+  padding-bottom: 11%;
+
+  .basic-info {
+    margin-top: 30px;
+    height: 100%;
+    overflow: hidden;
+
+    .basic-info-profile,
+    .basic-info-contents {
+      float: left;
+    }
+
+    .basic-info-profile {
+      width: 200px;
+      margin-left: 23%;
+      position: relative;
+      @include center;
+
+      .close-btn {
+        position: absolute;
+        top: 0;
+        right: 10px;
+      }
+
+      .profile,
+      .default {
+        display: inline-block;
+        color: $gray-6;
+        font-size: $font-size-18;
+        line-height: 200px;
+        width: 100%;
+        height: 200px;
+        border-radius: 100px;
+
+        @include thick;
+      }
+
+      .profile {
+        background-color: transparent;
+      }
+
+      .default {
+        background-color: $gray-8;
+      }
+
+      .plus-icon {
+        position: absolute;
+        right: 0;
+        top: 140px;
+
+        input[type='file'] {
+          position: absolute;
+          left: -9999px;
+        }
+
+        label {
+          display: block;
+          width: 52px;
+          height: 52px;
+          cursor: pointer;
+          background: url("#{$get-path-from-components-to-images}/icons/ic-plus.png") no-repeat 50% 50%;
+        }
+      }
+
+      p {
+        margin-top: 15px;
+        font-size: $font-size-14;
+        color: $gray-6;
+      }
+    }
+
+    .basic-info-contents {
+
+      &.subtract{
+        margin-left: 23%;
+      }
+
+      ul {
+        list-style: none;
+
+        li {
+          margin-bottom: 39px;
+          color: inherit;
+          font-size: $font-size-14;
+
+          span {
+            display: inline-block;
+            width: 61px;
+            margin-right: 60px;
+            font-size: $font-size-16;
+            @include thick;
+          }
+        }
+      }
+    }
+  }
+}

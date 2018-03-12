@@ -1,0 +1,188 @@
+.register-container {
+  position: relative;
+  left: 0;
+  top: 50px;
+  background-color: $white-0;
+  width: 100%;
+  height: 100%;
+
+  .fixed {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .container {
+    padding: $register-container-padding;
+    @include center;
+    color: $gray-1;
+    overflow: hidden;
+
+    h1 {
+      font-size: 28px;
+      color: inherit;
+      margin-bottom: 10px;
+      @include thick;
+    }
+
+    p {
+      display: inline-block;
+      width: 335px;
+      margin-bottom: 66px;
+      font-size: $font-size-14;
+
+      span {
+        color: red;
+      }
+    }
+
+    .line {
+      height: 647px;
+      float:left;
+      width: 2px;
+      /*Vertical*/
+      background-image: linear-gradient($gray-3 33%, rgba(255,255,255,0) 0%);
+      background-position: right;
+      background-size: 2px 20px;
+      background-repeat: repeat-y;
+    }
+
+    .input-register-left,
+    .input-register-right {
+      float: left;
+      width: 414px;
+      margin: 0 8.6%;
+
+      h3 {
+        margin-bottom: 20px;
+        font-size: $font-size-22;
+        color: inherit;
+      }
+
+      & > .input-register {
+        text-align: left;
+      }
+
+      .input-register {
+        position: relative;
+        margin-bottom: 10px;
+        width: 100%;
+
+        select {
+          background-image: url("#{$get-path-from-components-to-images}/icons/ic-select-down-arrow.png");
+          background-repeat: no-repeat;
+          background-position: 96%;
+        }
+
+        select::-ms-expand{
+          display:none;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=email],
+        select {
+          width: 100%;
+          height: 56px;
+          border-radius: 2px;
+          background-color: $white;
+          border: solid 1px #dfdfdf;
+          padding-left: 121px;
+          font-size: $font-size-14;
+
+          &.error {
+            border: solid 1px red;
+          }
+
+          &#club_phone_auth {
+            width: 310px;
+          }
+        }
+
+        input[type=text]:disabled {
+          cursor: pointer;
+        }
+
+        input[type=button] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          @include btn-reset-shape($btn-width-2, $btn-height-2, $btn-background-gray-5-color);
+          @include btn-reset-font($font-size-14, $btn-text-white-color, $btn-height-2);
+
+          &.inspect-phone-btn {
+            width: $btn-width-3;
+          }
+
+        }
+
+        @include placeholder-sync(input);
+
+        input:focus::-webkit-input-placeholder
+        {
+            color: transparent;
+        }
+
+        a {
+          font-size: 12px;
+          display: block;
+          margin-top: 5px;
+          margin-bottom: 15px;
+
+          @include right-align;
+
+          label {
+            vertical-align: top;
+            padding: 0 7px 0 0;
+          }
+
+          input[type=checkbox] {
+            position: absolute;
+            left: -999rem;
+          }
+
+          input[type="checkbox"] + label::before {
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+
+            display: inline-block;
+            border-radius: 2px;
+            background-color: #ffffff;
+            border: solid 1px #dfdfdf;
+
+            cursor: pointer;
+            content: ' ';
+          }
+
+          input[type="checkbox"]:checked + label::before {
+            background-color: red;
+          }
+
+          &.emerald {
+            color: $emerald-1;
+          }
+        }
+
+        .input-title {
+          position: absolute;
+          left: 14px;
+          top: 16px;
+          font-size: 16px;
+          color: inherit;
+        }
+      }
+    }
+
+    .submit-register {
+      clear: both;
+
+      input[type=submit] {
+        margin: 27px 0 75px 0;
+        @include btn-reset-shape($btn-width-4, $btn-height-4, $gray-6);
+        @include btn-reset-font($font-size-20, $white, $btn-height-4);
+        @include thick;
+      }
+    }
+  }
+}

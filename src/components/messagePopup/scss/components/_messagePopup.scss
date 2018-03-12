@@ -1,0 +1,17 @@
+.message-popup-container {
+  @include popup-reset-options(330px, 27%);
+  padding: 20px 0;
+
+  .contents {
+    padding: 0 30px;
+    font-size: $font-size-16;
+  }
+
+  .ok {
+    margin-top: 20px;
+    padding: 0 30px;
+    font-size: $font-size-14;
+    cursor: pointer;
+    @include right-align;
+  }
+}

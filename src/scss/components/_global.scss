@@ -1,0 +1,26 @@
+//Drop shadow
+@mixin z-depth-1 {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 0 rgba(0, 0, 0, 0.07), 0 3px 1px -2px rgba(0, 0, 0, 0.1);
+}
+
+@mixin center {
+  text-align: center;
+}
+@mixin right-align {
+  text-align: right;
+}
+@mixin left-align {
+  text-align: left;
+}
+
+//Text Styles
+@mixin thick { font-weight: 700; }
+@mixin light-thick { font-weight: 500; }
+@mixin light { font-weight: 300; }
+@mixin normal { font-weight: normal; }
+
+.global-loading,
+.global-error {
+  width: 100%;
+  padding: 30px 0;
+}

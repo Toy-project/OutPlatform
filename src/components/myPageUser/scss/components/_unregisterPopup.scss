@@ -1,0 +1,59 @@
+.unregister-popup-container {
+  @include popup-reset-options(500px, 30%);
+  top: 50%;
+  transform: translateY(-50%);
+  color: $gray-1;
+  padding: 0 30px;
+  @include center;
+
+  .header {
+    width: 100%;
+    margin-bottom: 20px;
+
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+    p {
+      width: 100%;
+    }
+  }
+
+  .contents {
+    margin-bottom: 20px;
+    label {
+      font-size: $font-size-16;
+      @include thick;
+      margin-right: 15px;
+    }
+
+    input[type=password] {
+      width: 190px;
+      height: 35px;
+      background-color: $white;
+      border: solid 1px #dfdfdf;
+      padding-left: 5px;
+    }
+  }
+
+  .footer {
+    width: 100%;
+    overflow: hidden;
+
+    .emerald-btn {
+      float: right;
+      @include btn-reset-shape(60px, 40px, $emerald-1);
+      @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+    }
+    .gray-btn {
+      float: left;
+      @include btn-reset-shape(60px, 40px, $gray-5);
+      @include btn-reset-font($font-size-18, $btn-text-white-color, 40px);
+
+    }
+  }
+
+  .close-btn {
+    top: 15px;
+  }
+}

@@ -1,0 +1,65 @@
+.snippet-edit-popup-container {
+  @include popup-reset-options(350px, 30%);
+  top: 50%;
+  transform: translateY(-50%);
+
+  @include left-align;
+
+  .close-btn-right {
+    top: 20px;
+  }
+
+  .info-title {
+    width: 290px;
+    margin-top: 40px;
+    h1 {
+        font-size: $font-size-20;
+        @include light-thick;
+        margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: $font-size-16;
+      margin-bottom: 10px;
+      @include light;
+    }
+  }
+
+  .info-input,
+  .info-title {
+    width: 300px;
+    margin-left: 30px;
+  }
+
+  .info-input {
+    margin-bottom: 33px;
+    font-size: $font-size-12;
+
+    input[type=text] {
+      width: 210px;
+      height: 30px;
+      border-radius: 2px;
+      background-color: $white;
+      border: solid 1px #dfdfdf;
+      padding-left: 5px;
+      font-size: $font-size-14;
+    }
+  }
+
+  .info-btn {
+    width: 100%;
+    padding-right: 30px;
+    @include right-align;
+
+    button {
+      font-size: $font-size-16;
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      border: none;
+      background-color: transparent;
+      outline: none;
+    }
+  }
+}

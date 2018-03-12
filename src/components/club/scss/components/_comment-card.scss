@@ -1,0 +1,105 @@
+.comment-card {
+  width: 100%;
+
+  background-color: $white;
+
+  .comment-card-inner {
+    height: 100%;
+    overflow: hidden;
+
+    .comment-card-who,
+    .comment-card-contents {
+      position: relative;
+    }
+
+    .comment-card-who {
+      width: 24%;
+      float: left;
+      padding: 2% 0;
+
+      @include center;
+
+      .comment-image {
+        display: inline-block;
+        margin-top: 15%;
+
+        h5 {
+          font-size: $font-size-12;
+        }
+
+        .default-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 50px;
+          margin-bottom: 10px;
+          background: url("#{$get-path-from-components-to-images}/icons/ic-profile.png");
+          background-position: 50% 50%;
+          background-size: 20px;
+          background-repeat: no-repeat;
+          @include z-depth-1;
+        }
+      }
+
+      hr {
+        float: right;
+        border: none;
+        border-left: 1px solid $gray-3;
+        width: 1px;
+        min-height: 120px;
+      }
+    }
+
+    .comment-card-contents {
+      float: left;
+      width: 76%;
+
+      .comment-card-date {
+        width: 100%;
+        position: relative;
+        height: 41px;
+
+        hr {
+          position: absolute;
+          left: 6.5px;
+          top: 40px;
+          border: none;
+          border-bottom: 1px solid $gray-3;
+          width: 97%;
+          height: 1px;
+        }
+
+        .comment-top {
+          line-height: 41px;
+          padding: 0 13px;
+
+          color: $gray-7;
+          font-size: $font-size-12;
+
+          @include left-align;
+
+          .star-rating {
+            margin-left: 20%;
+
+            i {
+              font-size: $font-size-15;
+            }
+          }
+
+          .option {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .comment-contents {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        word-break: break-all;
+
+        font-size: $font-size-12;
+        @include left-align;
+      }
+    }
+  }
+}

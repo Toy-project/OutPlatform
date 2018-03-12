@@ -1,0 +1,93 @@
+.card {
+  position : relative;
+  width: $card-width;
+  height: $card-height;
+  z-index: 0;
+  @include z-depth-1;
+
+  .card-image {
+    height: $image-height;
+    background-color: $gray-3;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .default {
+    display: block;
+    height: $image-height;
+    background-color: $gray-3;
+    padding: 109px 0 0 0;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-default-image.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor : pointer;
+
+    @include center;
+  }
+
+  .float{
+  	position: absolute;
+  	width:69.6px;
+  	height:69.4px;
+  	bottom:101.6px;
+  	right:17.4px;
+    background-color: $white;
+    background-image: url("#{$get-path-from-components-to-images}/icons/ic-profile.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 27px 27px;
+  	border-radius:50px;
+
+  	@include center;
+    @include z-depth-1;
+  }
+
+  .card-content-container {
+    max-height: $content-container-height;
+    padding: $content-box-padding;
+    color: $gray-1;
+    @include left-align;
+
+    .card-title {
+      font-size: $title-size;
+      margin-top: 14px;
+      display: block;
+      @include thick;
+    }
+
+    .card-contents {
+      margin: 6px 0 0 0;
+      font-size: $font-size-12;
+      width: 84%;
+      height: $content-height;
+      overflow: hidden;
+      line-height: inherit;
+    }
+
+    .card-rating {
+      position:relative;
+      width: 100%;
+      height: 25px;
+      margin: 14px 0 0 0;
+      display: inline-block;
+      z-index: 0;
+
+      .card-star {
+        i {
+          font-size: 15px;
+          margin-right: 6px;
+          color: $gray-3;
+        }
+      }
+
+      .card-button {
+        margin-left: 116px;
+
+        .btn  {
+          @include btn-reset-shape($btn-width, $btn-height, $btn-background-emerald-color);
+          @include btn-reset-font($font-size-12, $btn-text-white-color, $btn-height);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.contact-info-edit-phone {
+  @include popup-reset-options(350px, 30%);
+  top: 50%;
+  transform: translateY(-50%);
+
+  @include left-align;
+
+  .close-btn-right {
+    top: 20px;
+  }
+
+  .info-input {
+    position: relative;
+
+    input[type=button] {
+      position: absolute;
+      top: 0;
+      @include btn-reset-shape(80px, 30px, $emerald-1);
+      @include btn-reset-font($font-size-12, $btn-text-white-color, 30px);
+    }
+  }
+
+}
