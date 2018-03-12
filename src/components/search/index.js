@@ -87,11 +87,13 @@ class Search extends React.Component {
           return false;
         }
 
+        const image = data.club_photo ? data.club_photo.split(',') : [''];
+
         return search.map((data, key) => {
           return (
             <li key={key}>
               <div className='search-card'>
-                {data.club_photo ? <img alt='' src={`${process.env.API_URL}/${data.club_photo}`} /> : <span className="default"></span>}
+                {data.club_photo ? <img alt='' src={`${process.env.API_URL}/${image[0]}`} /> : <span className="default"></span>}
                 <ul className='club-info'>
                   <li><h3>단체정보</h3></li>
                   <li>단체 이름 : {data.club_name}</li>
