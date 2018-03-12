@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const {API_URL} = require('./variables');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -244,7 +245,7 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  // 나중에 입력
+                  data: "$API_URL: '" + API_URL + "/images';",
                 }
               }
             ],
