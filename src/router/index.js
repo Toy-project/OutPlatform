@@ -27,7 +27,7 @@ const App = () => {
       <Route path='/findUserId/' component={FindUserIdLayout} />
       <Route path='/findPassword/' component={FindPasswordLayout} />
       <Route path='/cart' component={CartLayout} />
-      <Route path='/search/:keyword' component={SearchLayout} />
+      <Route path='/search/' component={SearchLayout} />
     </div>
   )
 }

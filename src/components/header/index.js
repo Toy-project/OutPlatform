@@ -39,12 +39,11 @@ class Header extends React.Component {
   }
 
   handleSearch(e) {
-    const keyword = this.refs.keyword.value;
-
+    const keyword = encodeURIComponent(this.refs.keyword.value);
     //세션 저장소에 저장
     sessionStorage.setItem('keyword', keyword);
 
-    this.props.history.push(`/search/${keyword}`);
+    this.props.history.push(`/search`);
   }
 
   render(){
@@ -63,7 +62,7 @@ class Header extends React.Component {
                 <label htmlFor="search">
                   <i onClick={this.handleSearch}></i>
                 </label>
-                <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword')} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
+                <input type="text" ref="keyword" id="search" defaultValue={decodeURIComponent(sessionStorage.getItem('keyword'))} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
               </div>
             </form>
             {/* <span className='quoting-count'>

@@ -31,14 +31,12 @@ class Search extends React.Component {
     }
 
     handleSearch(e) {
-      const keyword = this.refs.keyword.value;
-
+      const keyword = encodeURIComponent(this.refs.keyword.value);
       //세션 저장소에 저장
       sessionStorage.setItem('keyword', keyword);
 
-      this.props.history.push(`/search/${keyword}`);
+      this.props.history.push(`/search`);
       this.props.fetchSearch(keyword, 0);
-
     }
 
     handlePageChange(pageNumber){
@@ -51,7 +49,7 @@ class Search extends React.Component {
       //Data Fetch
       start = pageNumber * 8 - 8;
 
-      this.props.fetchSearch(this.props.keyword, start);
+      this.props.fetchSearch(sessionStorage.getItem('keyword') ? sessionStorage.getItem('keyword') : '', start);
 
       this.setState({
         ...this.state,
@@ -60,7 +58,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-      this.props.fetchSearch(this.props.keyword, 0);
+      this.props.fetchSearch(sessionStorage.getItem('keyword') ? sessionStorage.getItem('keyword') : '', 0);
     }
 
     render() {
@@ -114,7 +112,7 @@ class Search extends React.Component {
                 <label>
                   <i onClick={this.handleSearch}></i>
                 </label>
-                <input type='text' ref='keyword' placeholder='검색어를 입력해주세요.' defaultValue={sessionStorage.getItem('keyword')} onKeyPress={this.handleDetectEnter} />
+                <input type='text' ref='keyword' placeholder='검색어를 입력해주세요.' defaultValue={decodeURIComponent(sessionStorage.getItem('keyword'))} onKeyPress={this.handleDetectEnter} />
               </div>
               <h1>총 검색 결과 {this.props.search.count}개를 찾았습니다.</h1>
               {this.props.search.count === 0 ? <h3>죄송합니다. 찾을 수 없습니다.</h3> : ''}
