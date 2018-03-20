@@ -11,6 +11,8 @@ import './scss/index.scss';
 import * as Common from 'helper/common';
 import { searchListEnd } from 'helper/variables';
 
+import { isEmpty } from 'helper/regExp';
+
 import { InnerError, InnerLoading } from 'components/';
 
 class Search extends React.Component {
@@ -27,11 +29,17 @@ class Search extends React.Component {
     }
 
     handleDetectEnter(e) {
-      return e.key === 'Enter' ? this.handleSearch() : false;
+      return e.key === 'Enter' ? this.handleSearch(e) : false;
     }
 
     handleSearch(e) {
+      e.preventDefault();
       const keyword = encodeURIComponent(this.refs.keyword.value);
+
+      if(isEmpty(keyword)) {
+        return false;
+      }
+
       //세션 저장소에 저장
       sessionStorage.setItem('keyword', keyword);
 

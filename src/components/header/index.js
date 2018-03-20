@@ -5,6 +5,8 @@ import  { withRouter } from 'react-router-dom';
 import './scss/index.scss';
 import { Nav } from 'components/';
 
+import { isEmpty } from 'helper/regExp';
+
 class Header extends React.Component {
   constructor(props){
     super(props);
@@ -17,7 +19,7 @@ class Header extends React.Component {
   }
 
   handleDetectEnter(e) {
-    return e.key === 'Enter' ? this.handleSearch() : false;
+    return e.key === 'Enter' ? this.handleSearch(e) : false;
   }
 
   componentDidMount() {
@@ -39,7 +41,12 @@ class Header extends React.Component {
   }
 
   handleSearch(e) {
+    e.preventDefault();
     const keyword = encodeURIComponent(this.refs.keyword.value);
+
+    if(isEmpty(keyword)) {
+      return false;
+    }
     //세션 저장소에 저장
     sessionStorage.setItem('keyword', keyword);
 

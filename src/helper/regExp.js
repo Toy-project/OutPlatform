@@ -1,3 +1,7 @@
+export function isEmpty(keyword) {
+  return /^(%20)*$/.test(keyword);
+}
+
 export function isPhoneGood(val) {
   return /^\d{3}-\d{3,4}-\d{4}$/.test(val);
 }
