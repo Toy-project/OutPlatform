@@ -62,7 +62,7 @@ class Header extends React.Component {
                 <label htmlFor="search">
                   <i onClick={this.handleSearch}></i>
                 </label>
-                <input type="text" ref="keyword" id="search" defaultValue={decodeURIComponent(sessionStorage.getItem('keyword'))} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
+                <input type="text" ref="keyword" id="search" defaultValue={sessionStorage.getItem('keyword') ? decodeURIComponent(sessionStorage.getItem('keyword')) : ''} placeholder='ex) 동아리명, 카테고리' onKeyPress={this.handleDetectEnter} />
               </div>
             </form>
             {/* <span className='quoting-count'>

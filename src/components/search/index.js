@@ -112,7 +112,7 @@ class Search extends React.Component {
                 <label>
                   <i onClick={this.handleSearch}></i>
                 </label>
-                <input type='text' ref='keyword' placeholder='검색어를 입력해주세요.' defaultValue={decodeURIComponent(sessionStorage.getItem('keyword'))} onKeyPress={this.handleDetectEnter} />
+                <input type='text' ref='keyword' placeholder='검색어를 입력해주세요.' defaultValue={sessionStorage.getItem('keyword') ? decodeURIComponent(sessionStorage.getItem('keyword')) : ''} onKeyPress={this.handleDetectEnter} />
               </div>
               <h1>총 검색 결과 {this.props.search.count}개를 찾았습니다.</h1>
               {this.props.search.count === 0 ? <h3>죄송합니다. 찾을 수 없습니다.</h3> : ''}
