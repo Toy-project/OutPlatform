@@ -465,7 +465,7 @@ class Register extends React.Component {
     // else if(Common.isEmpty(this.state.club_phone_auth.value)) this.refs.club_phone_auth.focus();
     else if(Common.isEmpty(this.state.club_name.value)) this.refs.club_name.focus();
     else if(Common.isEmpty(this.state.cate_id.value)) this.refs.cate_id.focus();
-    else if(Common.isEmpty(this.state.club_college.value)) this.refs.club_college.focus();
+    // else if(Common.isEmpty(this.state.club_college.value)) this.refs.club_college.focus();
     else if(Common.isEmpty(this.state.club_copyright.value)) this.refs.club_copyright.focus();
     else {
       return true;
@@ -487,7 +487,7 @@ class Register extends React.Component {
       this.state.club_phone.err,
       this.state.club_name.err,
       this.state.cate_id.err,
-      this.state.club_college.err,
+      // this.state.club_college.err,
       this.state.club_copyright.err,
 
       //True -> Ok / False -> Error
