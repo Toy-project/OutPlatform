@@ -184,10 +184,10 @@ class Profile extends React.Component {
             </div>
             <div className='profile-inner-left'>
               <ul>
-                <li>
+                {/* <li>
                   <h5>소속학교</h5>
                   <p>{this.state.isEditToggle ? editInputText('club_college') : this.handleEmptyValue(this.props.club_college)}</p>
-                </li>
+                </li> */}
                 <li>
                   <h5>단체종류</h5>
                   <p>{this.state.isEditToggle ? editInputText('cate_id') : this.handleEmptyValue(this.props.cate_name)}</p>

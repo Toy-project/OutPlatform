@@ -637,7 +637,7 @@ class Register extends React.Component {
                   }
                 </select>
               </div>
-              <div className='input-register college'>
+              {/* <div className='input-register college'>
                 <label htmlFor='club_college' className='input-title' >동아리 소속</label>
                 <input type='text' ref='club_college' id='club_college' onFocus={this.isFindCollegeToggle} placeholder='여기를 클릭해주세요!'/>
                 <a>
@@ -645,7 +645,7 @@ class Register extends React.Component {
                   <input type="checkbox" id='union_enabled' onChange={this.handleChange}/>
                   <label htmlFor='union_enabled'></label>
                 </a>
-              </div>
+              </div> */}
               <div className='input-register'>
                 <label htmlFor='club_copyright' className='input-title'>동아리 설명</label>
                 <input type="text" id='club_copyright' ref='club_copyright' placeholder='동아리의 매력을 한 줄로 설명해주세요!' onChange={this.handleChange}/>
