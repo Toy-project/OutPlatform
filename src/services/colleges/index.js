@@ -3,7 +3,7 @@ import axios from 'axios';
 const urlColleges = `${process.env.API_URL}/colleges/`;
 
 export function getColleges(start, end, keyword) {
-  const url = `http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=3942376907ca20d1edc9bdb7f31c5696&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&thisPage=${start}&perPage=${end}&searchSchulNm=${keyword}`;
+  const url = `http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=15a88b1d40746ac8defb105695e54c98&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&thisPage=${start}&perPage=${end}&searchSchulNm=${keyword}`;
   return axios({
     method: 'get',
     timeout: 20000,
